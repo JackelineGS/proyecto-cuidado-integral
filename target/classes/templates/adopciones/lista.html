@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: layout(~{::main}, 'adopciones', 'Adopciones')}">
+<head>
+    <title>Adopciones - Argos</title>
+</head>
+<body>
+
+<main class="space-y-6">
+
+    <div class="flex items-center justify-between flex-wrap gap-4">
+        <div class="flex gap-1 bg-[#f7f3ee] rounded-[12px] p-1 select-none">
+            <button onclick="switchAdoptionTab('pets')" id="tab-pets"
+                    class="tab-btn-ad px-5 py-2 rounded-[10px] font-['DM_Sans'] font-semibold text-[14px] transition-colors bg-white text-[#085041] shadow-sm">
+                Mascotas en adopción
+            </button>
+            <button onclick="switchAdoptionTab('requests')" id="tab-requests"
+                    class="relative px-5 py-2 rounded-[10px] font-['DM_Sans'] font-semibold text-[14px] transition-colors text-[#5f5e5a] hover:text-[#085041]">
+                Solicitudes
+                <span th:if="${unreadCount > 0}" th:text="${unreadCount}"
+                      class="absolute -top-1 -right-1 w-5 h-5 bg-[#d85a30] text-white rounded-full font-['DM_Sans'] text-[10px] font-bold flex items-center justify-center">
+                    0
+                </span>
+            </button>
+        </div>
+
+        <div id="btn-container-agregar">
+            <a th:href="@{/adopciones(action='nuevo')}"
+               class="flex items-center gap-2 bg-[#1d9e75] text-white font-['DM_Sans'] font-semibold text-[14px] px-6 py-2 rounded-[40px] hover:bg-[#158963] transition-colors whitespace-nowrap">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                Agregar Perfil
+            </a>
+        </div>
+    </div>
+
+
+    <div id="panel-pets" class="tab-panel-ad space-y-6">
+
+        <div th:if="${showForm}" class="bg-white rounded-[20px] p-6 border border-[#e8e4de] shadow-sm animate-fade-in">
+            <h3 class="font-['Playfair_Display'] font-bold text-[20px] text-[#085041] mb-4"
+                th:text="${mascotaAdopcion.id != null} ? 'Editar Perfil de Adopción' : 'Nuevo Perfil de Adopción'">
+                Nuevo Perfil de Adopción
+            </h3>
+
+            <form th:action="@{/adopciones/mascota/guardar}" th:object="${mascotaAdopcion}" method="post" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="hidden" th:field="*{id}" />
+
+                <div>
+                    <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Nombre</label>
+                    <input type="text" th:field="*{name}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required />
+                </div>
+                <div>
+                    <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Especie</label>
+                    <select th:field="*{species}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]">
+                        <option value="Perro">Perro</option>
+                        <option value="Gato">Gato</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Raza</label>
+                    <input type="text" th:field="*{breed}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required />
+                </div>
+                <div>
+                    <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Sexo</label>
+                    <select th:field="*{sex}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]">
+                        <option value="Macho">Macho</option>
+                        <option value="Hembra">Hembra</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Edad</label>
+                    <input type="text" th:field="*{age}" placeholder="Ej: 2 años" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required />
+                </div>
+                <div>
+                    <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Estado</label>
+                    <select th:field="*{status}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]">
+                        <option value="disponible">Disponible</option>
+                        <option value="adoptado">Adoptado</option>
+                    </select>
+                </div>
+
+                <div class="col-span-1 md:col-span-2 flex gap-4 justify-end mt-2">
+                    <a th:href="@{/adopciones}" class="px-6 py-2 border border-[#e8e4de] rounded-[40px] font-['DM_Sans'] text-[14px] text-[#5f5e5a] hover:bg-[#f7f3ee] transition-colors text-center">Cancelar</a>
+                    <button type="submit" class="px-6 py-2 bg-[#1d9e75] text-white rounded-[40px] font-['DM_Sans'] font-semibold text-[14px] hover:bg-[#158963] transition-colors">Guardar</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div th:if="${#lists.isEmpty(adoptionPets)}" class="col-span-full bg-white rounded-[20px] p-10 border border-[#e8e4de] text-center text-gray-500 font-['DM_Sans']">
+                No hay mascotas registradas para adopción.
+            </div>
+
+            <div th:unless="${#lists.isEmpty(adoptionPets)}" th:each="pet : ${adoptionPets}" class="bg-white rounded-[20px] p-6 border border-[#e8e4de] shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="text-[40px] select-none" th:text="${pet.species == 'Perro' ? '🐕' : '🐈'}">🐕</div>
+                        <a th:href="@{/adopciones(action='editar', id=${pet.id})}" class="text-[#1d9e75] hover:text-[#158963] transition-colors p-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                        </a>
+                    </div>
+                    <h3 class="font-['Playfair_Display'] font-bold text-[18px] text-[#085041] mb-2" th:text="${pet.name}">Nombre</h3>
+                    <div class="space-y-1 font-['DM_Sans'] text-[13px] text-[#5f5e5a] mb-4">
+                        <p>Especie: <span th:text="${pet.species}">Perro</span></p>
+                        <p>Raza: <span th:text="${pet.breed}">Raza</span></p>
+                        <p>Sexo: <span th:text="${pet.sex}">Macho</span></p>
+                        <p>Edad: <span th:text="${pet.age}">1 año</span></p>
+                    </div>
+                </div>
+                <div>
+                    <span class="inline-block px-3 py-1 rounded-[20px] font-['DM_Sans'] text-[12px] font-semibold"
+                          th:classappend="${pet.status == 'disponible'} ? 'bg-[#e1f5ee] text-[#085041]' : 'bg-[#f7f3ee] text-[#5f5e5a]'"
+                          th:text="${pet.status == 'disponible' ? 'Disponible' : 'Adoptado'}">
+                        Disponible
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="panel-requests" class="tab-panel-ad hidden space-y-4">
+
+        <div th:if="${#lists.isEmpty(adoptionRequests)}" class="bg-white rounded-[20px] p-10 border border-[#e8e4de] text-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#b0aba3] mx-auto mb-3"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+            <p class="font-['DM_Sans'] text-[14px] text-[#5f5e5a]">No hay solicitudes de adopción aún.</p>
+        </div>
+
+        <div th:unless="${#lists.isEmpty(adoptionRequests)}"
+             th:each="req : ${adoptionRequests}"
+             th:id="'req-card-' + ${req.id}"
+             th:classappend="${req.read} ? 'border-[#e8e4de]' : 'border-[#f5c6a8] bg-[#fffaf8]'"
+             th:onclick="'marcarLeidoAsync(' + ${req.id} + ', ' + ${req.read} + ')'"
+             class="bg-white rounded-[20px] p-5 border transition-colors cursor-pointer card-solicitud">
+
+            <div class="flex items-start justify-between gap-4 flex-wrap sm:flex-nowrap">
+                <div class="flex gap-4 flex-1">
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
+                         th:classappend="${req.read} ? 'bg-[#f7f3ee]' : 'bg-[#faece7]'">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             th:class="${req.read} ? 'text-[#5f5e5a]' : 'text-[#d85a30]'"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                    </div>
+
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-1">
+                            <p class="font-['DM_Sans'] font-semibold text-[15px] text-[#085041]" th:text="${req.applicantName}">Solicitante</p>
+                            <span th:id="'badge-unread-' + ${req.id}" th:unless="${req.read}" class="w-2 h-2 rounded-full bg-[#d85a30] inline-block"></span>
+                        </div>
+                        <p class="font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">
+                            Quiere adoptar a <span class="font-semibold text-[#2c2c2a]" th:text="${req.petName}">Mascota</span>
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-1 font-['DM_Sans'] text-[12px] text-[#5f5e5a]">
+                            <p th:text="'📧 ' + ${req.email}">📧 correo@mail.com</p>
+                            <p th:text="'📞 ' + ${req.phone}">📞 123456</p>
+                            <p th:text="'📍 ' + ${req.district}">📍 Distrito</p>
+                        </div>
+                        <p class="font-['DM_Sans'] text-[11px] text-[#b0aba3] mt-2"
+                           th:text="${#temporals.format(req.createdAt, 'dd/MM/yyyy, HH:mm:ss', 'es-PE')}">
+                            11/06/2026 15:30
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-end gap-2 flex-shrink-0 w-full sm:w-auto" onclick="event.stopPropagation();">
+                    <span th:id="'status-badge-' + ${req.id}"
+                          th:text="${statusLabelsMap.get(req.requestStatus)}"
+                          th:classappend="${statusStylesMap.get(req.requestStatus)}"
+                          class="px-3 py-1 rounded-full font-['DM_Sans'] text-[12px] font-semibold transition-all">
+                        Pendiente
+                    </span>
+
+                    <select th:value="${req.requestStatus}"
+                            th:data-id="${req.id}"
+                            onchange="cambiarEstadoAsync(this.getAttribute('data-id'), this.value)"
+                            class="text-[12px] font-['DM_Sans'] px-3 py-1.5 border border-[#e8e4de] rounded-[10px] focus:outline-none focus:border-[#1d9e75] text-[#5f5e5a] bg-white cursor-pointer w-full sm:w-auto">
+                        <option value="pendiente" th:selected="${req.requestStatus == 'pendiente'}">Pendiente</option>
+                        <option value="en_evaluacion" th:selected="${req.requestStatus == 'en_evaluacion'}">En evaluación</option>
+                        <option value="confirmado" th:selected="${req.requestStatus == 'confirmado'}">Confirmado</option>
+                        <option value="rechazado" th:selected="${req.requestStatus == 'rechazado'}">Rechazado</option>
+                        <option value="finalizado" th:selected="${req.requestStatus == 'finalizado'}">Finalizado</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script th:inline="javascript">
+    // 1. Alternancia fluida de Pestañas (Tabs)
+    function switchAdoptionTab(tabKey) {
+        document.querySelectorAll('.tab-panel-ad').forEach(p => p.classList.add('hidden'));
+        document.querySelectorAll('.tab-btn-ad').forEach(b => {
+            b.classList.remove('bg-white', 'text-[#085041]', 'shadow-sm');
+            b.classList.add('text-[#5f5e5a]', 'hover:text-[#085041]');
+        });
+
+        document.getElementById('panel-' + tabKey).classList.remove('hidden');
+        const activeBtn = document.getElementById('tab-' + tabKey);
+        activeBtn.classList.remove('text-[#5f5e5a]', 'hover:text-[#085041]');
+        activeBtn.classList.add('bg-white', 'text-[#085041]', 'shadow-sm');
+
+        // Ocultar botón "Agregar" si estamos en solicitudes
+        const btnAgregar = document.getElementById('btn-container-agregar');
+        if(tabKey === 'requests') {
+            btnAgregar.classList.add('hidden');
+        } else {
+            btnAgregar.classList.remove('hidden');
+        }
+    }
+
+    // Mantener la pestaña activa si se vuelve de una recarga de formulario
+    /*[ th:if="${showForm}" ]*/
+    switchAdoptionTab('pets');
+    /*[ th: if ]*/
+
+    // 2. Evento Asíncrono: Marcar como Leído
+    function marcarLeidoAsync(id, yaLeido) {
+        if (yaLeido) return; // Si ya estaba leído no hace nada
+
+        fetch('/adopciones/api/marcar-leido/' + id, { method: 'POST' })
+            .then(res => {
+                if (res.ok) {
+                    const card = document.getElementById('req-card-' + id);
+                    card.classList.remove('border-[#f5c6a8]', 'bg-[#fffaf8]');
+                    card.classList.add('border-[#e8e4de]');
+
+                    const badge = document.getElementById('badge-unread-' + id);
+                    if(badge) badge.remove();
+                }
+            });
+    }
+
+    // 3. Evento Asíncrono: Cambiar Estado de Solicitud
+    const stylesMap = /*[[${statusStylesMap}]]*/ {};
+    const labelsMap = /*[[${statusLabelsMap}]]*/ {};
+
+    function cambiarEstadoAsync(id, nuevoEstado) {
+        fetch('/adopciones/api/cambiar-estado/' + id + '?status=' + nuevoEstado, { method: 'POST' })
+            .then(res => {
+                if (res.ok) {
+                    const badge = document.getElementById('status-badge-' + id);
+                    // Limpiar todas las clases de colores previas
+                    badge.className = "px-3 py-1 rounded-full font-['DM_Sans'] text-[12px] font-semibold transition-all";
+                    // Aplicar la nueva clase de estilo y texto desde los diccionarios mapeados
+                    badge.classList.add(...stylesMap[nuevoEstado].split(' '));
+                    badge.textContent = labelsMap[nuevoEstado];
+                }
+            });
+    }
+</script>
+
+</body>
+</html>

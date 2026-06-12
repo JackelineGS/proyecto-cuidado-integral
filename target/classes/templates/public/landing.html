@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veterinaria Argos - Cuidado con Amor y Ciencia</title>
+    <link th:href="@{/css/tailwind.css}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-white font-['DM_Sans'] antialiased">
+
+<div th:replace="~{public/header :: public-header}"></div>
+
+<section class="relative bg-[#f7f3ee] pt-[140px] pb-20 overflow-hidden">
+    <div class="max-w-[1728px] mx-auto px-12">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8">
+                <div class="inline-block bg-[#e1f5ee] px-4 py-2 rounded-[40px]">
+                    <p class="font-['DM_Sans'] font-medium text-[12.8px] text-[#085041] tracking-[1.024px]">
+                        🐾 Cuidado con amor y ciencia
+                    </p>
+                </div>
+
+                <h1 class="font-['Playfair_Display'] font-bold text-[64px] leading-[73.6px] text-[#085041]">
+                    La clínica que tu <span class="text-[#d85a30]">mascota</span> merece
+                </h1>
+
+                <p class="font-['DM_Sans'] text-[16.8px] leading-[28.56px] text-[#5f5e5a] max-w-[468px]">
+                    Atención médica especializada, proceso de adopción responsable y todo lo que necesitan en nuestra tienda. Un solo lugar para el bienestar de tu compañero.
+                </p>
+
+                <div class="flex gap-4">
+                    <a th:href="@{/agendar}" class="bg-[#1d9e75] text-white font-['DM_Sans'] font-medium text-[15.2px] px-8 py-4 rounded-[40px] hover:bg-[#158963] transition-colors text-center">
+                        Agendar consulta
+                    </a>
+                    <a href="#servicios" onclick="document.getElementById('servicios').scrollIntoView({ behavior: 'smooth' })" class="border-2 border-[#1d9e75] text-[#1d9e75] font-['DM_Sans'] font-medium text-[15.2px] px-8 py-4 rounded-[40px] hover:bg-[#1d9e75] hover:text-white transition-colors text-center">
+                        Ver servicios
+                    </a>
+                </div>
+
+                <div class="flex gap-8 pt-8">
+                    <div>
+                        <p class="font-['Playfair_Display'] font-bold text-[28.8px] text-[#1d9e75]">12+</p>
+                        <p class="font-['DM_Sans'] text-[12.8px] text-[#5f5e5a]">Años de experiencia</p>
+                    </div>
+                    <div>
+                        <p class="font-['Playfair_Display'] font-bold text-[28.8px] text-[#1d9e75]">3,800+</p>
+                        <p class="font-['DM_Sans'] text-[12.8px] text-[#5f5e5a]">Mascotas atendidas</p>
+                    </div>
+                    <div>
+                        <p class="font-['Playfair_Display'] font-bold text-[28.8px] text-[#1d9e75]">98%</p>
+                        <p class="font-['DM_Sans'] text-[12.8px] text-[#5f5e5a]">Clientes satisfechos</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative">
+                <div class="rounded-l-[400px] overflow-hidden h-[600px] w-full shadow-sm">
+                    <img th:src="@{/images/hero-veterinarian.png}" alt="Veterinarian" class="w-full h-full object-cover" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="servicios" class="py-20 bg-white">
+    <div class="max-w-[1728px] mx-auto px-12">
+        <div class="mb-16">
+            <h2 class="font-['Playfair_Display'] font-bold text-[44.8px] leading-[53.76px] text-[#085041] mb-4">Nuestros servicios</h2>
+            <p class="font-['DM_Sans'] text-[16px] leading-[27.2px] text-[#5f5e5a] max-w-[568px]">
+                Tres pilares para el cuidado completo de tu mascota, con profesionales comprometidos y un trato cercano.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-7">
+            <div class="bg-[#f7f3ee] rounded-[24px] p-8 flex flex-col justify-between">
+                <div>
+                    <div class="text-[48px] mb-6 select-none">💡</div>
+                    <div class="inline-block bg-[#e1f5ee] px-3 py-1 rounded-[40px] mb-4">
+                        <p class="font-['DM_Sans'] font-semibold text-[11.2px] text-[#085041] tracking-[0.896px]">Atención médica</p>
+                    </div>
+                    <h3 class="font-['Playfair_Display'] font-bold text-[24px] text-[#085041] mb-4">Clínica Veterinaria</h3>
+                    <p class="font-['DM_Sans'] text-[16px] leading-[25.84px] text-[#5f5e5a] mb-6">
+                        Diagnóstico, tratamiento y prevención con equipos modernos y médicos especializados en pequeñas y grandes especies.
+                    </p>
+                    <ul class="space-y-3 mb-8 font-['DM_Sans'] text-[14.08px] text-[#5f5e5a]">
+                        <li>✓ Consultas generales y especialidades</li>
+                        <li>✓ Vacunación y desparasitación</li>
+                        <li>✓ Cirugías y hospitalización</li>
+                    </ul>
+                </div>
+                <a th:href="@{/agendar}" class="bg-white w-full font-['DM_Sans'] font-semibold text-[16px] text-[#085041] px-8 py-3 rounded-[40px] hover:bg-gray-50 transition-colors text-center block">Agendar Cita</a>
+            </div>
+
+            <div class="bg-[#f7f3ee] rounded-[24px] p-8 flex flex-col justify-between">
+                <div>
+                    <div class="text-[48px] mb-6 select-none">🏠</div>
+                    <div class="inline-block bg-[#faece7] px-3 py-1 rounded-[40px] mb-4">
+                        <p class="font-['DM_Sans'] font-semibold text-[11.2px] text-[#712b13] tracking-[0.896px]">Adopciones</p>
+                    </div>
+                    <h3 class="font-['Playfair_Display'] font-bold text-[24px] text-[#085041] mb-4">Dale un Hogar</h3>
+                    <p class="font-['DM_Sans'] text-[16px] leading-[25.84px] text-[#5f5e5a] mb-6">
+                        Conectamos mascotas rescatadas con familias responsables. Cada adopción incluye revisión médica completa y seguimiento.
+                    </p>
+                    <ul class="space-y-3 mb-8 font-['DM_Sans'] text-[14.08px] text-[#5f5e5a]">
+                        <li>✓ Perros y gatos de todas las edades</li>
+                        <li>✓ Mascotas esterilizadas y vacunadas</li>
+                        <li>✓ Proceso de adopción guiado</li>
+                    </ul>
+                </div>
+                <a href="#adopciones" onclick="document.getElementById('adopciones').scrollIntoView({ behavior: 'smooth' })" class="bg-white w-full font-['DM_Sans'] font-semibold text-[16px] text-[#085041] px-8 py-3 rounded-[40px] hover:bg-gray-50 transition-colors text-center block">Ver disponibles</a>
+            </div>
+
+            <div class="bg-[#f7f3ee] rounded-[24px] p-8 flex flex-col justify-between">
+                <div>
+                    <div class="text-[48px] mb-6 select-none">🛒</div>
+                    <div class="inline-block bg-[#eeedfe] px-3 py-1 rounded-[40px] mb-4">
+                        <p class="font-['DM_Sans'] font-semibold text-[11.2px] text-[#3c3489] tracking-[0.896px]">Pet Shop</p>
+                    </div>
+                    <h3 class="font-['Playfair_Display'] font-bold text-[24px] text-[#085041] mb-4">Tienda de Mascotas</h3>
+                    <p class="font-['DM_Sans'] text-[16px] leading-[25.84px] text-[#5f5e5a] mb-6">
+                        Todo lo que tu mascota necesita en un solo lugar: alimentos premium, accesorios, juguetes y productos de higiene.
+                    </p>
+                    <ul class="space-y-3 mb-8 font-['DM_Sans'] text-[14.08px] text-[#5f5e5a]">
+                        <li>✓ Alimentos premium y medicados</li>
+                        <li>✓ Accesorios y juguetes</li>
+                        <li>✓ Productos de higiene y grooming</li>
+                    </ul>
+                </div>
+                <a href="#productos" onclick="document.getElementById('productos').scrollIntoView({ behavior: 'smooth' })" class="bg-white w-full font-['DM_Sans'] font-semibold text-[16px] text-[#085041] px-8 py-3 rounded-[40px] hover:bg-gray-50 transition-colors text-center block">Explorar tienda</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="reservar" class="py-20 bg-[#f7f3ee]">
+    <div class="max-w-[1728px] mx-auto px-12">
+        <div class="mb-12 text-center">
+            <p class="font-['DM_Sans'] font-medium text-[12px] text-[#1d9e75] tracking-[1.2px] mb-2 uppercase">Nuestro equipo médico</p>
+            <h2 class="font-['Playfair_Display'] font-bold text-[44.8px] leading-[53.76px] text-[#085041] mb-4">Agenda tu Cita</h2>
+            <p class="font-['DM_Sans'] text-[16px] leading-[27.2px] text-[#5f5e5a] max-w-[520px] mx-auto">
+                Elige al especialista que mejor se adapte a las necesidades de tu mascota y reserva un horario en minutos.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-10">
+            <div th:each="vet : ${vetsLanding}" class="bg-white rounded-[24px] p-6 border border-[#e8e4de] flex flex-col items-center text-center shadow-sm hover:shadow-md transition-shadow">
+                <div class="w-20 h-20 rounded-full flex items-center justify-center text-white font-['DM_Sans'] font-bold text-[22px] mb-4"
+                     th:style="'background-color: ' + ${vet.color}" th:text="${vet.initials}">
+                    XX
+                </div>
+                <h3 class="font-['DM_Sans'] font-semibold text-[15px] text-[#085041] mb-1" th:text="${vet.name}">Doctor</h3>
+                <p class="font-['DM_Sans'] text-[13px] text-[#5f5e5a] mb-1" th:text="${vet.specialty}">Especialidad</p>
+                <p class="font-['DM_Sans'] text-[12px] text-[#b0aba3] mb-5" th:text="${vet.experience} + ' de experiencia'">0 años</p>
+                <a th:href="@{/agendar}" class="w-full bg-[#1d9e75] text-white text-center font-['DM_Sans'] font-semibold text-[13px] py-2.5 rounded-[40px] hover:bg-[#158963] transition-colors block">Agendar Cita</a>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <a th:href="@{/agendar}" class="inline-flex items-center gap-2 border-2 border-[#1d9e75] text-[#1d9e75] font-['DM_Sans'] font-semibold text-[15px] px-8 py-3 rounded-[40px] hover:bg-[#1d9e75] hover:text-white transition-colors">
+                Ver todos los horarios disponibles
+            </a>
+        </div>
+    </div>
+</section>
+
+<section id="adopciones" class="py-20 bg-[#085041] text-white">
+    <div class="max-w-[1728px] mx-auto px-12">
+        <div class="mb-16">
+            <p class="font-['DM_Sans'] font-medium text-[12px] text-[#9fe1cb] tracking-[1.2px] mb-2">Encuentra tu compañero</p>
+            <h2 class="font-['Playfair_Display'] font-bold text-[44.8px] leading-[53.76px] mb-4">Mascotas en adopción</h2>
+            <p class="font-['DM_Sans'] text-[16px] leading-[27.2px] text-[rgba(255,255,255,0.65)] max-w-[568px]">
+                Estas amiguitas esperan una familia llena de amor. Todas están vacunadas, desparasitadas y con chequeo médico al día.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            <div th:each="pet : ${adoptionPets}" class="bg-[rgba(255,255,255,0.08)] border border-[rgba(255,255,255,0.15)] rounded-[20px] p-5 flex flex-col justify-between">
+                <div>
+                    <div class="bg-gray-700 rounded-[20px] h-[113px] mb-4 overflow-hidden shadow-inner">
+                        <img th:src="@{/images/pets/{name}.png(name=${#strings.toLowerCase(pet.name)})}" th:alt="${pet.name}" class="w-full h-full object-cover" onerror="this.src='/images/default-pet.png'" />
+                    </div>
+                    <h3 class="font-['Playfair_Display'] text-[17.6px] text-center mb-2" th:text="${pet.name}">Mascota</h3>
+                    <p class="font-['DM_Sans'] text-[12.8px] text-[rgba(255,255,255,0.6)] text-center mb-4"
+                       th:text="${pet.breed} + ' · ' + ${pet.age} + ' · ' + ${pet.sex}">
+                        Raza · Edad · Sexo
+                    </p>
+                </div>
+                <a th:href="@{/adoptar(petId=${pet.id})}" class="bg-white w-full text-center text-[#085041] font-['DM_Sans'] font-semibold text-[14px] px-4 py-2.5 rounded-[40px] hover:bg-gray-100 transition-colors block">
+                    Quiero adoptar
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="productos" class="py-20 bg-white">
+    <div class="max-w-[1728px] mx-auto px-12">
+        <div class="mb-16">
+            <p class="font-['DM_Sans'] font-medium text-[12px] text-[#d85a30] tracking-[1.2px] mb-2">Tienda online</p>
+            <h2 class="font-['Playfair_Display'] font-bold text-[44.8px] leading-[53.76px] text-[#085041] mb-4">Pet Shop Argos</h2>
+            <p class="font-['DM_Sans'] text-[16px] leading-[27.2px] text-[#5f5e5a] max-w-[568px]">
+                Productos seleccionados por nuestros veterinarios. Calidad garantizada para la salud y felicidad de tu mascota.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            <div th:each="product : ${products}" class="bg-white rounded-[20px] p-6 border border-[#e8e4de] flex flex-col justify-between">
+                <div>
+                    <div class="text-[40px] mb-4 select-none">🥩</div>
+                    <h3 class="font-['DM_Sans'] font-medium text-[16px] text-[#2c2c2a] mb-2" th:text="${product.name}">Producto</h3>
+                    <p class="font-['DM_Sans'] text-[13.12px] leading-[19.68px] text-[#5f5e5a] mb-4 line-clamp-3" th:text="${product.description}">Descripción...</p>
+                </div>
+                <div class="flex items-center justify-between mt-2 pt-2 border-t border-[#f7f3ee]">
+                    <p class="font-['Playfair_Display'] font-bold text-[19.2px] text-[#1d9e75]"
+                       th:text="'S/ ' + ${#numbers.formatDecimal(product.price, 1, 2, 'POINT')}">S/ 0.00</p>
+                    <a th:href="'https://wa.me/51999999999?text=Hola,%20deseo%20comprar%20el%20producto:%20' + ${product.name}"
+                       target="_blank" class="bg-[#1d9e75] text-white font-['DM_Sans'] font-semibold text-[13px] px-4 py-2 rounded-[40px] hover:bg-[#158963] transition-colors">
+                        Comprar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="nosotros" class="py-20 bg-[#f7f3ee]">
+    <div class="max-w-[1728px] mx-auto px-12">
+        <h2 class="font-['Playfair_Display'] font-bold text-[44.8px] leading-[53.76px] text-[#085041] mb-12 text-center">¿Por qué elegirnos?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center">
+                <div class="text-[48px] mb-4 select-none">⚕️</div>
+                <h3 class="font-['Playfair_Display'] font-bold text-[24px] text-[#085041] mb-2">Profesionales Certificados</h3>
+                <p class="font-['DM_Sans'] text-[14px] text-[#5f5e5a]">Equipo de veterinarios con especialidades y años de experiencia</p>
+            </div>
+            <div class="text-center">
+                <div class="text-[48px] mb-4 select-none">🏥</div>
+                <h3 class="font-['Playfair_Display'] font-bold text-[24px] text-[#085041] mb-2">Instalaciones Modernas</h3>
+                <p class="font-['DM_Sans'] text-[14px] text-[#5f5e5a]">Equipamiento de última generación para diagnóstico y tratamiento</p>
+            </div>
+            <div class="text-center">
+                <div class="text-[48px] mb-4 select-none">💚</div>
+                <h3 class="font-['Playfair_Display'] font-bold text-[24px] text-[#085041] mb-2">Atención Personalizada</h3>
+                <p class="font-['DM_Sans'] text-[14px] text-[#5f5e5a]">Cada mascota recibe el cuidado y seguimiento que merece</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-[#085041] text-white py-12">
+    <div class="max-w-[1728px] mx-auto px-12">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+            <div>
+                <h3 class="font-['Playfair_Display'] font-bold text-[24px] mb-4">ARGOS</h3>
+                <p class="font-['DM_Sans'] text-[14px] text-[rgba(255,255,255,0.7)]">Cuidado veterinario con amor y ciencia desde 2014</p>
+            </div>
+            <div>
+                <h4 class="font-['DM_Sans'] font-semibold text-[16px] mb-4">Servicios</h4>
+                <ul class="space-y-2 font-['DM_Sans'] text-[14px] text-[rgba(255,255,255,0.7)]">
+                    <li>Clínica Veterinaria</li>
+                    <li>Adopciones</li>
+                    <li>Pet Shop</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-['DM_Sans'] font-semibold text-[16px] mb-4">Contacto</h4>
+                <ul class="space-y-2 font-['DM_Sans'] text-[14px] text-[rgba(255,255,255,0.7)]">
+                    <li>contacto@argos.com</li>
+                    <li>(01) 234-5678</li>
+                    <li>Av. Principal 123, Lima</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-['DM_Sans'] font-semibold text-[16px] mb-4">Horarios</h4>
+                <ul class="space-y-2 font-['DM_Sans'] text-[14px] text-[rgba(255,255,255,0.7)]">
+                    <li>Lunes - Viernes: 8am - 8pm</li>
+                    <li>Sábados: 9am - 6pm</li>
+                    <li>Domingos: 10am - 2pm</li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-[rgba(255,255,255,0.2)] pt-8 text-center">
+            <p class="font-['DM_Sans'] text-[14px] text-[rgba(255,255,255,0.7)]">© 2026 Veterinaria Argos. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

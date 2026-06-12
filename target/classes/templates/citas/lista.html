@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: layout(~{::main}, 'citas', ${medicalAppt != null} ? 'Atención Médica' : 'Citas')}">
+<head>
+    <title>Citas - Argos</title>
+</head>
+<body>
+
+<main class="space-y-6">
+
+    <div th:if="${medicalAppt != null}" class="space-y-5 pb-10">
+        <div class="flex items-center justify-between">
+            <div>
+                <h2 class="font-['Playfair_Display'] font-bold text-[24px] text-[#085041]"
+                    th:text="${atencionMedica.id != null} ? 'Editar Atención Médica' : 'Atención Médica'">
+                    Atención Médica
+                </h2>
+                <p class="font-['DM_Sans'] text-[14px] text-[#5f5e5a] mt-1">
+                    Paciente: <strong class="text-[#2c2c2a]" th:text="${medicalAppt.patientName}">Firulais</strong>
+                    &nbsp;·&nbsp;Cliente: <strong class="text-[#2c2c2a]" th:text="${medicalAppt.clientName}">Juan Pérez</strong>
+                    &nbsp;·&nbsp;Fecha: <strong class="text-[#2c2c2a]" th:text="${#temporals.format(medicalAppt.date, 'dd/MM/yyyy', 'es-PE')}">11/06/2026</strong>
+                    &nbsp;·&nbsp;Dr.: <strong class="text-[#2c2c2a]" th:text="${medicalAppt.doctor}">Dr. Silva</strong>
+                </p>
+            </div>
+            <a th:href="@{/citas}" class="text-[#5f5e5a] hover:text-[#2c2c2a]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18network"/></svg>
+            </a>
+        </div>
+
+        <form th:action="@{/citas/atencion/guardar}" th:object="${atencionMedica}" method="post" class="space-y-4">
+            <input type="hidden" th:field="*{id}" />
+            <input type="hidden" name="appointmentId" th:value="${medicalAppt.id}" />
+            <input type="hidden" name="patientName" th:value="${medicalAppt.patientName}" />
+
+            <section class="bg-white rounded-[20px] border border-[#e8e4de] overflow-hidden">
+                <div class="px-6 py-4 bg-[#f7f3ee]">
+                    <h3 class="font-['Playfair_Display'] font-bold text-[17px] text-[#085041]">Triaje</h3>
+                </div>
+                <div class="px-6 py-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Peso (kg)</label>
+                        <input type="text" th:field="*{triageWeight}" placeholder="Ej: 12.5" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" />
+                    </div>
+                    <div>
+                        <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Temperatura (°C)</label>
+                        <input type="text" th:field="*{triageTemperature}" placeholder="Ej: 38.5" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" />
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-[20px] border border-[#e8e4de] overflow-hidden">
+                <div class="px-6 py-4 bg-[#f7f3ee]"><h3 class="font-['Playfair_Display'] font-bold text-[17px] text-[#085041]">Diagnóstico</h3></div>
+                <div class="px-6 py-5">
+                    <textarea th:field="*{diagnosis}" placeholder="Escriba el diagnóstico del paciente..." rows="4" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]"></textarea>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-[20px] border border-[#e8e4de] overflow-hidden">
+                <div class="px-6 py-4 bg-[#f7f3ee]"><h3 class="font-['Playfair_Display'] font-bold text-[17px] text-[#085041]">Tratamiento</h3></div>
+                <div class="px-6 py-5">
+                    <textarea th:field="*{treatment}" placeholder="Describa el tratamiento a seguir..." rows="4" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]"></textarea>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-[20px] border border-[#e8e4de] overflow-hidden">
+                <div class="px-6 py-4 bg-[#f7f3ee]"><h3 class="font-['Playfair_Display'] font-bold text-[17px] text-[#085041]">Observaciones</h3></div>
+                <div class="px-6 py-5">
+                    <textarea th:field="*{observations}" placeholder="Observaciones adicionales..." rows="3" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]"></textarea>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-[20px] border border-[#e8e4de] overflow-hidden">
+                <div class="flex items-center justify-between px-6 py-4 bg-[#f7f3ee]">
+                    <h3 class="font-['Playfair_Display'] font-bold text-[17px] text-[#085041]">Vacunas</h3>
+                    <div class="flex items-center gap-2">
+                        <label class="relative inline-flex h-5 w-9 items-center rounded-full cursor-pointer transition-colors select-none">
+                            <input type="checkbox" id="vaccinesEnabled" th:field="*{vaccinesEnabled}" class="sr-only peer" onchange="toggleSec(this, 'sec-vaccines')">
+                            <div class="w-9 h-5 bg-[#d1cdc7] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-4 after:content-[''] after:absolute after:top-[3px] after:left-[4px] after:bg-white after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:bg-[#1d9e75]"></div>
+                        </label>
+                    </div>
+                </div>
+                <div id="sec-vaccines" class="px-6 py-5 space-y-3 th-toggle-block" th:classappend="*{vaccinesEnabled} ? '' : 'hidden'">
+                    <div id="contenedor-vacunas" class="space-y-3">
+                        <div th:each="v, stat : *{vaccines}" class="flex gap-3 items-center fila-vacuna">
+                            <input type="text" th:name="'vaccines[' + ${stat.index} + '].name'" th:value="${v.name}" placeholder="Nombre de la vacuna" class="flex-1 px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" />
+                            <input type="text" th:name="'vaccines[' + ${stat.index} + '].dose'" th:value="${v.dose}" placeholder="Dosis" class="w-36 px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" />
+                            <button type="button" onclick="eliminarVacuna(this)" class="text-red-400 hover:text-red-600 transition-colors btn-eliminar-vacuna">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="button" onclick="agregarVacuna()" class="flex items-center gap-1 text-[#1d9e75] font-['DM_Sans'] text-[13px] font-semibold hover:text-[#158963] transition-colors mt-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Agregar vacuna
+                    </button>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-[20px] border border-[#e8e4de] overflow-hidden">
+                <div class="flex items-center justify-between px-6 py-4 bg-[#f7f3ee]">
+                    <h3 class="font-['Playfair_Display'] font-bold text-[17px] text-[#085041]">Cirugía</h3>
+                    <div class="flex items-center gap-2">
+                        <label class="relative inline-flex h-5 w-9 items-center rounded-full cursor-pointer transition-colors select-none">
+                            <input type="checkbox" id="surgeryEnabled" th:field="*{surgeryEnabled}" class="sr-only peer" onchange="toggleSec(this, 'sec-surgery')">
+                            <div class="w-9 h-5 bg-[#d1cdc7] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-4 after:content-[''] after:absolute after:top-[3px] after:left-[4px] after:bg-white after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:bg-[#1d9e75]"></div>
+                        </label>
+                    </div>
+                </div>
+                <div id="sec-surgery" class="px-6 py-5 th-toggle-block" th:classappend="*{surgeryEnabled} ? '' : 'hidden'">
+                    <textarea th:field="*{surgery}" placeholder="Describa la cirugía realizada..." rows="3" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]"></textarea>
+                </div>
+            </section>
+
+            <div class="flex justify-end gap-4">
+                <a th:href="@{/citas}" class="px-6 py-2 border border-[#e8e4de] rounded-[40px] font-['DM_Sans'] text-[14px] text-[#5f5e5a] hover:bg-[#f7f3ee] transition-colors text-center">Cancelar</a>
+                <button type="submit" class="px-8 py-2 bg-[#1d9e75] text-white rounded-[40px] font-['DM_Sans'] font-semibold text-[14px] hover:bg-[#158963] transition-colors"
+                        th:text="${atencionMedica.id != null} ? 'Actualizar Atención' : 'Guardar Atención Médica'">Guardar</button>
+            </div>
+        </form>
+    </div>
+
+    <div th:if="${medicalAppt == null}" class="space-y-6">
+        <div class="flex justify-end">
+            <a th:href="@{/citas(action='nuevo')}" class="flex items-center gap-2 bg-[#1d9e75] text-white font-['DM_Sans'] font-semibold text-[14px] px-6 py-2 rounded-[40px] hover:bg-[#158963] transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                Agregar Cita
+            </a>
+        </div>
+
+        <div th:if="${showForm}" class="bg-white rounded-[20px] p-6 border border-[#e8e4de] shadow-sm animate-fade-in">
+            <div class="flex justify-between items-center mb-5">
+                <h3 class="font-['Playfair_Display'] font-bold text-[20px] text-[#085041]" th:text="${cita.id != null} ? 'Editar Cita' : 'Nueva Cita'">Nueva Cita</h3>
+                <a th:href="@{/citas}" class="text-[#5f5e5a] hover:text-[#2c2c2a]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </a>
+            </div>
+
+            <form th:action="@{/citas/guardar}" th:object="${cita}" method="post" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="hidden" th:field="*{id}" />
+
+                <div>
+                    <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">DNI del cliente</label>
+                    <div class="relative">
+                        <input type="text" th:field="*{clientDni}" id="clientDniInput" maxlength="8" placeholder="Ej: 12345678" oninput="buscarDniAsync(this.value)" class="w-full pl-4 pr-10 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#b0aba3]"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    </div>
+                    <p id="dniErrorMsg" class="mt-1 font-['DM_Sans'] text-[12px] text-red-500 hidden"></p>
+                </div>
+
+                <div>
+                    <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Nombre del cliente</label>
+                    <input type="text" th:field="*{clientName}" id="clientNameInput" readonly class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] bg-[#f7f3ee] text-[#2c2c2a] focus:outline-none" placeholder="Se completa automáticamente" required />
+                </div>
+
+                <div>
+                    <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Paciente</label>
+                    <select th:field="*{patientName}" id="patientNameSelect" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required>
+                        <option value="">Seleccione un paciente</option>
+                        <option th:if="${cita.id != null}" th:value="${cita.patientName}" th:text="${cita.patientName}" selected></option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Veterinario</label>
+                    <select th:field="*{doctor}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required>
+                        <option th:each="doc : ${doctorsList}" th:value="${doc}" th:text="${doc}"></option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Fecha</label>
+                    <input type="date" th:field="*{date}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required />
+                </div>
+
+                <div>
+                    <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Hora</label>
+                    <input type="time" th:field="*{time}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required />
+                </div>
+
+                <div th:if="${cita.id != null}">
+                    <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Estado</label>
+                    <select th:field="*{status}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]">
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="Atendido">Atendido</option>
+                        <option value="Cancelado">Cancelado</option>
+                    </select>
+                </div>
+
+                <div class="col-span-1 md:col-span-2">
+                    <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Motivo de consulta</label>
+                    <textarea th:field="*{consultationReason}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" rows="3" placeholder="Describa el motivo de la consulta"></textarea>
+                </div>
+
+                <div class="col-span-1 md:col-span-2 flex gap-4 justify-end">
+                    <a th:href="@{/citas}" class="px-6 py-2 border border-[#e8e4de] rounded-[40px] font-['DM_Sans'] text-[14px] text-[#5f5e5a] hover:bg-[#f7f3ee] transition-colors text-center">Cancelar</a>
+                    <button type="submit" class="px-6 py-2 bg-[#1d9e75] text-white rounded-[40px] font-['DM_Sans'] font-semibold text-[14px] hover:bg-[#158963] transition-colors">Guardar</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="bg-white rounded-[20px] overflow-hidden border border-[#e8e4de] shadow-sm">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-[#f7f3ee]">
+                    <tr>
+                        <th class="px-5 py-4 text-left font-['DM_Sans'] font-semibold text-[14px] text-[#085041]">Cliente</th>
+                        <th class="px-5 py-4 text-left font-['DM_Sans'] font-semibold text-[14px] text-[#085041]">Paciente</th>
+                        <th class="px-5 py-4 text-left font-['DM_Sans'] font-semibold text-[14px] text-[#085041]">Veterinario</th>
+                        <th class="px-5 py-4 text-left font-['DM_Sans'] font-semibold text-[14px] text-[#085041]">Fecha</th>
+                        <th class="px-5 py-4 text-left font-['DM_Sans'] font-semibold text-[14px] text-[#085041]">Hora</th>
+                        <th class="px-5 py-4 text-left font-['DM_Sans'] font-semibold text-[14px] text-[#085041]">Estado</th>
+                        <th class="px-5 py-4 text-left font-['DM_Sans'] font-semibold text-[14px] text-[#085041]">Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${#lists.isEmpty(appointments)}"><td colspan="7" class="px-5 py-8 text-center text-gray-500 font-['DM_Sans'] text-[14px]">No hay citas registradas.</td></tr>
+
+                    <tr th:unless="${#lists.isEmpty(appointments)}" th:each="appt, iter : ${appointments}" class="border-t border-[#e8e4de]" th:classappend="${iter.index % 2 == 0} ? 'bg-white' : 'bg-[#fafafa]'">
+                        <td class="px-5 py-4 font-['DM_Sans'] text-[14px] text-[#2c2c2a]" th:text="${appt.clientName}">Cliente</td>
+                        <td class="px-5 py-4 font-['DM_Sans'] text-[14px] text-[#5f5e5a]" th:text="${appt.patientName}">Paciente</td>
+                        <td class="px-5 py-4 font-['DM_Sans'] text-[14px] text-[#5f5e5a]" th:text="${appt.doctor}">Veterinario</td>
+                        <td class="px-5 py-4 font-['DM_Sans'] text-[14px] text-[#5f5e5a]" th:text="${#temporals.format(appt.date, 'dd/MM/yyyy', 'es-PE')}">01/01/2026</td>
+                        <td class="px-5 py-4 font-['DM_Sans'] text-[14px] text-[#5f5e5a]" th:text="${appt.time}">09:00 AM</td>
+                        <td class="px-5 py-4">
+                                <span class="px-3 py-1 rounded-full font-['DM_Sans'] text-[12px] font-semibold"
+                                      th:classappend="${appt.status == 'Pendiente'} ? 'bg-yellow-100 text-yellow-700' : (${appt.status == 'Atendido'} ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700')"
+                                      th:text="${appt.status}">
+                                    Pendiente
+                                </span>
+                        </td>
+                        <td class="px-5 py-4">
+                            <div class="flex items-center gap-3 flex-wrap">
+                                <a th:href="@{/citas(action='editar', id=${appt.id})}" class="text-[#1d9e75] hover:text-[#158963] transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                                </a>
+
+                                <a th:if="${appt.hasMedicalRecord}" th:href="@{/citas/atencion(apptId=${appt.id})}" class="flex items-center gap-1 bg-[#085041] text-white font-['DM_Sans'] text-[12px] font-semibold px-3 py-1 rounded-[20px] hover:bg-[#063830] transition-colors whitespace-nowrap">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg> Editar Atención
+                                </a>
+                                <a th:if="${!appt.hasMedicalRecord && appt.status == 'Pendiente'}" th:href="@{/citas/atencion(apptId=${appt.id})}" class="flex items-center gap-1 bg-[#085041] text-white font-['DM_Sans'] text-[12px] font-semibold px-3 py-1 rounded-[20px] hover:bg-[#063830] transition-colors whitespace-nowrap">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg> Iniciar Atención
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    // 1. Manejo del colapso/visibilidad de las secciones mediante toggles
+    function toggleSec(checkbox, targetId) {
+        const targetBlock = document.getElementById(targetId);
+        if (checkbox.checked) {
+            targetBlock.classList.remove('hidden');
+        } else {
+            targetBlock.classList.add('hidden');
+        }
+    }
+
+    // 2. Control de filas dinámicas de Vacunas (Manejo de índices de arreglos indexados para Java List)
+    function agregarVacuna() {
+        const contenedor = document.getElementById('contenedor-vacunas');
+        const totalFilas = contenedor.getElementsByClassName('fila-vacuna').length;
+
+        const nuevaFila = document.createElement('div');
+        nuevaFila.className = 'flex gap-3 items-center fila-vacuna';
+        nuevaFila.innerHTML = `
+            <input type="text" name="vaccines[${totalFilas}].name" placeholder="Nombre de la vacuna" class="flex-1 px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" />
+            <input type="text" name="vaccines[${totalFilas}].dose" placeholder="Dosis" class="w-36 px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" />
+            <button type="button" onclick="eliminarVacuna(this)" class="text-red-400 hover:text-red-600 transition-colors btn-eliminar-vacuna">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+            </button>
+        `;
+        contenedor.appendChild(nuevaFila);
+    }
+
+    function eliminarVacuna(button) {
+        const contenedor = document.getElementById('contenedor-vacunas');
+        if (contenedor.getElementsByClassName('fila-vacuna').length > 1) {
+            button.closest('.fila-vacuna').remove();
+            reindexarVacunas();
+        }
+    }
+
+    function reindexarVacunas() {
+        const filas = document.getElementById('contenedor-vacunas').getElementsByClassName('fila-vacuna');
+        for (let i = 0; i < filas.length; i++) {
+            filas[i].querySelector('input[name$=".name"]').name = `vaccines[${i}].name`;
+            filas[i].querySelector('input[name$=".dose"]').name = `vaccines[${i}].dose`;
+        }
+    }
+
+    // 3. Consulta asíncrona (AJAX / Fetch API) para Búsqueda por DNI del Dueño
+    function buscarDniAsync(dni) {
+        const errorMsg = document.getElementById('dniErrorMsg');
+        const nameInput = document.getElementById('clientNameInput');
+        const petSelect = document.getElementById('patientNameSelect');
+
+        if (dni.trim().length === 8) {
+            fetch('/clientes/api/buscar-dni/' + dni)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.encontrado) {
+                        nameInput.value = data.clientName;
+                        errorMsg.classList.add('hidden');
+
+                        // Rellenar select de mascotas vinculadas
+                        petSelect.innerHTML = '';
+                        data.pets.forEach(p => {
+                            const opt = document.createElement('option');
+                            opt.value = p;
+                            opt.textContent = p;
+                            petSelect.appendChild(opt);
+                        });
+                    } else {
+                        nameInput.value = '';
+                        petSelect.innerHTML = '<option value="">Seleccione un paciente</option>';
+                        errorMsg.textContent = 'No se encontró ningún cliente con ese DNI.';
+                        errorMsg.classList.remove('hidden');
+                    }
+                }).catch(() => {
+                errorMsg.textContent = 'Error al conectar con el servidor de búsqueda.';
+                errorMsg.classList.remove('hidden');
+            });
+        } else {
+            errorMsg.classList.add('hidden');
+        }
+    }
+</script>
+
+</body>
+</html>

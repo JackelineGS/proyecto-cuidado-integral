@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda tu Cita - Argos Veterinaria</title>
+    <link th:href="@{/css/tailwind.css}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-[#f7f3ee] font-['DM_Sans'] antialiased">
+
+<header class="bg-white border-b border-[#e8e4de] px-8 py-4 fixed top-0 left-0 right-0 z-50 h-[70px] flex items-center justify-between">
+    <a th:href="@{/}" class="font-['Playfair_Display'] font-bold text-[24px] text-[#085041] tracking-wide">ARGOS</a>
+    <span class="text-[13px] text-[#5f5e5a] font-medium">Atención al Cliente: 999 999 999</span>
+</header>
+
+<div id="paso-calendario" th:classappend="${param.success != null} ? 'hidden' : ''" class="pt-[90px] px-6 pb-16 max-w-[1400px] mx-auto w-full space-y-6">
+
+    <div class="flex items-center gap-4">
+        <a th:href="@{/}" class="flex items-center gap-2 text-[#5f5e5a] hover:text-[#085041] font-['DM_Sans'] text-[14px] transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Volver al inicio
+        </a>
+        <h1 class="font-['Playfair_Display'] font-bold text-[28px] text-[#085041]">Agenda tu Cita</h1>
+    </div>
+
+    <div class="bg-white rounded-[20px] p-4 border border-[#e8e4de] shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+            <a th:href="@{/agendar(date=${prevDateStr})}" class="p-2 rounded-full hover:bg-[#f7f3ee] transition-colors text-[#5f5e5a] hover:text-[#085041]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </a>
+
+            <div class="flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#1d9e75]"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+                <span class="font-['DM_Sans'] font-semibold text-[16px] text-[#085041]" th:text="${formattedLongDate}">Jueves, 11 de Junio 2026</span>
+
+                <input type="date" th:value="${currentDateStr}" onchange="window.location.href='/agendar?date=' + this.value" class="ml-2 px-3 py-1 border border-[#e8e4de] rounded-[8px] font-['DM_Sans'] text-[13px] text-[#5f5e5a] focus:outline-none focus:border-[#1d9e75]" />
+            </div>
+
+            <a th:href="@{/agendar(date=${nextDateStr})}" class="p-2 rounded-full hover:bg-[#f7f3ee] transition-colors text-[#5f5e5a] hover:text-[#085041]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
+        </div>
+
+        <div class="flex justify-center gap-2 overflow-x-auto py-1">
+            <a th:each="day : ${weekDays}" th:href="@{/agendar(date=${day.dateStr})}"
+               class="flex flex-col items-center px-4 py-2 rounded-[12px] transition-colors min-w-[56px]"
+               th:classappend="${day.dateStr == currentDateStr} ? 'bg-[#1d9e75] text-white shadow-sm' : (${day.isToday} ? 'bg-[#e1f5ee] text-[#085041]' : 'hover:bg-[#f7f3ee] text-[#5f5e5a]')">
+                <span class="font-['DM_Sans'] text-[11px]" th:text="${day.dayName}">Lun</span>
+                <span class="font-['DM_Sans'] font-semibold text-[16px]" th:text="${day.dayNumber}">11</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-[20px] border border-[#e8e4de] overflow-x-auto shadow-sm">
+        <table class="w-full min-w-[800px]">
+            <thead>
+            <tr class="border-b border-[#e8e4de]">
+                <th class="w-24 px-4 py-4" />
+                <th th:each="vet : ${vetsList}" class="px-4 py-4 text-center">
+                    <div class="flex flex-col items-center gap-2">
+                        <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-['DM_Sans'] font-bold text-[14px]"
+                             th:style="'background-color: ' + ${vet.color}" th:text="${vet.initials}">RR</div>
+                        <div>
+                            <p class="font-['DM_Sans'] font-semibold text-[13px] text-[#085041]" th:text="${vet.name}">Médico</p>
+                            <p class="font-['DM_Sans'] text-[11px] text-[#5f5e5a]" th:text="${vet.specialty}">Especialidad</p>
+                        </div>
+                    </div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="hour, rowIdx : ${hoursList}" class="border-b border-[#f7f3ee]" th:classappend="${rowIdx.index % 2 == 0} ? 'bg-white' : 'bg-[#fafafa]'">
+                <td class="px-4 py-3 font-['DM_Sans'] text-[13px] text-[#5f5e5a] text-right align-middle w-24" th:text="${hour}">09:00</td>
+
+                <td th:each="vet : ${vetsList}" class="px-3 py-2 text-center">
+                    <div th:with="slotKey=${currentDateStr + '_' + hour + '_' + vet.name}">
+
+                                <span th:if="${#lists.contains(bookedSlots, slotKey)}" class="inline-block px-4 py-1.5 bg-[#f0ede8] rounded-[12px] font-['DM_Sans'] text-[12px] text-[#b0aba3] select-none">
+                                    Ocupado
+                                </span>
+
+                        <button th:unless="${#lists.contains(bookedSlots, slotKey)}"
+                                type="button" th:data-hour="${hour}" th:data-vet="${vet.name}" th:data-color="${vet.color}"
+                                onclick="abrirFormularioReserva(this.getAttribute('data-hour'), this.getAttribute('data-vet'), this.getAttribute('data-color'))"
+                                class="inline-block px-4 py-1.5 rounded-[12px] font-['DM_Sans'] font-semibold text-[12px] text-white transition-all hover:opacity-90 cursor-pointer shadow-sm"
+                                th:style="'background-color: ' + ${vet.color}">
+                            Agendar
+                        </button>
+
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="paso-formulario" class="hidden pt-[90px] px-6 pb-16 max-w-2xl mx-auto w-full animate-fade-in">
+    <button onclick="irAPasoCalendario()" class="flex items-center gap-2 text-[#5f5e5a] hover:text-[#085041] font-['DM_Sans'] text-[14px] mb-6 transition-colors cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg> Volver al horario
+    </button>
+
+    <div class="bg-white rounded-[24px] p-8 border border-[#e8e4de] shadow-sm">
+        <h2 class="font-['Playfair_Display'] font-bold text-[26px] text-[#085041] mb-1">Completar reserva</h2>
+
+        <div class="flex gap-3 flex-wrap mb-6 mt-3">
+                <span class="inline-flex items-center gap-1.5 bg-[#e1f5ee] text-[#085041] font-['DM_Sans'] text-[13px] font-semibold px-3 py-1.5 rounded-full">
+                    📅 <span id="resumen-fecha" th:text="${formattedLongDate}">Fecha</span>
+                </span>
+            <span class="inline-flex items-center gap-1.5 bg-[#e1f5ee] text-[#085041] font-['DM_Sans'] text-[13px] font-semibold px-3 py-1.5 rounded-full">
+                    🕐 <span id="resumen-hora">00:00</span>
+                </span>
+            <span id="badge-vet" class="inline-flex items-center gap-1.5 text-white font-['DM_Sans'] text-[13px] font-semibold px-3 py-1.5 rounded-full">
+                    👨‍⚕️ <span id="resumen-vet">Médico</span>
+                </span>
+        </div>
+
+        <form th:action="@{/agendar/confirmar}" method="post" class="space-y-4">
+            <input type="hidden" name="date" id="input-date" th:value="${currentDateStr}" />
+            <input type="hidden" name="time" id="input-time" />
+            <input type="hidden" name="doctor" id="input-doctor" />
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">DNI del cliente *</label>
+                    <input type="text" name="clientDni" id="clientDni" maxlength="8" oninput="publicDniLookup(this.value)" placeholder="12345678" class="w-full px-4 py-2.5 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required />
+                </div>
+                <div>
+                    <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Nombre completo *</label>
+                    <input type="text" name="clientName" id="clientName" placeholder="Juan Pérez" class="w-full px-4 py-2.5 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required />
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Teléfono</label>
+                    <input type="tel" name="phone" id="phone" placeholder="987654321" class="w-full px-4 py-2.5 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" />
+                </div>
+                <div>
+                    <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Correo</label>
+                    <input type="email" name="email" id="email" placeholder="correo@email.com" class="w-full px-4 py-2.5 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" />
+                </div>
+            </div>
+
+            <div>
+                <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Nombre del paciente (Mascota) *</label>
+                <input type="text" name="patientName" id="patientName" placeholder="Nombre de tu mascota" class="w-full px-4 py-2.5 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required />
+            </div>
+
+            <div>
+                <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Motivo de consulta</label>
+                <textarea name="consultationReason" placeholder="Describe brevemente el motivo de tu visita..." rows="3" class="w-full px-4 py-2.5 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]"></textarea>
+            </div>
+
+            <div class="flex gap-3 pt-2">
+                <button type="button" onclick="irAPasoCalendario()" class="flex-1 py-3 border border-[#e8e4de] rounded-[40px] font-['DM_Sans'] text-[14px] text-[#5f5e5a] hover:bg-[#f7f3ee] transition-colors cursor-pointer">Cancelar</button>
+                <button type="submit" class="flex-1 py-3 bg-[#1d9e75] text-white rounded-[40px] font-['DM_Sans'] font-semibold text-[14px] hover:bg-[#158963] transition-colors cursor-pointer">Generar Cita</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div th:if="${param.success != null}" class="min-h-screen bg-[#f7f3ee] flex flex-col items-center justify-center px-6 pt-[50px]">
+    <div class="bg-white rounded-[24px] p-10 max-w-lg w-full text-center shadow-sm border border-[#e8e4de] animate-fade-in">
+        <div class="w-16 h-16 bg-[#e1f5ee] rounded-full flex items-center justify-center mx-auto mb-6">
+            <span class="text-[32px]">✅</span>
+        </div>
+        <h2 class="font-['Playfair_Display'] font-bold text-[28px] text-[#085041] mb-3">¡Cita Agendada!</h2>
+
+        <p class="font-['DM_Sans'] text-[15px] text-[#5f5e5a] mb-2">
+            Su reserva se ha registrado de forma satisfactoria en nuestro sistema clínico.
+        </p>
+
+        <div class="bg-[#f7f3ee] rounded-[16px] p-5 my-6 text-left space-y-2">
+            <p class="font-['DM_Sans'] text-[14px] text-[#2c2c2a]">⏰ <span class="font-semibold">Recuerda llegar 15 minutos antes</span> de tu cita.</p>
+            <p class="font-['DM_Sans'] text-[14px] text-[#2c2c2a]">💬 Si deseas reprogramar, escríbenos al WhatsApp <a href="https://wa.me/51999999999" class="text-[#1d9e75] font-semibold hover:underline">999 999 999</a></p>
+        </div>
+
+        <a th:href="@{/agendar}" class="block w-full bg-[#1d9e75] text-white text-center font-['DM_Sans'] font-semibold text-[15px] py-3 rounded-[40px] hover:bg-[#158963] transition-colors">
+            Volver a la Agenda
+        </a>
+    </div>
+</div>
+
+<script>
+    function abrirFormularioReserva(hora, medico, color) {
+        // Ocultar sección del calendario, mostrar sección del formulario
+        document.getElementById('paso-calendario').classList.add('hidden');
+        document.getElementById('paso-formulario').classList.remove('hidden');
+
+        // Inyectar datos en los inputs ocultos para el POST
+        document.getElementById('input-time').value = hora;
+        document.getElementById('input-doctor').value = medico;
+
+        // Actualizar interfaz del resumen superior
+        document.getElementById('resumen-hora').textContent = hora;
+        document.getElementById('resumen-vet').textContent = medico;
+        document.getElementById('badge-vet').style.backgroundColor = color;
+    }
+
+    function irAPasoCalendario() {
+        document.getElementById('paso-formulario').classList.add('hidden');
+        document.getElementById('paso-calendario').classList.remove('hidden');
+    }
+
+    // Reutilización del endpoint asíncrono para auto-completar datos si el DNI ya existe
+    function publicDniLookup(dni) {
+        if (dni.trim().length === 8) {
+            fetch('/clientes/api/buscar-dni/' + dni)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.encontrado) {
+                        document.getElementById('clientName').value = data.clientName;
+                        // Enlaza el primer paciente del cliente en el campo de texto
+                        if (data.pets && data.pets.length > 0) {
+                            document.getElementById('patientName').value = data.pets[0];
+                        }
+                    }
+                });
+        }
+    }
+</script>
+</body>
+</html>
