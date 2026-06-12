@@ -136,8 +136,8 @@
                 </h3>
             </div>
             <span class="font-['DM_Sans'] text-[13px] text-[#5f5e5a]"
-                  th:text="${purchases.size() + (purchases.size() == 1 ? ' venta registrada' : ' ventas registradas')}">
-                0 ventas registradas
+                  th:text="|${#lists.size(purchases)} ${#lists.size(purchases) == 1 ? 'venta registrada' : 'ventas registradas'}|">
+                    0 ventas registradas
             </span>
         </div>
 
