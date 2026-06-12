@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud de Adopción - Argos Veterinaria</title>
+    <link th:href="@{/css/tailwind.css}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-[#f7f3ee] font-['DM_Sans'] antialiased">
+
+<div th:replace="~{public/header :: public-header}"></div>
+
+<div class="min-h-screen flex items-center justify-center px-6 pt-[120px] pb-16">
+
+    <div class="bg-white rounded-[24px] p-8 w-full max-w-md relative shadow-sm border border-[#e8e4de]">
+
+        <a th:href="@{/}" class="absolute top-6 right-6 text-[#5f5e5a] hover:text-[#085041] transition-colors" title="Cancelar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </a>
+
+        <h2 class="font-['Playfair_Display'] font-bold text-[28px] text-[#085041] mb-2">
+            Solicitud de Adopción
+        </h2>
+        <p class="font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-6">
+            Quiero adoptar a <span class="font-semibold text-[#085041]" th:text="${petName}">Mascota</span>
+        </p>
+
+        <form th:action="@{/adoptar/enviar}" th:object="${solicitudAdopcion}" method="post" class="space-y-4">
+
+            <input type="hidden" name="petId" th:value="${petId}" />
+            <input type="hidden" name="petName" th:value="${petName}" />
+
+            <div>
+                <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Nombre completo</label>
+                <input type="text" th:field="*{applicantName}" placeholder="Ej: Juan Pérez" class="w-full px-4 py-3 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required />
+            </div>
+
+            <div>
+                <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Correo electrónico</label>
+                <input type="email" th:field="*{email}" placeholder="correo@ejemplo.com" class="w-full px-4 py-3 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required />
+            </div>
+
+            <div>
+                <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Número de contacto</label>
+                <input type="tel" th:field="*{phone}" placeholder="987654321" class="w-full px-4 py-3 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required />
+            </div>
+
+            <div>
+                <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Distrito</label>
+                <input type="text" th:field="*{district}" placeholder="Ej: Santiago de Surco" class="w-full px-4 py-3 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required />
+            </div>
+
+            <button type="submit" class="w-full bg-[#1d9e75] text-white font-['DM_Sans'] font-semibold text-[16px] py-3 rounded-[40px] hover:bg-[#158963] transition-colors mt-6 cursor-pointer shadow-sm">
+                Enviar Solicitud
+            </button>
+        </form>
+    </div>
+</div>
+
+<th:block th:if="${param.success}">
+    <script>
+        alert('¡Solicitud enviada! El equipo de Argos se pondrá en contacto pronto.');
+        window.location.href = '/';
+    </script>
+</th:block>
+
+</body>
+</html>

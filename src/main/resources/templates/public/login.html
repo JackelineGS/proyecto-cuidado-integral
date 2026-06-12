@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Argos</title>
+    <link th:href="@{/css/tailwind.css}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-[#f7f3ee] font-['DM_Sans'] antialiased">
+
+<div th:replace="~{public/header :: public-header}"></div>
+
+<div class="min-h-screen flex items-center justify-center p-4 pt-[100px]">
+
+    <div class="bg-white rounded-[24px] p-8 w-full max-w-md relative shadow-sm border border-[#e8e4de]">
+
+        <a th:href="@{/}" class="absolute top-6 right-6 text-[#5f5e5a] hover:text-[#085041] transition-colors" title="Cerrar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </a>
+
+        <h2 class="font-['Playfair_Display'] font-bold text-[32px] text-[#085041] mb-6">
+            Iniciar Sesión
+        </h2>
+
+        <div th:if="${error != null}" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-[13px] font-['DM_Sans'] mb-4 animate-fade-in">
+            <p th:text="${error}">Error de autenticación.</p>
+        </div>
+
+        <form th:action="@{/login}" method="post" class="space-y-4">
+            <div>
+                <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">
+                    Correo electrónico
+                </label>
+                <input
+                        type="email"
+                        name="email"
+                        th:value="${email}"
+                        class="w-full px-4 py-3 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]"
+                        placeholder="correo@ejemplo.com"
+                        required
+                />
+            </div>
+
+            <div>
+                <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">
+                    Contraseña
+                </label>
+                <input
+                        type="password"
+                        name="password"
+                        class="w-full px-4 py-3 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]"
+                        placeholder="••••••••"
+                        required
+                />
+            </div>
+
+            <button
+                    type="submit"
+                    class="w-full bg-[#1d9e75] text-white font-['DM_Sans'] font-semibold text-[16px] py-3 rounded-[40px] hover:bg-[#158963] transition-colors mt-6 cursor-pointer shadow-sm"
+            >
+                Ingresar
+            </button>
+
+            <p class="text-center text-[#5f5e5a] text-[12px] font-['DM_Sans'] mt-4">
+                Credenciales de prueba: <br/>
+                <strong class="text-[#2c2c2a]">vet@argos.com</strong> / <strong class="text-[#2c2c2a]">123456</strong>
+            </p>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

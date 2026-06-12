@@ -1,641 +1,289 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Veterinaria Argos - La clínica que tu mascota merece</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        serif: ['"Playfair Display"', 'serif'],
-                        sans: ['"DM Sans"', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            green: '#085041',
-                            orange: '#d85a30',
-                            charcoal: '#2e2e2c',
-                            gray: '#5f5e5a',
-                            cream: '#fdfbf7',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        html {
-            scroll-behavior: smooth;
-        }
-    </style>
+    <title>Veterinaria Argos - Cuidado con Amor y Ciencia</title>
+    <link th:href="@{/css/tailwind.css}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body class="bg-brand-cream font-sans text-brand-charcoal antialiased">
-<!-- NAVBAR (HEADER) -->
-<header class="sticky top-0 z-50 bg-brand-cream/80 backdrop-blur-md border-b border-brand-green/10">
-    <nav class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <!-- Logo -->
-        <a href="#" class="flex items-center gap-2">
-            <span class="font-serif text-2xl font-bold text-brand-green tracking-wide">ARGOS</span>
-        </a>
-        <!-- Nav Links -->
-        <div class="hidden md:flex items-center gap-8 font-medium">
-            <a href="#servicios" class="text-brand-gray hover:text-brand-green transition-colors">Servicios</a>
-            <a href="#adopciones" class="text-brand-gray hover:text-brand-green transition-colors">Adopciones</a>
-            <a href="#petshop" class="text-brand-gray hover:text-brand-green transition-colors">Pet Shop</a>
-            <a href="#nosotros" class="text-brand-gray hover:text-brand-green transition-colors">Nosotros</a>
-        </div>
-        <!-- Action Buttons -->
-        <div class="flex items-center gap-4">
-            <!-- Shopping Cart Icon -->
-            <a href="#petshop" class="p-2 text-brand-green hover:bg-brand-green/5 rounded-full transition-all relative">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-                </svg>
-            </a>
+<body class="bg-white font-['DM_Sans'] antialiased">
 
-            <!-- Mi cuenta Button -->
-            <a href="/login" class="flex items-center gap-2 border border-brand-green text-brand-green font-medium px-5 py-2 rounded-full hover:bg-brand-green hover:text-white transition-all duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                </svg>
-                <span>Mi cuenta</span>
-            </a>
-        </div>
-    </nav>
-</header>
-<!-- HERO SECTION -->
-<section class="max-w-7xl mx-auto px-6 py-12 md:py-24 grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
-    <!-- Hero Text -->
-    <div class="md:col-span-7 flex flex-col justify-center">
-        <!-- Badge -->
-        <div class="inline-flex items-center gap-2 bg-[#eaf4f1] text-brand-green font-semibold px-4 py-1.5 rounded-full text-sm w-fit mb-6">
-            <span>🐾</span>
-            <span>Clínica veterinaria, Pet Shop y Adopciones</span>
-        </div>
-        <!-- Title -->
-        <h1 class="font-serif text-5xl md:text-7xl font-bold leading-tight text-brand-green mb-6">
-            La clínica que tu <span class="text-brand-orange">mascota</span> merece
-        </h1>
-        <!-- Description -->
-        <p class="text-brand-gray text-lg md:text-xl leading-relaxed mb-8 max-w-xl">
-            Ofrecemos atención médica del más alto nivel, productos de calidad premium para su cuidado diario, y conectamos animalitos rescatados con familias amorosas. Todo en un solo lugar.
-        </p>
-        <!-- Buttons -->
-        <div class="flex flex-wrap items-center gap-4 mb-12">
-            <a href="#agenda-cita" class="bg-brand-green hover:bg-brand-green/90 text-white font-semibold px-8 py-4 rounded-full transition-all shadow-lg shadow-brand-green/10 hover:translate-y-[-2px]">
-                Agendar Cita
-            </a>
-            <a href="#servicios" class="border border-brand-green text-brand-green hover:bg-brand-green/5 font-semibold px-8 py-4 rounded-full transition-all">
-                Ver servicios
-            </a>
-        </div>
-        <!-- Metrics -->
-        <div class="grid grid-cols-3 gap-6 border-t border-brand-green/10 pt-8">
-            <div>
-                <h4 class="font-serif text-3xl font-bold text-brand-green">12+</h4>
-                <p class="text-sm text-brand-gray">Años de experiencia</p>
+<div th:replace="~{public/header :: public-header}"></div>
+
+<section class="relative bg-[#f7f3ee] pt-[140px] pb-20 overflow-hidden">
+    <div class="max-w-[1728px] mx-auto px-12">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8">
+                <div class="inline-block bg-[#e1f5ee] px-4 py-2 rounded-[40px]">
+                    <p class="font-['DM_Sans'] font-medium text-[12.8px] text-[#085041] tracking-[1.024px]">
+                        🐾 Cuidado con amor y ciencia
+                    </p>
+                </div>
+
+                <h1 class="font-['Playfair_Display'] font-bold text-[64px] leading-[73.6px] text-[#085041]">
+                    La clínica que tu <span class="text-[#d85a30]">mascota</span> merece
+                </h1>
+
+                <p class="font-['DM_Sans'] text-[16.8px] leading-[28.56px] text-[#5f5e5a] max-w-[468px]">
+                    Atención médica especializada, proceso de adopción responsable y todo lo que necesitan en nuestra tienda. Un solo lugar para el bienestar de tu compañero.
+                </p>
+
+                <div class="flex gap-4">
+                    <a th:href="@{/agendar}" class="bg-[#1d9e75] text-white font-['DM_Sans'] font-medium text-[15.2px] px-8 py-4 rounded-[40px] hover:bg-[#158963] transition-colors text-center">
+                        Agendar consulta
+                    </a>
+                    <a href="#servicios" onclick="document.getElementById('servicios').scrollIntoView({ behavior: 'smooth' })" class="border-2 border-[#1d9e75] text-[#1d9e75] font-['DM_Sans'] font-medium text-[15.2px] px-8 py-4 rounded-[40px] hover:bg-[#1d9e75] hover:text-white transition-colors text-center">
+                        Ver servicios
+                    </a>
+                </div>
+
+                <div class="flex gap-8 pt-8">
+                    <div>
+                        <p class="font-['Playfair_Display'] font-bold text-[28.8px] text-[#1d9e75]">12+</p>
+                        <p class="font-['DM_Sans'] text-[12.8px] text-[#5f5e5a]">Años de experiencia</p>
+                    </div>
+                    <div>
+                        <p class="font-['Playfair_Display'] font-bold text-[28.8px] text-[#1d9e75]">3,800+</p>
+                        <p class="font-['DM_Sans'] text-[12.8px] text-[#5f5e5a]">Mascotas atendidas</p>
+                    </div>
+                    <div>
+                        <p class="font-['Playfair_Display'] font-bold text-[28.8px] text-[#1d9e75]">98%</p>
+                        <p class="font-['DM_Sans'] text-[12.8px] text-[#5f5e5a]">Clientes satisfechos</p>
+                    </div>
+                </div>
             </div>
-            <div>
-                <h4 class="font-serif text-3xl font-bold text-brand-green">3,800+</h4>
-                <p class="text-sm text-brand-gray">Mascotas atendidas</p>
-            </div>
-            <div>
-                <h4 class="font-serif text-3xl font-bold text-brand-green">98%</h4>
-                <p class="text-sm text-brand-gray">Clientes satisfechos</p>
+
+            <div class="relative">
+                <div class="rounded-l-[400px] overflow-hidden h-[600px] w-full shadow-sm">
+                    <img th:src="@{/images/hero-veterinarian.png}" alt="Veterinarian" class="w-full h-full object-cover" />
+                </div>
             </div>
         </div>
-    </div>
-    <!-- Hero Image Container -->
-    <div class="md:col-span-5 flex justify-center relative">
-        <div class="w-80 h-80 md:w-[450px] md:h-[450px] rounded-full overflow-hidden border-[8px] border-white shadow-xl relative z-10">
-            <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=800" alt="Mascotas felices" class="w-full h-full object-cover">
-        </div>
-        <!-- Decorative circle backgrounds -->
-        <div class="absolute w-72 h-72 rounded-full bg-brand-orange/10 -top-6 -right-6 filter blur-xl"></div>
-        <div class="absolute w-72 h-72 rounded-full bg-brand-green/5 -bottom-6 -left-6 filter blur-xl"></div>
     </div>
 </section>
-<!-- NOTIFICATION ALERTS -->
-<div class="max-w-4xl mx-auto px-6 mb-8">
-    <!-- Success Alert -->
-    <div th:if="${successMessage}" class="flex items-center gap-3 bg-emerald-50 border border-emerald-200 text-emerald-800 px-6 py-4 rounded-2xl shadow-sm">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-emerald-600 shrink-0">
-            <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
-        </svg>
-        <p class="font-medium" th:text="${successMessage}"></p>
-    </div>
 
-    <!-- Error Alert -->
-    <div th:if="${errorMessage}" class="flex items-center gap-3 bg-rose-50 border border-rose-200 text-rose-800 px-6 py-4 rounded-2xl shadow-sm">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-rose-600 shrink-0">
-            <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clip-rule="evenodd" />
-        </svg>
-        <p class="font-medium" th:text="${errorMessage}"></p>
-    </div>
-</div>
-<!-- SERVICES SECTION -->
-<section id="servicios" class="bg-white py-24 border-y border-brand-green/5">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="text-center max-w-2xl mx-auto mb-16">
-            <h2 class="font-serif text-4xl md:text-5xl font-bold text-brand-green mb-4">Nuestros servicios</h2>
-            <p class="text-brand-gray text-lg">
-                Ofrecemos tres pilares fundamentales para el cuidado de tu compañero de vida, con profesionales de confianza y equipamiento moderno.
+<section id="servicios" class="py-20 bg-white">
+    <div class="max-w-[1728px] mx-auto px-12">
+        <div class="mb-16">
+            <h2 class="font-['Playfair_Display'] font-bold text-[44.8px] leading-[53.76px] text-[#085041] mb-4">Nuestros servicios</h2>
+            <p class="font-['DM_Sans'] text-[16px] leading-[27.2px] text-[#5f5e5a] max-w-[568px]">
+                Tres pilares para el cuidado completo de tu mascota, con profesionales comprometidos y un trato cercano.
             </p>
         </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-7">
+            <div class="bg-[#f7f3ee] rounded-[24px] p-8 flex flex-col justify-between">
+                <div>
+                    <div class="text-[48px] mb-6 select-none">💡</div>
+                    <div class="inline-block bg-[#e1f5ee] px-3 py-1 rounded-[40px] mb-4">
+                        <p class="font-['DM_Sans'] font-semibold text-[11.2px] text-[#085041] tracking-[0.896px]">Atención médica</p>
+                    </div>
+                    <h3 class="font-['Playfair_Display'] font-bold text-[24px] text-[#085041] mb-4">Clínica Veterinaria</h3>
+                    <p class="font-['DM_Sans'] text-[16px] leading-[25.84px] text-[#5f5e5a] mb-6">
+                        Diagnóstico, tratamiento y prevención con equipos modernos y médicos especializados en pequeñas y grandes especies.
+                    </p>
+                    <ul class="space-y-3 mb-8 font-['DM_Sans'] text-[14.08px] text-[#5f5e5a]">
+                        <li>✓ Consultas generales y especialidades</li>
+                        <li>✓ Vacunación y desparasitación</li>
+                        <li>✓ Cirugías y hospitalización</li>
+                    </ul>
+                </div>
+                <a th:href="@{/agendar}" class="bg-white w-full font-['DM_Sans'] font-semibold text-[16px] text-[#085041] px-8 py-3 rounded-[40px] hover:bg-gray-50 transition-colors text-center block">Agendar Cita</a>
+            </div>
+
+            <div class="bg-[#f7f3ee] rounded-[24px] p-8 flex flex-col justify-between">
+                <div>
+                    <div class="text-[48px] mb-6 select-none">🏠</div>
+                    <div class="inline-block bg-[#faece7] px-3 py-1 rounded-[40px] mb-4">
+                        <p class="font-['DM_Sans'] font-semibold text-[11.2px] text-[#712b13] tracking-[0.896px]">Adopciones</p>
+                    </div>
+                    <h3 class="font-['Playfair_Display'] font-bold text-[24px] text-[#085041] mb-4">Dale un Hogar</h3>
+                    <p class="font-['DM_Sans'] text-[16px] leading-[25.84px] text-[#5f5e5a] mb-6">
+                        Conectamos mascotas rescatadas con familias responsables. Cada adopción incluye revisión médica completa y seguimiento.
+                    </p>
+                    <ul class="space-y-3 mb-8 font-['DM_Sans'] text-[14.08px] text-[#5f5e5a]">
+                        <li>✓ Perros y gatos de todas las edades</li>
+                        <li>✓ Mascotas esterilizadas y vacunadas</li>
+                        <li>✓ Proceso de adopción guiado</li>
+                    </ul>
+                </div>
+                <a href="#adopciones" onclick="document.getElementById('adopciones').scrollIntoView({ behavior: 'smooth' })" class="bg-white w-full font-['DM_Sans'] font-semibold text-[16px] text-[#085041] px-8 py-3 rounded-[40px] hover:bg-gray-50 transition-colors text-center block">Ver disponibles</a>
+            </div>
+
+            <div class="bg-[#f7f3ee] rounded-[24px] p-8 flex flex-col justify-between">
+                <div>
+                    <div class="text-[48px] mb-6 select-none">🛒</div>
+                    <div class="inline-block bg-[#eeedfe] px-3 py-1 rounded-[40px] mb-4">
+                        <p class="font-['DM_Sans'] font-semibold text-[11.2px] text-[#3c3489] tracking-[0.896px]">Pet Shop</p>
+                    </div>
+                    <h3 class="font-['Playfair_Display'] font-bold text-[24px] text-[#085041] mb-4">Tienda de Mascotas</h3>
+                    <p class="font-['DM_Sans'] text-[16px] leading-[25.84px] text-[#5f5e5a] mb-6">
+                        Todo lo que tu mascota necesita en un solo lugar: alimentos premium, accesorios, juguetes y productos de higiene.
+                    </p>
+                    <ul class="space-y-3 mb-8 font-['DM_Sans'] text-[14.08px] text-[#5f5e5a]">
+                        <li>✓ Alimentos premium y medicados</li>
+                        <li>✓ Accesorios y juguetes</li>
+                        <li>✓ Productos de higiene y grooming</li>
+                    </ul>
+                </div>
+                <a href="#productos" onclick="document.getElementById('productos').scrollIntoView({ behavior: 'smooth' })" class="bg-white w-full font-['DM_Sans'] font-semibold text-[16px] text-[#085041] px-8 py-3 rounded-[40px] hover:bg-gray-50 transition-colors text-center block">Explorar tienda</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="reservar" class="py-20 bg-[#f7f3ee]">
+    <div class="max-w-[1728px] mx-auto px-12">
+        <div class="mb-12 text-center">
+            <p class="font-['DM_Sans'] font-medium text-[12px] text-[#1d9e75] tracking-[1.2px] mb-2 uppercase">Nuestro equipo médico</p>
+            <h2 class="font-['Playfair_Display'] font-bold text-[44.8px] leading-[53.76px] text-[#085041] mb-4">Agenda tu Cita</h2>
+            <p class="font-['DM_Sans'] text-[16px] leading-[27.2px] text-[#5f5e5a] max-w-[520px] mx-auto">
+                Elige al especialista que mejor se adapte a las necesidades de tu mascota y reserva un horario en minutos.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-10">
+            <div th:each="vet : ${vetsLanding}" class="bg-white rounded-[24px] p-6 border border-[#e8e4de] flex flex-col items-center text-center shadow-sm hover:shadow-md transition-shadow">
+                <div class="w-20 h-20 rounded-full flex items-center justify-center text-white font-['DM_Sans'] font-bold text-[22px] mb-4"
+                     th:style="'background-color: ' + ${vet.color}" th:text="${vet.initials}">
+                    XX
+                </div>
+                <h3 class="font-['DM_Sans'] font-semibold text-[15px] text-[#085041] mb-1" th:text="${vet.name}">Doctor</h3>
+                <p class="font-['DM_Sans'] text-[13px] text-[#5f5e5a] mb-1" th:text="${vet.specialty}">Especialidad</p>
+                <p class="font-['DM_Sans'] text-[12px] text-[#b0aba3] mb-5" th:text="${vet.experience} + ' de experiencia'">0 años</p>
+                <a th:href="@{/agendar}" class="w-full bg-[#1d9e75] text-white text-center font-['DM_Sans'] font-semibold text-[13px] py-2.5 rounded-[40px] hover:bg-[#158963] transition-colors block">Agendar Cita</a>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <a th:href="@{/agendar}" class="inline-flex items-center gap-2 border-2 border-[#1d9e75] text-[#1d9e75] font-['DM_Sans'] font-semibold text-[15px] px-8 py-3 rounded-[40px] hover:bg-[#1d9e75] hover:text-white transition-colors">
+                Ver todos los horarios disponibles
+            </a>
+        </div>
+    </div>
+</section>
+
+<section id="adopciones" class="py-20 bg-[#085041] text-white">
+    <div class="max-w-[1728px] mx-auto px-12">
+        <div class="mb-16">
+            <p class="font-['DM_Sans'] font-medium text-[12px] text-[#9fe1cb] tracking-[1.2px] mb-2">Encuentra tu compañero</p>
+            <h2 class="font-['Playfair_Display'] font-bold text-[44.8px] leading-[53.76px] mb-4">Mascotas en adopción</h2>
+            <p class="font-['DM_Sans'] text-[16px] leading-[27.2px] text-[rgba(255,255,255,0.65)] max-w-[568px]">
+                Estas amiguitas esperan una familia llena de amor. Todas están vacunadas, desparasitadas y con chequeo médico al día.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            <div th:each="pet : ${adoptionPets}" class="bg-[rgba(255,255,255,0.08)] border border-[rgba(255,255,255,0.15)] rounded-[20px] p-5 flex flex-col justify-between">
+                <div>
+                    <div class="bg-gray-700 rounded-[20px] h-[113px] mb-4 overflow-hidden shadow-inner">
+                        <img th:src="@{/images/pets/{name}.png(name=${#strings.toLowerCase(pet.name)})}" th:alt="${pet.name}" class="w-full h-full object-cover" onerror="this.src='/images/default-pet.png'" />
+                    </div>
+                    <h3 class="font-['Playfair_Display'] text-[17.6px] text-center mb-2" th:text="${pet.name}">Mascota</h3>
+                    <p class="font-['DM_Sans'] text-[12.8px] text-[rgba(255,255,255,0.6)] text-center mb-4"
+                       th:text="${pet.breed} + ' · ' + ${pet.age} + ' · ' + ${pet.sex}">
+                        Raza · Edad · Sexo
+                    </p>
+                </div>
+                <a th:href="@{/adoptar(petId=${pet.id})}" class="bg-white w-full text-center text-[#085041] font-['DM_Sans'] font-semibold text-[14px] px-4 py-2.5 rounded-[40px] hover:bg-gray-100 transition-colors block">
+                    Quiero adoptar
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="productos" class="py-20 bg-white">
+    <div class="max-w-[1728px] mx-auto px-12">
+        <div class="mb-16">
+            <p class="font-['DM_Sans'] font-medium text-[12px] text-[#d85a30] tracking-[1.2px] mb-2">Tienda online</p>
+            <h2 class="font-['Playfair_Display'] font-bold text-[44.8px] leading-[53.76px] text-[#085041] mb-4">Pet Shop Argos</h2>
+            <p class="font-['DM_Sans'] text-[16px] leading-[27.2px] text-[#5f5e5a] max-w-[568px]">
+                Productos seleccionados por nuestros veterinarios. Calidad garantizada para la salud y felicidad de tu mascota.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            <div th:each="product : ${products}" class="bg-white rounded-[20px] p-6 border border-[#e8e4de] flex flex-col justify-between">
+                <div>
+                    <div class="text-[40px] mb-4 select-none">🥩</div>
+                    <h3 class="font-['DM_Sans'] font-medium text-[16px] text-[#2c2c2a] mb-2" th:text="${product.name}">Producto</h3>
+                    <p class="font-['DM_Sans'] text-[13.12px] leading-[19.68px] text-[#5f5e5a] mb-4 line-clamp-3" th:text="${product.description}">Descripción...</p>
+                </div>
+                <div class="flex items-center justify-between mt-2 pt-2 border-t border-[#f7f3ee]">
+                    <p class="font-['Playfair_Display'] font-bold text-[19.2px] text-[#1d9e75]"
+                       th:text="'S/ ' + ${#numbers.formatDecimal(product.price, 1, 2, 'POINT')}">S/ 0.00</p>
+                    <a th:href="'https://wa.me/51999999999?text=Hola,%20deseo%20comprar%20el%20producto:%20' + ${product.name}"
+                       target="_blank" class="bg-[#1d9e75] text-white font-['DM_Sans'] font-semibold text-[13px] px-4 py-2 rounded-[40px] hover:bg-[#158963] transition-colors">
+                        Comprar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="nosotros" class="py-20 bg-[#f7f3ee]">
+    <div class="max-w-[1728px] mx-auto px-12">
+        <h2 class="font-['Playfair_Display'] font-bold text-[44.8px] leading-[53.76px] text-[#085041] mb-12 text-center">¿Por qué elegirnos?</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Service Card 1 -->
-            <div class="bg-brand-cream border border-brand-green/5 p-8 rounded-3xl hover:shadow-lg transition-all duration-300">
-                <div class="w-12 h-12 bg-[#eaf4f1] text-brand-green flex items-center justify-center rounded-2xl mb-6 text-xl">
-                    🏥
-                </div>
-                <h3 class="font-serif text-2xl font-bold text-brand-green mb-3">Clínica Veterinaria</h3>
-                <p class="text-brand-gray leading-relaxed mb-6">
-                    Consulta general, especialidades médicas, cirugía interna, vacunas, desparasitación y servicio de diagnóstico digital para la salud integral de tu mascota.
-                </p>
-            </div>
-            <!-- Service Card 2 -->
-            <div class="bg-brand-cream border border-brand-green/5 p-8 rounded-3xl hover:shadow-lg transition-all duration-300">
-                <div class="w-12 h-12 bg-[#fdf2ee] text-brand-orange flex items-center justify-center rounded-2xl mb-6 text-xl">
-                    🛒
-                </div>
-                <h3 class="font-serif text-2xl font-bold text-brand-green mb-3">Tienda de Mascotas</h3>
-                <p class="text-brand-gray leading-relaxed mb-6">
-                    Una selección exclusiva de comida súper premium, accesorios seguros, juguetes interactivos de estimulación y productos de higiene recomendados por veterinarios.
-                </p>
-            </div>
-            <!-- Service Card 3 -->
-            <div class="bg-brand-cream border border-brand-green/5 p-8 rounded-3xl hover:shadow-lg transition-all duration-300">
-                <div class="w-12 h-12 bg-[#eaf4f1] text-brand-green flex items-center justify-center rounded-2xl mb-6 text-xl">
-                    ❤️
-                </div>
-                <h3 class="font-serif text-2xl font-bold text-brand-green mb-3">Adopción Responsable</h3>
-                <p class="text-brand-gray leading-relaxed mb-6">
-                    Apoyamos activamente el rescate animal en Lima. Evaluamos y preparamos a mascotas desamparadas para ser entregadas vacunadas y esterilizadas a familias amorosas.
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- ADOPTIONS SECTION -->
-<section id="adopciones" class="py-24">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="text-center max-w-2xl mx-auto mb-16">
-            <h2 class="font-serif text-4xl md:text-5xl font-bold text-brand-green mb-4">Encuentra a tu compañero</h2>
-            <p class="text-brand-gray text-lg">
-                Estos pequeños esperan un hogar lleno de amor. Todos se entregan vacunados, desparasitados y esterilizados.
-            </p>
-        </div>
-        <!-- Pets Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div th:if="${#lists.isEmpty(mascotas)}" class="col-span-full text-center py-12 bg-white rounded-3xl border border-brand-green/5">
-                <p class="text-brand-gray text-lg font-medium">Por el momento no hay mascotas en adopción. ¡Vuelve pronto!</p>
-            </div>
-            <!-- Pet Card loop -->
-            <div th:each="mascota : ${mascotas}" class="bg-white border border-brand-green/5 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
-                <div class="h-64 bg-stone-100 relative">
-                    <img th:src="${mascota.especie == 'PERRO' ? 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=400' : 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=400'}" alt="Mascota en adopción" class="w-full h-full object-cover">
-                    <span class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3.5 py-1 rounded-full text-xs font-semibold text-brand-green" th:text="${mascota.sexo == 'M' ? 'Macho' : 'Hembra'}">Macho</span>
-                </div>
-                <div class="p-6">
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-serif text-2xl font-bold text-brand-green" th:text="${mascota.nombre}">Nombre</h3>
-                        <span class="text-sm font-semibold text-brand-orange bg-brand-orange/10 px-3 py-1 rounded-full" th:text="${mascota.raza}">Raza</span>
-                    </div>
-                    <p class="text-brand-gray text-sm mb-6" th:text="${mascota.edad + ' años de edad'}">Edad</p>
-
-                    <button class="w-full bg-[#eaf4f1] hover:bg-brand-green hover:text-white text-brand-green font-semibold py-3 rounded-2xl transition-all text-center">
-                        Solicitar Adopción
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- PET SHOP SECTION -->
-<section id="petshop" class="bg-white py-24 border-y border-brand-green/5">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="text-center max-w-2xl mx-auto mb-16">
-            <h2 class="font-serif text-4xl md:text-5xl font-bold text-brand-green mb-4">Tienda online</h2>
-            <p class="text-brand-gray text-lg">
-                Productos premium recomendados por veterinarios para garantizar la salud y felicidad de tu mascota.
-            </p>
-        </div>
-        <!-- Products Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div th:if="${#lists.isEmpty(productos)}" class="col-span-full text-center py-12 bg-brand-cream rounded-3xl border border-brand-green/5">
-                <p class="text-brand-gray text-lg font-medium">No hay productos en stock actualmente. ¡Visítanos luego!</p>
-            </div>
-            <!-- Product Card loop -->
-            <div th:each="producto : ${productos}" class="bg-brand-cream border border-brand-green/5 rounded-3xl p-6 flex flex-col justify-between hover:shadow-md transition-all duration-300">
-                <div>
-                    <div class="h-48 bg-white rounded-2xl mb-4 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&q=80&w=300" alt="Producto" class="w-full h-full object-cover">
-                    </div>
-                    <h3 class="font-serif text-lg font-bold text-brand-green mb-2" th:text="${producto.nombre}">Nombre de producto</h3>
-                    <p class="text-brand-gray text-sm mb-4 line-clamp-2" th:text="${producto.descripcion}">Descripción corta...</p>
-                </div>
-                <div>
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="font-serif text-xl font-bold text-brand-green" th:text="${'S/ ' + producto.precio}">S/ 0.00</span>
-                        <span class="text-xs text-brand-gray" th:text="${producto.stock + ' disp.'}">stock</span>
-                    </div>
-                    <button class="w-full bg-brand-green hover:bg-brand-green/90 text-white font-semibold py-2.5 rounded-xl transition-all flex items-center justify-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                        </svg>
-                        <span>Agregar</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- INTERACTIVE APPOINTMENT SECTION -->
-<section id="agenda-cita" class="py-24 bg-brand-cream">
-    <div class="max-w-7xl mx-auto px-6">
-
-        <!-- VISTA 1: NUESTRO EQUIPO MÉDICO (SELECCIÓN DE DOCTOR) -->
-        <div id="vista-doctores" class="transition-opacity duration-300">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="text-brand-green text-sm font-bold tracking-wider uppercase">Nuestro Equipo Médico</span>
-                <h2 class="font-serif text-4xl md:text-5xl font-bold text-brand-green mt-2 mb-4">Agenda tu Cita</h2>
-                <p class="text-brand-gray text-lg">
-                    Elige al especialista que mejor se adapte a las necesidades de tu mascota y reserva un horario en minutos.
-                </p>
-            </div>
-            <!-- Doctors Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
-                <!-- Dr. Rodríguez -->
-                <div class="bg-white border border-brand-green/5 rounded-3xl p-6 text-center flex flex-col items-center justify-between shadow-sm hover:shadow-md transition-all duration-300">
-                    <div class="flex flex-col items-center">
-                        <div class="w-20 h-20 rounded-full bg-[#1ea57d] text-white flex items-center justify-center text-2xl font-bold mb-4 font-serif">
-                            RR
-                        </div>
-                        <h3 class="font-bold text-brand-green text-lg">Dr. Rodríguez</h3>
-                        <p class="text-xs text-brand-gray mt-1">Medicina General</p>
-                        <p class="text-[11px] text-brand-gray/80 mt-1">10 años de experiencia</p>
-                    </div>
-                    <button onclick="seleccionarDoctor('Dr. Rodríguez', 1)" class="w-full mt-6 bg-[#1ea57d] hover:bg-[#1a936f] text-white text-sm font-semibold py-3 rounded-full transition-all">
-                        Agendar Cita
-                    </button>
-                </div>
-                <!-- Dra. Silva -->
-                <div class="bg-white border border-brand-green/5 rounded-3xl p-6 text-center flex flex-col items-center justify-between shadow-sm hover:shadow-md transition-all duration-300">
-                    <div class="flex flex-col items-center">
-                        <div class="w-20 h-20 rounded-full bg-[#085041] text-white flex items-center justify-center text-2xl font-bold mb-4 font-serif">
-                            SS
-                        </div>
-                        <h3 class="font-bold text-brand-green text-lg">Dra. Silva</h3>
-                        <p class="text-xs text-brand-gray mt-1">Cirugía</p>
-                        <p class="text-[11px] text-brand-gray/80 mt-1">8 años de experiencia</p>
-                    </div>
-                    <button onclick="seleccionarDoctor('Dra. Silva', 2)" class="w-full mt-6 bg-[#085041] hover:bg-[#063f33] text-white text-sm font-semibold py-3 rounded-full transition-all">
-                        Agendar Cita
-                    </button>
-                </div>
-                <!-- Dr. Mendoza -->
-                <div class="bg-white border border-brand-green/5 rounded-3xl p-6 text-center flex flex-col items-center justify-between shadow-sm hover:shadow-md transition-all duration-300">
-                    <div class="flex flex-col items-center">
-                        <div class="w-20 h-20 rounded-full bg-[#d85a30] text-white flex items-center justify-center text-2xl font-bold mb-4 font-serif">
-                            MM
-                        </div>
-                        <h3 class="font-bold text-brand-green text-lg">Dr. Mendoza</h3>
-                        <p class="text-xs text-brand-gray mt-1">Dermatología</p>
-                        <p class="text-[11px] text-brand-gray/80 mt-1">6 años de experiencia</p>
-                    </div>
-                    <button onclick="seleccionarDoctor('Dr. Mendoza', 3)" class="w-full mt-6 bg-[#d85a30] hover:bg-[#c3512b] text-white text-sm font-semibold py-3 rounded-full transition-all">
-                        Agendar Cita
-                    </button>
-                </div>
-                <!-- Dra. Torres -->
-                <div class="bg-white border border-brand-green/5 rounded-3xl p-6 text-center flex flex-col items-center justify-between shadow-sm hover:shadow-md transition-all duration-300">
-                    <div class="flex flex-col items-center">
-                        <div class="w-20 h-20 rounded-full bg-[#7b51db] text-white flex items-center justify-center text-2xl font-bold mb-4 font-serif">
-                            TT
-                        </div>
-                        <h3 class="font-bold text-brand-green text-lg">Dra. Torres</h3>
-                        <p class="text-xs text-brand-gray mt-1">Odontología</p>
-                        <p class="text-[11px] text-brand-gray/80 mt-1">9 años de experiencia</p>
-                    </div>
-                    <button onclick="seleccionarDoctor('Dra. Torres', 4)" class="w-full mt-6 bg-[#7b51db] hover:bg-[#6841be] text-white text-sm font-semibold py-3 rounded-full transition-all">
-                        Agendar Cita
-                    </button>
-                </div>
-                <!-- Dr. Vargas -->
-                <div class="bg-white border border-brand-green/5 rounded-3xl p-6 text-center flex flex-col items-center justify-between shadow-sm hover:shadow-md transition-all duration-300">
-                    <div class="flex flex-col items-center">
-                        <div class="w-20 h-20 rounded-full bg-[#1e62ec] text-white flex items-center justify-center text-2xl font-bold mb-4 font-serif">
-                            VV
-                        </div>
-                        <h3 class="font-bold text-brand-green text-lg">Dr. Vargas</h3>
-                        <p class="text-xs text-brand-gray mt-1">Cardiología</p>
-                        <p class="text-[11px] text-brand-gray/80 mt-1">12 años de experiencia</p>
-                    </div>
-                    <button onclick="seleccionarDoctor('Dr. Vargas', 5)" class="w-full mt-6 bg-[#1e62ec] hover:bg-[#1953c8] text-white text-sm font-semibold py-3 rounded-full transition-all">
-                        Agendar Cita
-                    </button>
-                </div>
-            </div>
-            <!-- View all schedules button -->
             <div class="text-center">
-                <button onclick="abrirCalendarioCompleto()" class="border-2 border-brand-green text-brand-green hover:bg-brand-green hover:text-white font-bold px-8 py-4 rounded-full transition-all duration-300 shadow-md">
-                    Ver todos los horarios disponibles
-                </button>
+                <div class="text-[48px] mb-4 select-none">⚕️</div>
+                <h3 class="font-['Playfair_Display'] font-bold text-[24px] text-[#085041] mb-2">Profesionales Certificados</h3>
+                <p class="font-['DM_Sans'] text-[14px] text-[#5f5e5a]">Equipo de veterinarios con especialidades y años de experiencia</p>
             </div>
-        </div>
-        <!-- VISTA 2: CALENDARIO DE HORARIOS DISPONIBLES (GRILLA COMPLETA) -->
-        <div id="vista-horarios" class="hidden transition-opacity duration-300">
-            <!-- Back header link -->
-            <div class="flex items-center justify-between mb-8">
-                <button onclick="volverAInicioDoctores()" class="flex items-center gap-2 text-brand-green font-bold hover:text-brand-green/80 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-                    </svg>
-                    <span>Volver al inicio</span>
-                </button>
-                <h2 class="font-serif text-3xl font-bold text-brand-green">Agenda tu Cita</h2>
+            <div class="text-center">
+                <div class="text-[48px] mb-4 select-none">🏥</div>
+                <h3 class="font-['Playfair_Display'] font-bold text-[24px] text-[#085041] mb-2">Instalaciones Modernas</h3>
+                <p class="font-['DM_Sans'] text-[14px] text-[#5f5e5a]">Equipamiento de última generación para diagnóstico y tratamiento</p>
             </div>
-            <!-- Date Navigation Bar -->
-            <div class="bg-white border border-brand-green/5 rounded-3xl p-6 shadow-sm mb-8">
-                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-stone-100 pb-4 mb-4">
-                    <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-6 h-6 text-brand-green">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-                        </svg>
-                        <span class="font-serif text-lg font-bold text-brand-green" id="fecha-seleccionada-texto">Jue, 11 de Junio 2026</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <input type="date" value="2026-06-11" id="agenda-date-picker" onchange="actualizarFechaAgenda(this.value)" class="border border-stone-200 rounded-xl px-3 py-1.5 focus:outline-none focus:border-brand-green text-sm">
-                    </div>
-                </div>
-                <!-- Days Horizontal List -->
-                <div class="flex items-center justify-between px-2">
-                    <button class="p-1 hover:bg-stone-100 rounded-full text-brand-gray">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-                        </svg>
-                    </button>
-                    <div class="flex gap-4 sm:gap-8 overflow-x-auto py-1">
-                        <div onclick="seleccionarDia(8, 'Lun')" class="flex flex-col items-center cursor-pointer px-3 py-1 rounded-xl text-brand-gray hover:bg-stone-50">
-                            <span class="text-xs">Lun</span>
-                            <span class="font-bold text-lg">8</span>
-                        </div>
-                        <div onclick="seleccionarDia(9, 'Mar')" class="flex flex-col items-center cursor-pointer px-3 py-1 rounded-xl text-brand-gray hover:bg-stone-50">
-                            <span class="text-xs">Mar</span>
-                            <span class="font-bold text-lg">9</span>
-                        </div>
-                        <div onclick="seleccionarDia(10, 'Mié')" class="flex flex-col items-center cursor-pointer px-3 py-1 rounded-xl text-brand-gray hover:bg-stone-50">
-                            <span class="text-xs">Mié</span>
-                            <span class="font-bold text-lg">10</span>
-                        </div>
-                        <div onclick="seleccionarDia(11, 'Jue')" class="flex flex-col items-center cursor-pointer px-3.5 py-1.5 rounded-xl bg-brand-green text-white shadow-sm">
-                            <span class="text-xs">Jue</span>
-                            <span class="font-bold text-lg">11</span>
-                        </div>
-                        <div onclick="seleccionarDia(12, 'Vie')" class="flex flex-col items-center cursor-pointer px-3 py-1 rounded-xl text-brand-gray hover:bg-stone-50">
-                            <span class="text-xs">Vie</span>
-                            <span class="font-bold text-lg">12</span>
-                        </div>
-                        <div onclick="seleccionarDia(13, 'Sáb')" class="flex flex-col items-center cursor-pointer px-3 py-1 rounded-xl text-brand-gray hover:bg-stone-50">
-                            <span class="text-xs">Sáb</span>
-                            <span class="font-bold text-lg">13</span>
-                        </div>
-                        <div onclick="seleccionarDia(14, 'Dom')" class="flex flex-col items-center cursor-pointer px-3 py-1 rounded-xl text-brand-gray hover:bg-stone-50">
-                            <span class="text-xs">Dom</span>
-                            <span class="font-bold text-lg">14</span>
-                        </div>
-                    </div>
-                    <button class="p-1 hover:bg-stone-100 rounded-full text-brand-gray">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            <!-- Schedule Table Grid -->
-            <div class="bg-white border border-brand-green/5 rounded-3xl overflow-hidden shadow-sm">
-                <div class="overflow-x-auto">
-                    <table class="w-full min-w-[900px] border-collapse">
-                        <thead>
-                        <tr class="bg-stone-50 border-b border-stone-100">
-                            <th class="py-5 px-6 text-left font-semibold text-brand-green text-sm w-32">Hora</th>
-
-                            <!-- Dr. Rodríguez Column Header -->
-                            <th class="py-5 px-4 text-center border-l border-stone-100 column-dr-rodriguez">
-                                <div class="flex flex-col items-center">
-                                    <div class="w-12 h-12 rounded-full bg-[#1ea57d] text-white flex items-center justify-center text-sm font-bold mb-2 font-serif">
-                                        RR
-                                    </div>
-                                    <span class="font-bold text-brand-green text-sm">Dr. Rodríguez</span>
-                                    <span class="text-[10px] text-brand-gray">Medicina General</span>
-                                </div>
-                            </th>
-                            <!-- Dra. Silva Column Header -->
-                            <th class="py-5 px-4 text-center border-l border-stone-100 column-dra-silva">
-                                <div class="flex flex-col items-center">
-                                    <div class="w-12 h-12 rounded-full bg-[#085041] text-white flex items-center justify-center text-sm font-bold mb-2 font-serif">
-                                        SS
-                                    </div>
-                                    <span class="font-bold text-brand-green text-sm">Dra. Silva</span>
-                                    <span class="text-[10px] text-brand-gray">Cirugía</span>
-                                </div>
-                            </th>
-                            <!-- Dr. Mendoza Column Header -->
-                            <th class="py-5 px-4 text-center border-l border-stone-100 column-dr-mendoza">
-                                <div class="flex flex-col items-center">
-                                    <div class="w-12 h-12 rounded-full bg-[#d85a30] text-white flex items-center justify-center text-sm font-bold mb-2 font-serif">
-                                        MM
-                                    </div>
-                                    <span class="font-bold text-brand-green text-sm">Dr. Mendoza</span>
-                                    <span class="text-[10px] text-brand-gray">Dermatología</span>
-                                </div>
-                            </th>
-                            <!-- Dra. Torres Column Header -->
-                            <th class="py-5 px-4 text-center border-l border-stone-100 column-dra-torres">
-                                <div class="flex flex-col items-center">
-                                    <div class="w-12 h-12 rounded-full bg-[#7b51db] text-white flex items-center justify-center text-sm font-bold mb-2 font-serif">
-                                        TT
-                                    </div>
-                                    <span class="font-bold text-brand-green text-sm">Dra. Torres</span>
-                                    <span class="text-[10px] text-brand-gray">Odontología</span>
-                                </div>
-                            </th>
-                            <!-- Dr. Vargas Column Header -->
-                            <th class="py-5 px-4 text-center border-l border-stone-100 column-dr-vargas">
-                                <div class="flex flex-col items-center">
-                                    <div class="w-12 h-12 rounded-full bg-[#1e62ec] text-white flex items-center justify-center text-sm font-bold mb-2 font-serif">
-                                        VV
-                                    </div>
-                                    <span class="font-bold text-brand-green text-sm">Dr. Vargas</span>
-                                    <span class="text-[10px] text-brand-gray">Cardiología</span>
-                                </div>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody class="divide-y divide-stone-100 text-sm">
-                        <!-- Loops over each hour and sets schedule button -->
-                        <tr th:each="horaStr : ${#arguments != null ? {'09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00'} : {'09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00'}}">
-                            <td class="py-4 px-6 font-bold text-brand-green" th:text="${horaStr}">09:00</td>
-
-                            <!-- Dr. Rodríguez Row Cell -->
-                            <td class="py-3 px-4 text-center border-l border-stone-50 column-dr-rodriguez">
-                                <button th:onclick="abrirModalBooking('Dr. Rodríguez', 1, [[${horaStr}]])" class="w-full bg-[#1ea57d] hover:bg-[#1a936f] text-white font-semibold py-2 rounded-xl transition-all shadow-sm">
-                                    Agendar
-                                </button>
-                            </td>
-                            <!-- Dra. Silva Row Cell -->
-                            <td class="py-3 px-4 text-center border-l border-stone-50 column-dra-silva">
-                                <button th:onclick="abrirModalBooking('Dra. Silva', 2, [[${horaStr}]])" class="w-full bg-[#085041] hover:bg-[#063f33] text-white font-semibold py-2 rounded-xl transition-all shadow-sm">
-                                    Agendar
-                                </button>
-                            </td>
-                            <!-- Dr. Mendoza Row Cell -->
-                            <td class="py-3 px-4 text-center border-l border-stone-50 column-dr-mendoza">
-                                <button th:onclick="abrirModalBooking('Dr. Mendoza', 3, [[${horaStr}]])" class="w-full bg-[#d85a30] hover:bg-[#c3512b] text-white font-semibold py-2 rounded-xl transition-all shadow-sm">
-                                    Agendar
-                                </button>
-                            </td>
-                            <!-- Dra. Torres Row Cell -->
-                            <td class="py-3 px-4 text-center border-l border-stone-50 column-dra-torres">
-                                <button th:onclick="abrirModalBooking('Dra. Torres', 4, [[${horaStr}]])" class="w-full bg-[#7b51db] hover:bg-[#6841be] text-white font-semibold py-2 rounded-xl transition-all shadow-sm">
-                                    Agendar
-                                </button>
-                            </td>
-                            <!-- Dr. Vargas Row Cell -->
-                            <td class="py-3 px-4 text-center border-l border-stone-50 column-dr-vargas">
-                                <button th:onclick="abrirModalBooking('Dr. Vargas', 5, [[${horaStr}]])" class="w-full bg-[#1e62ec] hover:bg-[#1953c8] text-white font-semibold py-2 rounded-xl transition-all shadow-sm">
-                                    Agendar
-                                </button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="text-center">
+                <div class="text-[48px] mb-4 select-none">💚</div>
+                <h3 class="font-['Playfair_Display'] font-bold text-[24px] text-[#085041] mb-2">Atención Personalizada</h3>
+                <p class="font-['DM_Sans'] text-[14px] text-[#5f5e5a]">Cada mascota recibe el cuidado y seguimiento que merece</p>
             </div>
         </div>
     </div>
 </section>
-<!-- BOOKING CONFIRMATION MODAL -->
-<div id="booking-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-brand-charcoal/50 backdrop-blur-sm hidden transition-all">
-    <div class="bg-white border border-brand-green/5 rounded-3xl shadow-2xl max-w-xl w-full p-8 md:p-10 relative overflow-hidden transform scale-95 transition-transform duration-300" id="booking-modal-content">
-        <!-- Close Button -->
-        <button onclick="cerrarModalBooking()" class="absolute top-6 right-6 p-1.5 text-brand-gray hover:bg-stone-100 rounded-full transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-            </svg>
-        </button>
-        <div class="mb-6">
-            <h3 class="font-serif text-2xl font-bold text-brand-green mb-1">Confirmar Cita Médica</h3>
-            <p class="text-sm text-brand-gray">
-                Completa la información para reservar con el <span id="modal-doctor-name" class="font-bold text-brand-green">Dr.</span> el <span id="modal-fecha-texto" class="font-bold text-brand-green">Jueves 11 de Junio</span> a las <span id="modal-hora-texto" class="font-bold text-brand-green">10:00 AM</span>.
-            </p>
-        </div>
-        <!-- Booking Form -->
-        <form th:action="@{/agendar}" th:object="${citaForm}" method="post" class="space-y-4">
-            <!-- Hidden inputs populated dynamically via JS -->
-            <input type="hidden" th:field="*{idVeterinario}" id="modal-input-vet-id">
-            <input type="hidden" th:field="*{fecha}" id="modal-input-fecha">
-            <input type="hidden" th:field="*{hora}" id="modal-input-hora">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <!-- Client Name -->
-                <div>
-                    <label for="modal-nombreCliente" class="block text-xs font-semibold text-brand-green mb-1">Nombre completo del dueño</label>
-                    <input type="text" th:field="*{nombreCliente}" id="modal-nombreCliente" required placeholder="E.g., Juan Pérez"
-                           class="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:border-brand-green text-sm bg-brand-cream/30">
-                </div>
-                <!-- Client DNI -->
-                <div>
-                    <label for="modal-dniCliente" class="block text-xs font-semibold text-brand-green mb-1">Número de DNI</label>
-                    <input type="number" th:field="*{dniCliente}" id="modal-dniCliente" required placeholder="8 dígitos"
-                           class="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:border-brand-green text-sm bg-brand-cream/30">
-                </div>
-                <!-- Client Email -->
-                <div>
-                    <label for="modal-correoCliente" class="block text-xs font-semibold text-brand-green mb-1">Correo electrónico</label>
-                    <input type="email" th:field="*{correoCliente}" id="modal-correoCliente" required placeholder="juan@ejemplo.com"
-                           class="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:border-brand-green text-sm bg-brand-cream/30">
-                </div>
-                <!-- Client Phone -->
-                <div>
-                    <label for="modal-celularCliente" class="block text-xs font-semibold text-brand-green mb-1">Celular de contacto</label>
-                    <input type="tel" th:field="*{celularCliente}" id="modal-celularCliente" required placeholder="987654321"
-                           class="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:border-brand-green text-sm bg-brand-cream/30">
-                </div>
-                <!-- Pet Name -->
-                <div>
-                    <label for="modal-nombreMascota" class="block text-xs font-semibold text-brand-green mb-1">Nombre de la mascota</label>
-                    <input type="text" th:field="*{nombreMascota}" id="modal-nombreMascota" required placeholder="E.g., Toby"
-                           class="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:border-brand-green text-sm bg-brand-cream/30">
-                </div>
-                <!-- Pet Species -->
-                <div>
-                    <label for="modal-especieMascota" class="block text-xs font-semibold text-brand-green mb-1">Especie</label>
-                    <select th:field="*{especieMascota}" id="modal-especieMascota" required
-                            class="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:border-brand-green text-sm bg-brand-cream/30">
-                        <option value="PERRO">Perro (Canino)</option>
-                        <option value="GATO">Gato (Felino)</option>
-                    </select>
-                </div>
-                <!-- Consulta Reason -->
-                <div class="sm:col-span-2">
-                    <label for="modal-motivoConsulta" class="block text-xs font-semibold text-brand-green mb-1">Motivo de consulta</label>
-                    <textarea th:field="*{motivoConsulta}" id="modal-motivoConsulta" rows="2" required placeholder="Describa el motivo o síntomas de la mascota..."
-                              class="w-full px-4 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:border-brand-green text-sm bg-brand-cream/30"></textarea>
-                </div>
-            </div>
-            <!-- Action Buttons -->
-            <div class="flex items-center justify-end gap-3 pt-4 border-t border-stone-100">
-                <button type="button" onclick="cerrarModalBooking()" class="px-5 py-2.5 border border-stone-200 text-brand-gray font-medium rounded-xl hover:bg-stone-50 transition-colors text-sm">
-                    Cancelar
-                </button>
-                <button type="submit" class="px-6 py-2.5 bg-brand-orange hover:bg-brand-orange/90 text-white font-semibold rounded-xl transition-all shadow-md text-sm">
-                    Reservar Cita
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-<!-- FOOTER -->
-<footer id="nosotros" class="bg-brand-green text-white py-16 border-t border-white/5">
-    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
-        <!-- Brand -->
-        <div class="md:col-span-2">
-            <h3 class="font-serif text-3xl font-bold mb-4 tracking-wide">ARGOS</h3>
-            <p class="text-[#eaf4f1] text-sm leading-relaxed max-w-sm mb-6">
-                Años cuidando lo que más quieres. Una clínica veterinaria integral dedicada al cuidado de la salud animal con tecnología médica avanzada y mucho amor por los animales.
-            </p>
-            <span class="text-[#eaf4f1] text-xs">Lima, Perú</span>
-        </div>
-        <!-- Services QuickLinks -->
-        <div>
-            <h4 class="font-semibold text-[#fdf2ee] mb-4">Nuestros Servicios</h4>
-            <ul class="space-y-2 text-[#eaf4f1] text-sm">
-                <li>Consultas médicas</li>
-                <li>Cirugía y Hospitalización</li>
-                <li>Triaje y Vacunación</li>
-                <li>Pet Shop & Farmacia</li>
-            </ul>
-        </div>
-        <!-- Contact / Schedule -->
-        <div>
-            <h4 class="font-semibold text-[#fdf2ee] mb-4">Horario de Atención</h4>
-            <p class="text-[#eaf4f1] text-sm mb-2">Lunes a Sábado: 8:00 AM - 8:00 PM</p>
-            <p class="text-[#eaf4f1] text-sm mb-6">Domingos: Cerrado</p>
 
-            <h4 class="font-semibold text-[#fdf2ee] mb-2">Línea de Emergencias</h4>
-            <p class="text-brand-orange text-lg font-bold">999-000-111</p>
+<footer class="bg-[#085041] text-white py-12">
+    <div class="max-w-[1728px] mx-auto px-12">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+            <div>
+                <h3 class="font-['Playfair_Display'] font-bold text-[24px] mb-4">ARGOS</h3>
+                <p class="font-['DM_Sans'] text-[14px] text-[rgba(255,255,255,0.7)]">Cuidado veterinario con amor y ciencia desde 2014</p>
+            </div>
+            <div>
+                <h4 class="font-['DM_Sans'] font-semibold text-[16px] mb-4">Servicios</h4>
+                <ul class="space-y-2 font-['DM_Sans'] text-[14px] text-[rgba(255,255,255,0.7)]">
+                    <li>Clínica Veterinaria</li>
+                    <li>Adopciones</li>
+                    <li>Pet Shop</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-['DM_Sans'] font-semibold text-[16px] mb-4">Contacto</h4>
+                <ul class="space-y-2 font-['DM_Sans'] text-[14px] text-[rgba(255,255,255,0.7)]">
+                    <li>contacto@argos.com</li>
+                    <li>(01) 234-5678</li>
+                    <li>Av. Principal 123, Lima</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-['DM_Sans'] font-semibold text-[16px] mb-4">Horarios</h4>
+                <ul class="space-y-2 font-['DM_Sans'] text-[14px] text-[rgba(255,255,255,0.7)]">
+                    <li>Lunes - Viernes: 8am - 8pm</li>
+                    <li>Sábados: 9am - 6pm</li>
+                    <li>Domingos: 10am - 2pm</li>
+                </ul>
+            </div>
         </div>
-    </div>
-    <div class="max-w-7xl mx-auto px-6 border-t border-white/10 mt-12 pt-8 text-center text-xs text-[#eaf4f1]">
-        <p>&copy; 2026 Veterinaria Argos. Todos los derechos reservados.</p>
+        <div class="border-t border-[rgba(255,255,255,0.2)] pt-8 text-center">
+            <p class="font-['DM_Sans'] text-[14px] text-[rgba(255,255,255,0.7)]">© 2026 Veterinaria Argos. Todos los derechos reservados.</p>
+        </div>
     </div>
 </footer>
+
+</body>
+</html>

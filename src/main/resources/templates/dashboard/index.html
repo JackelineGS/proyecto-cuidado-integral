@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: layout(~{::main}, 'dashboard', 'Dashboard')}">
+<head>
+    <title>Dashboard - Argos Veterinaria</title>
+</head>
+<body>
+
+<main class="space-y-6">
+
+    <!-- Bloque Superior: Citas y Solicitudes -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        <!-- Tarjeta: Citas de Hoy -->
+        <div class="bg-white rounded-[20px] p-6 border border-[#e8e4de]">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-['Playfair_Display'] font-bold text-[24px] text-[#085041]">
+                    Citas de Hoy
+                </h3>
+                <div class="bg-[#e1f5ee] text-[#085041] font-['DM_Sans'] font-bold text-[20px] w-12 h-12 rounded-full flex items-center justify-center"
+                     th:text="${todayAppointments.size()}">
+                    0
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <!-- Condicional: Si no hay citas -->
+                <p th:if="${#lists.isEmpty(todayAppointments)}" class="font-['DM_Sans'] text-[14px] text-[#5f5e5a]">
+                    No hay citas programadas para hoy
+                </p>
+
+                <!-- Bucle: Lista de Citas -->
+                <div th:unless="${#lists.isEmpty(todayAppointments)}"
+                     th:each="apt : ${todayAppointments}"
+                     class="bg-[#f7f3ee] rounded-[12px] p-4">
+                    <div class="flex items-start justify-between">
+                        <div class="flex-1">
+                            <p class="font-['DM_Sans'] font-semibold text-[16px] text-[#085041]"
+                               th:text="${apt.time + ' - ' + apt.patientName}">
+                                09:00 AM - Firulais
+                            </p>
+                            <p class="font-['DM_Sans'] text-[14px] text-[#5f5e5a] mt-1">
+                                Dueño: <span th:text="${apt.clientName}">Juan Pérez</span>
+                            </p>
+                            <p class="font-['DM_Sans'] text-[14px] text-[#5f5e5a]">
+                                Doctor: <span th:text="${apt.doctor}">Dr. Silva</span>
+                            </p>
+                            <p th:if="${apt.consultationReason != null}"
+                               class="font-['DM_Sans'] text-[12px] text-[#5f5e5a] mt-2 italic"
+                               th:text="${'Motivo: ' + apt.consultationReason}">
+                                Motivo: Chequeo general
+                            </p>
+                        </div>
+                        <!-- Icon: Calendar -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#1d9e75]"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta: Solicitudes de Adopción -->
+        <div class="bg-white rounded-[20px] p-6 border border-[#e8e4de]">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-['Playfair_Display'] font-bold text-[24px] text-[#085041]">
+                    Solicitudes de Adopción
+                </h3>
+                <div th:if="${unreadRequestsCount > 0}"
+                     class="bg-[#d85a30] text-white font-['DM_Sans'] font-bold text-[14px] w-8 h-8 rounded-full flex items-center justify-center"
+                     th:text="${unreadRequestsCount}">
+                    0
+                </div>
+            </div>
+
+            <div class="space-y-3 max-h-[500px] overflow-auto">
+                <p th:if="${#lists.isEmpty(adoptionRequests)}" class="font-['DM_Sans'] text-[14px] text-[#5f5e5a]">
+                    No hay solicitudes de adopción
+                </p>
+
+                <!-- Formulario/Enlace para simular el click y marcar como leído -->
+                <div th:unless="${#lists.isEmpty(adoptionRequests)}"
+                     th:each="request : ${adoptionRequests}"
+                     th:classappend="${request.read} ? 'bg-[#f7f3ee]' : 'bg-[#faece7]'"
+                     class="rounded-[12px] p-4 cursor-pointer transition-colors selector-solicitud"
+                     th:data-id="${request.id}"
+                     onclick="marcarComoLeido(this.getAttribute('data-id'))">
+
+                    <div class="flex items-start gap-3">
+                        <div class="flex-shrink-0">
+                            <!-- Icon: Bell (Dinámico por estado de lectura) -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                 th:class="${request.read} ? 'text-[#5f5e5a]' : 'text-[#d85a30]'"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                        </div>
+                        <div class="flex-1">
+                            <p class="font-['DM_Sans'] font-semibold text-[14px]"
+                               th:classappend="${request.read} ? 'text-[#2c2c2a]' : 'text-[#712b13]'">
+                                Nueva solicitud de adopción
+                            </p>
+                            <p class="font-['DM_Sans'] text-[14px] text-[#5f5e5a] mt-1">
+                                <span class="font-semibold" th:text="${request.applicantName}">Juan</span> quiere adoptar a <span th:text="${request.petName}">Luna</span>
+                            </p>
+                            <div class="mt-2 space-y-1 font-['DM_Sans'] text-[12px] text-[#5f5e5a]">
+                                <p th:text="${'Email: ' + request.email}">Email: ejemplo@correo.com</p>
+                                <p th:text="${'Teléfono: ' + request.phone}">Teléfono: 123456</p>
+                                <p th:text="${'Distrito: ' + request.district}">Distrito: Lima</p>
+                            </div>
+                            <p class="font-['DM_Sans'] text-[11px] text-[#5f5e5a] mt-2"
+                               th:text="${#temporals.format(request.createdAt, 'dd/MM/yyyy, HH:mm:ss', 'es-PE')}">
+                                12/06/2026 15:30:00
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bloque Central: Estadísticas (Stats) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white rounded-[20px] p-6 border border-[#e8e4de]">
+            <p class="font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Total Pacientes</p>
+            <p class="font-['Playfair_Display'] font-bold text-[36px] text-[#085041]" th:text="${totalPacientes}">0</p>
+        </div>
+        <div class="bg-white rounded-[20px] p-6 border border-[#e8e4de]">
+            <p class="font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Total Clientes</p>
+            <p class="font-['Playfair_Display'] font-bold text-[36px] text-[#085041]" th:text="${totalClientes}">0</p>
+        </div>
+        <div class="bg-white rounded-[20px] p-6 border border-[#e8e4de]">
+            <p class="font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Citas Totales</p>
+            <p class="font-['Playfair_Display'] font-bold text-[36px] text-[#085041]" th:text="${totalCitas}">0</p>
+        </div>
+        <div class="bg-white rounded-[20px] p-6 border border-[#e8e4de]">
+            <p class="font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">En Adopción</p>
+            <p class="font-['Playfair_Display'] font-bold text-[36px] text-[#085041]" th:text="${totalEnAdopcion}">0</p>
+        </div>
+    </div>
+
+    <!-- Bloque Inferior: Últimas Compras -->
+    <div class="bg-white rounded-[20px] p-6 border border-[#e8e4de]">
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-[#e1f5ee] rounded-full flex items-center justify-center">
+                    <!-- Icon: ShoppingBag -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#1d9e75]"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                </div>
+                <h3 class="font-['Playfair_Display'] font-bold text-[20px] text-[#085041]">
+                    Últimas Compras
+                </h3>
+            </div>
+            <span class="font-['DM_Sans'] text-[13px] text-[#5f5e5a]"
+                  th:text="${purchases.size() + (purchases.size() == 1 ? ' venta registrada' : ' ventas registradas')}">
+                0 ventas registradas
+            </span>
+        </div>
+
+        <p th:if="${#lists.isEmpty(purchases)}" class="font-['DM_Sans'] text-[14px] text-[#5f5e5a]">No hay compras registradas aún.</p>
+
+        <div th:unless="${#lists.isEmpty(purchases)}" class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                <tr class="border-b border-[#e8e4de]">
+                    <th class="pb-3 text-left font-['DM_Sans'] font-semibold text-[13px] text-[#085041] pr-4">Boleta</th>
+                    <th class="pb-3 text-left font-['DM_Sans'] font-semibold text-[13px] text-[#085041] pr-4">Producto</th>
+                    <th class="pb-3 text-center font-['DM_Sans'] font-semibold text-[13px] text-[#085041] pr-4">Cant.</th>
+                    <th class="pb-3 text-left font-['DM_Sans'] font-semibold text-[13px] text-[#085041] pr-4">Cliente</th>
+                    <th class="pb-3 text-left font-['DM_Sans'] font-semibold text-[13px] text-[#085041] pr-4">Correo</th>
+                    <th class="pb-3 text-left font-['DM_Sans'] font-semibold text-[13px] text-[#085041] pr-4">Método</th>
+                    <th class="pb-3 text-left font-['DM_Sans'] font-semibold text-[13px] text-[#085041] pr-4">Total</th>
+                    <th class="pb-3 text-left font-['DM_Sans'] font-semibold text-[13px] text-[#085041]">Fecha</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="p, iter : ${purchases}"
+                    class="border-b border-[#f7f3ee]"
+                    th:classappend="${iter.index % 2 == 0} ? '' : 'bg-[#fafafa]'">
+
+                    <!-- Boleta corta (últimos 6 caracteres) -->
+                    <td class="py-3 pr-4 font-['DM_Sans'] text-[12px] text-[#5f5e5a]"
+                        th:text="${'#' + #strings.toUpperCase(#strings.substring(p.id, p.id.length() - 6))}">
+                        #A1B2C3
+                    </td>
+                    <td class="py-3 pr-4 font-['DM_Sans'] text-[13px] text-[#2c2c2a] font-semibold max-w-[160px] truncate"
+                        th:text="${p.productName}">
+                        Comida de Gato
+                    </td>
+                    <td class="py-3 pr-4 font-['DM_Sans'] text-[13px] text-[#5f5e5a] text-center" th:text="${p.quantity}">
+                        1
+                    </td>
+                    <td class="py-3 pr-4 font-['DM_Sans'] text-[13px] text-[#2c2c2a]" th:text="${p.buyerName}">Carlos</td>
+                    <td class="py-3 pr-4 font-['DM_Sans'] text-[12px] text-[#5f5e5a]" th:text="${p.buyerEmail}">carlos@mail.com</td>
+                    <td class="py-3 pr-4">
+                        <!-- Inyección del mapa METHOD_LABEL -->
+                        <span class="inline-block px-2 py-0.5 bg-[#e1f5ee] text-[#085041] rounded-full font-['DM_Sans'] text-[11px] font-semibold"
+                              th:text="${methodLabels.get(p.paymentMethod)}">
+                                Tarjeta
+                            </span>
+                    </td>
+                    <td class="py-3 pr-4 font-['Playfair_Display'] font-bold text-[14px] text-[#085041]"
+                        th:text="${'S/ ' + #numbers.formatDecimal(p.total, 1, 2, 'POINT')}">
+                        S/ 0.00
+                    </td>
+                    <td class="py-3 font-['DM_Sans'] text-[12px] text-[#5f5e5a]"
+                        th:text="${#temporals.format(p.date, 'dd/MM/yyyy', 'es-PE')}">
+                        12/06/2026
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- JavaScript para manejar la interactividad local (Marcar como leído) -->
+    <script>
+        function marcarComoLeido(id) {
+            // Envío asíncrono estilo fetch hacia tu AdopcionController en Spring Boot
+            fetch('/adopciones/marcar-leido/' + id, { method: 'POST' })
+                .then(response => {
+                    if(response.ok) {
+                        window.location.reload(); // Recargamos para refrescar la vista
+                    }
+                });
+        }
+    </script>
+</main>
+
+</body>
+</html>
