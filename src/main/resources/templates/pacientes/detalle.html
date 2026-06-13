@@ -8,8 +8,7 @@
 
 <main class="space-y-6">
 
-    <a th:href="@{/pacientes}"
-       class="flex items-center gap-2 text-[#5f5e5a] hover:text-[#085041] font-['DM_Sans'] text-[14px] transition-colors inline-flex">
+    <a th:href="@{/pacientes}" class="flex items-center gap-2 text-[#5f5e5a] hover:text-[#085041] font-['DM_Sans'] text-[14px] transition-colors inline-flex">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
         Volver a Pacientes
     </a>
@@ -25,245 +24,36 @@
                 <p class="font-['DM_Sans'] text-[12px] text-[#5f5e5a]">Paciente</p>
                 <p class="font-['Playfair_Display'] font-bold text-[24px] text-[#085041]" th:text="${patient.name}">Nombre Paciente</p>
             </div>
-            <div class="w-px h-10 bg-[#e8e4de]" />
+            <div class="w-px h-10 bg-[#e8e4de]" ></div>
             <div>
                 <p class="font-['DM_Sans'] text-[12px] text-[#5f5e5a]">Dueño</p>
-                <p class="font-['DM_Sans'] font-semibold text-[16px] text-[#2c2c2a]" th:text="${patient.owner}">Nombre Dueño</p>
+                <p class="font-['DM_Sans'] font-semibold text-[16px] text-[#2c2c2a]" th:text="${patient.cliente != null ? patient.cliente.nombre : 'Sin registrar'}">Nombre Dueño</p>
             </div>
         </div>
 
-        <div class="border-b border-[#e8e4de] mb-6 overflow-x-auto">
-            <div class="flex gap-6 min-w-max">
-                <button onclick="switchTab('general')" id="tab-general" class="tab-btn pb-3 font-['DM_Sans'] text-[14px] transition-colors whitespace-nowrap text-[#085041] font-semibold border-b-2 border-[#1d9e75]">
-                    Información General
-                </button>
-                <button onclick="switchTab('triage')" id="tab-triage" class="tab-btn pb-3 font-['DM_Sans'] text-[14px] transition-colors whitespace-nowrap text-[#5f5e5a] hover:text-[#085041]">
-                    Triaje
-                </button>
-                <button onclick="switchTab('vaccines')" id="tab-vaccines" class="tab-btn pb-3 font-['DM_Sans'] text-[14px] transition-colors whitespace-nowrap text-[#5f5e5a] hover:text-[#085041]">
-                    Vacunas
-                </button>
-                <button onclick="switchTab('surgeries')" id="tab-surgeries" class="tab-btn pb-3 font-['DM_Sans'] text-[14px] transition-colors whitespace-nowrap text-[#5f5e5a] hover:text-[#085041]">
-                    Cirugías
-                </button>
-                <button onclick="switchTab('history')" id="tab-history" class="tab-btn pb-3 font-['DM_Sans'] text-[14px] transition-colors whitespace-nowrap text-[#5f5e5a] hover:text-[#085041]">
-                    Historial de Citas
-                </button>
-                <button onclick="switchTab('medical')" id="tab-medical" class="tab-btn pb-3 font-['DM_Sans'] text-[14px] transition-colors whitespace-nowrap text-[#5f5e5a] hover:text-[#085041]">
-                    Atención Médica
-                </button>
-            </div>
+        <div class="border-b border-[#e8e4de] mb-6">
+            <h2 class="pb-3 font-['DM_Sans'] text-[14px] text-[#085041] font-semibold border-b-2 border-[#1d9e75] inline-block">Información General</h2>
         </div>
 
-        <div id="content-general" class="tab-content grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             <div>
-                <p class="font-['DM_Sans'] text-[12px] text-[#5f5e5a] mb-1">Nombre</p>
-                <p class="font-['DM_Sans'] text-[15px] text-[#2c2c2a]" th:text="${patient.name}">—</p>
-            </div>
-            <div>
-                <p class="font-['DM_Sans'] text-[12px] text-[#5f5e5a] mb-1">Dueño</p>
-                <p class="font-['DM_Sans'] text-[15px] text-[#2c2c2a]" th:text="${patient.owner}">—</p>
+                <p class="font-['DM_Sans'] text-[12px] text-[#5f5e5a] mb-1">ID Sistema</p>
+                <p class="font-['DM_Sans'] text-[15px] text-[#2c2c2a]" th:text="${patient.id}">—</p>
             </div>
             <div>
                 <p class="font-['DM_Sans'] text-[12px] text-[#5f5e5a] mb-1">Especie</p>
                 <p class="font-['DM_Sans'] text-[15px] text-[#2c2c2a]" th:text="${patient.species}">—</p>
             </div>
             <div>
-                <p class="font-['DM_Sans'] text-[12px] text-[#5f5e5a] mb-1">Raza</p>
-                <p class="font-['DM_Sans'] text-[15px] text-[#2c2c2a]" th:text="${patient.breed}">—</p>
-            </div>
-            <div>
-                <p class="font-['DM_Sans'] text-[12px] text-[#5f5e5a] mb-1">Fecha de nacimiento</p>
-                <p class="font-['DM_Sans'] text-[15px] text-[#2c2c2a]"
-                   th:text="${patient.birthDate != null} ? ${#temporals.format(patient.birthDate, 'dd/MM/yyyy', 'es-PE')} : '—'">—</p>
-            </div>
-            <div>
-                <p class="font-['DM_Sans'] text-[12px] text-[#5f5e5a] mb-1">Edad</p>
-                <p class="font-['DM_Sans'] text-[15px] text-[#2c2c2a]" th:text="${patient.age}">—</p>
-            </div>
-            <div>
-                <p class="font-['DM_Sans'] text-[12px] text-[#5f5e5a] mb-1">Color</p>
-                <p class="font-['DM_Sans'] text-[15px] text-[#2c2c2a]" th:text="${patient.color != null && !patient.color.isEmpty()} ? ${patient.color} : '—'">—</p>
-            </div>
-            <div>
                 <p class="font-['DM_Sans'] text-[12px] text-[#5f5e5a] mb-1">Sexo</p>
                 <p class="font-['DM_Sans'] text-[15px] text-[#2c2c2a]" th:text="${patient.sex}">—</p>
             </div>
             <div>
-                <p class="font-['DM_Sans'] text-[12px] text-[#5f5e5a] mb-1">Estado</p>
-                <p class="font-['DM_Sans'] text-[15px] text-[#2c2c2a]" th:text="${patient.status}">—</p>
+                <p class="font-['DM_Sans'] text-[12px] text-[#5f5e5a] mb-1">Estado Actual</p>
+                <span class="inline-block px-3 py-1 mt-1 rounded-[20px] font-['DM_Sans'] text-[12px] font-medium" th:classappend="${patient.status == 'ACTIVO'} ? 'bg-[#e1f5ee] text-[#085041]' : 'bg-[#ececf0] text-[#5f5e5a]'" th:text="${patient.status}">Activo</span>
             </div>
         </div>
-
-        <div id="content-triage" class="tab-content hidden space-y-3">
-            <p th:if="${#lists.isEmpty(patient.triage)}" class="font-['DM_Sans'] text-[14px] text-[#5f5e5a]">No hay registros de triaje.</p>
-            <div th:unless="${#lists.isEmpty(patient.triage)}" th:each="t : ${patient.triage}" class="bg-[#f7f3ee] rounded-[12px] p-4">
-                <p class="font-['DM_Sans'] text-[12px] text-[#5f5e5a] mb-2"
-                   th:text="${t.date != null} ? ${#temporals.format(t.date, 'dd/MM/yyyy', 'es-PE')} : '—'">—</p>
-                <div class="grid grid-cols-2 gap-4">
-                    <p th:if="${t.weight != null}" class="font-['DM_Sans'] text-[14px]">
-                        <span class="text-[#5f5e5a]">Peso: </span><span th:text="${t.weight}">0</span> kg
-                    </p>
-                    <p th:if="${t.temperature != null}" class="font-['DM_Sans'] text-[14px]">
-                        <span class="text-[#5f5e5a]">Temperatura: </span><span th:text="${t.temperature}">0</span> °C
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div id="content-vaccines" class="tab-content hidden space-y-3">
-            <p th:if="${#lists.isEmpty(patient.vaccines)}" class="font-['DM_Sans'] text-[14px] text-[#5f5e5a]">No hay registros de vacunas.</p>
-            <div th:unless="${#lists.isEmpty(patient.vaccines)}" th:each="v : ${patient.vaccines}" class="bg-[#f7f3ee] rounded-[12px] p-4">
-                <p class="font-['DM_Sans'] font-semibold text-[15px] text-[#085041] mb-1" th:text="${v.name}">Nombre Vacuna</p>
-                <div class="flex gap-6 flex-wrap">
-                    <p th:if="${v.date != null}" class="font-['DM_Sans'] text-[14px]">
-                        <span class="text-[#5f5e5a]">Aplicada: </span><span th:text="${#temporals.format(v.date, 'dd/MM/yyyy', 'es-PE')}">01/01/2026</span>
-                    </p>
-                    <p th:if="${v.dose != null && !v.dose.isEmpty()}" class="font-['DM_Sans'] text-[14px]">
-                        <span class="text-[#5f5e5a]">Dosis: </span><span th:text="${v.dose}">1ml</span>
-                    </p>
-                    <p th:if="${v.nextDate != null}" class="font-['DM_Sans'] text-[14px]">
-                        <span class="text-[#5f5e5a]">Próxima: </span><span th:text="${#temporals.format(v.nextDate, 'dd/MM/yyyy', 'es-PE')}">01/06/2026</span>
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div id="content-surgeries" class="tab-content hidden space-y-3">
-            <p th:if="${#lists.isEmpty(patient.surgeries)}" class="font-['DM_Sans'] text-[14px] text-[#5f5e5a]">No hay registros de cirugías.</p>
-            <div th:unless="${#lists.isEmpty(patient.surgeries)}" th:each="s : ${patient.surgeries}" class="bg-[#f7f3ee] rounded-[12px] p-4">
-                <div class="flex justify-between items-start mb-2">
-                    <p class="font-['DM_Sans'] text-[12px] text-[#5f5e5a]"
-                       th:text="${s.date != null} ? ${#temporals.format(s.date, 'dd/MM/yyyy', 'es-PE')} : '—'">—</p>
-                    <p th:if="${s.doctor != null}" class="font-['DM_Sans'] text-[12px] text-[#5f5e5a]" th:text="${s.doctor}">Dr. Silva</p>
-                </div>
-                <p class="font-['DM_Sans'] text-[14px] text-[#2c2c2a]" th:text="${s.description}">Descripción cirugía</p>
-            </div>
-        </div>
-
-        <div id="content-history" class="tab-content hidden space-y-3">
-            <p th:if="${#lists.isEmpty(attendedAppointments)}" class="font-['DM_Sans'] text-[14px] text-[#5f5e5a]">No hay citas atendidas registradas.</p>
-            <div th:unless="${#lists.isEmpty(attendedAppointments)}" th:each="apt : ${attendedAppointments}" class="bg-[#f7f3ee] rounded-[12px] p-4">
-                <div class="flex justify-between items-start mb-1">
-                    <p class="font-['DM_Sans'] font-semibold text-[15px] text-[#085041]">
-                        <span th:text="${apt.date != null} ? ${#temporals.format(apt.date, 'dd/MM/yyyy', 'es-PE')} : '—'">01/01/2026</span>
-                        <span th:if="${apt.time != null}" class="font-normal text-[13px] text-[#5f5e5a]" th:text="' · ' + ${apt.time}"> · 09:00 AM</span>
-                    </p>
-                    <p class="font-['DM_Sans'] text-[13px] text-[#5f5e5a]" th:text="${apt.doctor}">Doctor</p>
-                </div>
-                <p th:if="${apt.consultationReason != null}" class="font-['DM_Sans'] text-[13px] text-[#5f5e5a] mt-1">
-                    <span class="font-semibold text-[#2c2c2a]">Motivo: </span><span th:text="${apt.consultationReason}">Motivo</span>
-                </p>
-            </div>
-        </div>
-
-        <div id="content-medical" class="tab-content hidden space-y-4">
-            <p th:if="${#lists.isEmpty(patient.medicalAttentions)}" class="font-['DM_Sans'] text-[14px] text-[#5f5e5a]">No hay atenciones médicas registradas.</p>
-
-            <div th:unless="${#lists.isEmpty(patient.medicalAttentions)}"
-                 th:each="m, iter : ${patient.medicalAttentions}"
-                 class="border border-[#e8e4de] rounded-[16px] overflow-hidden">
-
-                <button th:onclick="'toggleAccordion(\'med-\' + ' + ${iter.index} + ')'"
-                        class="w-full flex justify-between items-center px-5 py-4 bg-[#f7f3ee] hover:bg-[#ede9e3] transition-colors focus:outline-none">
-                    <div class="flex gap-4 items-center">
-                        <span class="font-['DM_Sans'] font-semibold text-[15px] text-[#085041]"
-                              th:text="${m.date != null} ? ${#temporals.format(m.date, 'dd/MM/yyyy', 'es-PE')} : '—'">01/01/2026</span>
-                        <span class="font-['DM_Sans'] text-[13px] text-[#5f5e5a]" th:text="${m.doctor}">Dr. Silva</span>
-                    </div>
-                    <span th:id="'icon-med-' + ${iter.index}" class="font-['DM_Sans'] text-[20px] text-[#5f5e5a] leading-none"
-                          th:text="${iter.first} ? '−' : '+'">−</span>
-                </button>
-
-                <div th:id="'panel-med-' + ${iter.index}"
-                     th:classappend="${iter.first} ? '' : 'hidden'"
-                     class="accordion-panel px-5 py-5 space-y-5 bg-white border-t border-[#e8e4de]">
-
-                    <div th:if="${m.triage != null && (m.triage.weight != null || m.triage.temperature != null)}">
-                        <p class="font-['DM_Sans'] font-semibold text-[12px] text-[#085041] uppercase tracking-wide mb-2">Triaje</p>
-                        <div class="flex gap-8 flex-wrap">
-                            <p th:if="${m.triage.weight != null}" class="font-['DM_Sans'] text-[14px] text-[#2c2c2a]">
-                                <span class="text-[#5f5e5a]">Peso: </span><span th:text="${m.triage.weight} + ' kg'">0 kg</span>
-                            </p>
-                            <p th:if="${m.triage.temperature != null}" class="font-['DM_Sans'] text-[14px] text-[#2c2c2a]">
-                                <span class="text-[#5f5e5a]">Temperatura: </span><span th:text="${m.triage.temperature} + ' °C'">0 °C</span>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div th:if="${m.diagnosis != null && !m.diagnosis.isEmpty()}">
-                        <p class="font-['DM_Sans'] font-semibold text-[12px] text-[#085041] uppercase tracking-wide mb-2">Diagnóstico</p>
-                        <p class="font-['DM_Sans'] text-[14px] text-[#2c2c2a] whitespace-pre-wrap" th:text="${m.diagnosis}">Diagnóstico</p>
-                    </div>
-
-                    <div th:if="${m.treatment != null && !m.treatment.isEmpty()}">
-                        <p class="font-['DM_Sans'] font-semibold text-[12px] text-[#085041] uppercase tracking-wide mb-2">Tratamiento</p>
-                        <p class="font-['DM_Sans'] text-[14px] text-[#2c2c2a] whitespace-pre-wrap" th:text="${m.treatment}">Tratamiento</p>
-                    </div>
-
-                    <div th:if="${m.observations != null && !m.observations.isEmpty()}">
-                        <p class="font-['DM_Sans'] font-semibold text-[12px] text-[#085041] uppercase tracking-wide mb-2">Observaciones</p>
-                        <p class="font-['DM_Sans'] text-[14px] text-[#2c2c2a] whitespace-pre-wrap" th:text="${m.observations}">Observaciones</p>
-                    </div>
-
-                    <div th:if="${!#lists.isEmpty(m.vaccines)}">
-                        <p class="font-['DM_Sans'] font-semibold text-[12px] text-[#085041] uppercase tracking-wide mb-2">Vacunas</p>
-                        <div class="space-y-1">
-                            <p th:each="mv : ${m.vaccines}" class="font-['DM_Sans'] text-[14px] text-[#2c2c2a]">
-                                <span class="font-semibold" th:text="${mv.name}">Vacuna</span>
-                                <span th:if="${mv.dose != null && !mv.dose.isEmpty()}" class="text-[#5f5e5a]" th:text="' — ' + ${mv.dose}"> — 1ml</span>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div th:if="${m.surgery != null && !m.surgery.isEmpty()}">
-                        <p class="font-['DM_Sans'] font-semibold text-[12px] text-[#085041] uppercase tracking-wide mb-2">Cirugía</p>
-                        <p class="font-['DM_Sans'] text-[14px] text-[#2c2c2a] whitespace-pre-wrap" th:text="${m.surgery}">Detalle Cirugía</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 </main>
-
-<script>
-    // Controlador de Pestañas (Tabs)
-    function switchTab(tabKey) {
-        // Ocultar todo el contenido de pestañas
-        document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
-        // Quitar estilos activos de todos los botones
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.classList.remove('text-[#085041]', 'font-semibold', 'border-b-2', 'border-[#1d9e75]');
-            btn.classList.add('text-[#5f5e5a]', 'hover:text-[#085041]');
-        });
-
-        // Mostrar contenido seleccionado
-        document.getElementById('content-' + tabKey).classList.remove('hidden');
-        // Activar el botón correspondiente
-        const activeBtn = document.getElementById('tab-' + tabKey);
-        activeBtn.classList.remove('text-[#5f5e5a]', 'hover:text-[#085041]');
-        activeBtn.classList.add('text-[#085041]', 'font-semibold', 'border-b-2', 'border-[#1d9e75]');
-    }
-
-    // Controlador de Acordeón (Atención Médica)
-    function toggleAccordion(id) {
-        const panel = document.getElementById('panel-' + id);
-        const icon = document.getElementById('icon-' + id);
-
-        const isHidden = panel.classList.contains('hidden');
-
-        // Colapsar todos los paneles para un comportamiento limpio de acordeón
-        document.querySelectorAll('.accordion-panel').forEach(p => p.classList.add('hidden'));
-        document.querySelectorAll('[id^="icon-med-"]').forEach(i => i.textContent = '+');
-
-        // Si el panel clickeado estaba oculto, lo expandimos
-        if (isHidden) {
-            panel.classList.remove('hidden');
-            icon.textContent = '−';
-        }
-    }
-</script>
-
 </body>
 </html>
