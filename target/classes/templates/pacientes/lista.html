@@ -146,38 +146,39 @@
                 </tr>
                 </thead>
                 <tbody>
-                <!-- Caso: No hay registros -->
-                <tr th:if="${#lists.isEmpty(filteredPets)}">
+                <tr th:if="${#lists.isEmpty(pacientes)}">
                     <td colspan="6" class="px-6 py-10 text-center font-['DM_Sans'] text-[14px] text-[#5f5e5a]">
                         No se encontraron pacientes bajo estos criterios.
                     </td>
                 </tr>
 
-                <!-- Bucle principal de Pacientes -->
-                <tr th:unless="${#lists.isEmpty(filteredPets)}"
-                    th:each="pet, iter : ${filteredPets}"
+                <tr th:unless="${#lists.isEmpty(pacientes)}"
+                    th:each="pet, iter : ${pacientes}"
                     th:classappend="${iter.index % 2 == 0} ? 'bg-white' : 'bg-[#fafafa]'"
                     th:data-url="@{/pacientes/detalle/{id}(id=${pet.id})}"
                     onclick="window.location.href=this.getAttribute('data-url')"
                     class="border-t border-[#e8e4de] cursor-pointer hover:bg-[#f7f3ee]/50 transition-colors">
 
                     <td class="px-6 py-4 font-['DM_Sans'] font-medium text-[14px] text-[#2c2c2a]" th:text="${pet.name}">Firulais</td>
+
                     <td class="px-6 py-4 font-['DM_Sans'] text-[14px] text-[#5f5e5a]" th:text="${pet.species}">Perro</td>
-                    <td class="px-6 py-4 font-['DM_Sans'] text-[14px] text-[#5f5e5a]" th:text="${pet.owner}">Juan Pérez</td>
+
+                    <td class="px-6 py-4 font-['DM_Sans'] text-[14px] text-[#5f5e5a]"
+                        th:text="${pet.cliente != null ? pet.cliente.nombre : 'Sin Dueño'}">Juan Pérez</td>
+
                     <td class="px-6 py-4 font-['DM_Sans'] text-[14px] text-[#5f5e5a]" th:text="${pet.sex}">Macho</td>
+
                     <td class="px-6 py-4">
-                        <!-- Estatus de Color Dinámico -->
                         <span class="inline-block px-3 py-1 rounded-[20px] font-['DM_Sans'] text-[12px] font-medium"
-                              th:classappend="${pet.status == 'Activo'} ? 'bg-[#e1f5ee] text-[#085041]' : 'bg-[#ececf0] text-[#5f5e5a]'"
-                              th:text="${pet.status}">
-                                Activo
-                            </span>
+                        th:classappend="${pet.status == 'ACTIVO'} ? 'bg-[#e1f5ee] text-[#085041]' : 'bg-[#ececf0] text-[#5f5e5a]'"
+                        th:text="${pet.status}">
+                        Activo
+                        </span>
                     </td>
+
                     <td class="px-6 py-4" onclick="event.stopPropagation();">
-                        <!-- Botón de Edición (Redirige pasando el ID por parámetro para abrir el formulario con datos) -->
                         <a th:href="@{/pacientes(action='editar', id=${pet.id})}"
                            class="text-[#1d9e75] hover:text-[#158963] inline-block transition-colors p-1">
-                            <!-- Icon: Edit -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
                         </a>
                     </td>
