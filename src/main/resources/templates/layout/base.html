@@ -4,27 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${pageTitle + ' - Argos'}">Argos</title>
-    <!-- Enlace a tus estilos globales de Tailwind -->
-    <link th:href="@{/css/tailwind.css}" rel="stylesheet">
-    <!-- Opcional: CDN de Tailwind v4 si aún no configuras tu compilador local -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 <body class="font-['DM_Sans'] antialiased">
 
 <div class="flex h-screen bg-[#f7f3ee]">
 
-    <!-- ================= SIDEBAR LATERAL ================= -->
     <aside class="w-64 bg-[#085041] text-white flex flex-col shrink-0">
-        <!-- Logo y Cabecera del Sidebar -->
         <div class="p-6">
             <h1 class="font-['Playfair_Display'] font-bold text-[28px]">ARGOS</h1>
             <p class="font-['DM_Sans'] text-[12px] text-[rgba(255,255,255,0.7)] mt-1">Panel Veterinario</p>
         </div>
 
-        <!-- Navegación del Menú (Simulación dinámica de isActive de React) -->
         <nav class="flex-1 px-4 space-y-1">
-
-            <!-- Enlace: Dashboard -->
             <a th:href="@{/dashboard}"
                class="flex items-center gap-3 px-4 py-3 rounded-lg font-['DM_Sans'] text-[14px] transition-colors"
                th:classappend="${currentSection == 'dashboard'} ? 'bg-[#1d9e75] text-white' : 'text-[rgba(255,255,255,0.7)] hover:bg-[rgba(255,255,255,0.1)]'">
@@ -32,7 +26,6 @@
                 Dashboard
             </a>
 
-            <!-- Enlace: Pacientes -->
             <a th:href="@{/pacientes}"
                class="flex items-center gap-3 px-4 py-3 rounded-lg font-['DM_Sans'] text-[14px] transition-colors"
                th:classappend="${currentSection == 'pacientes'} ? 'bg-[#1d9e75] text-white' : 'text-[rgba(255,255,255,0.7)] hover:bg-[rgba(255,255,255,0.1)]'">
@@ -40,7 +33,6 @@
                 Pacientes
             </a>
 
-            <!-- Enlace: Clientes -->
             <a th:href="@{/clientes}"
                class="flex items-center gap-3 px-4 py-3 rounded-lg font-['DM_Sans'] text-[14px] transition-colors"
                th:classappend="${currentSection == 'clientes'} ? 'bg-[#1d9e75] text-white' : 'text-[rgba(255,255,255,0.7)] hover:bg-[rgba(255,255,255,0.1)]'">
@@ -48,7 +40,6 @@
                 Clientes
             </a>
 
-            <!-- Enlace: Citas -->
             <a th:href="@{/citas}"
                class="flex items-center gap-3 px-4 py-3 rounded-lg font-['DM_Sans'] text-[14px] transition-colors"
                th:classappend="${currentSection == 'citas'} ? 'bg-[#1d9e75] text-white' : 'text-[rgba(255,255,255,0.7)] hover:bg-[rgba(255,255,255,0.1)]'">
@@ -56,7 +47,6 @@
                 Citas
             </a>
 
-            <!-- Enlace: Productos -->
             <a th:href="@{/productos}"
                class="flex items-center gap-3 px-4 py-3 rounded-lg font-['DM_Sans'] text-[14px] transition-colors"
                th:classappend="${currentSection == 'productos'} ? 'bg-[#1d9e75] text-white' : 'text-[rgba(255,255,255,0.7)] hover:bg-[rgba(255,255,255,0.1)]'">
@@ -64,7 +54,6 @@
                 Productos
             </a>
 
-            <!-- Enlace: Adopciones -->
             <a th:href="@{/adopciones}"
                class="flex items-center gap-3 px-4 py-3 rounded-lg font-['DM_Sans'] text-[14px] transition-colors"
                th:classappend="${currentSection == 'adopciones'} ? 'bg-[#1d9e75] text-white' : 'text-[rgba(255,255,255,0.7)] hover:bg-[rgba(255,255,255,0.1)]'">
@@ -73,7 +62,6 @@
             </a>
         </nav>
 
-        <!-- Botón de Cerrar Sesión -->
         <div class="p-4 border-t border-[rgba(255,255,255,0.1)]">
             <a th:href="@{/logout}"
                class="flex items-center gap-3 px-4 py-3 rounded-lg w-full font-['DM_Sans'] text-[14px] text-[rgba(255,255,255,0.7)] hover:bg-[rgba(255,255,255,0.1)] transition-colors">
@@ -83,17 +71,13 @@
         </div>
     </aside>
 
-    <!-- ================= CONTENEDOR PRINCIPAL DERECHO ================= -->
     <div class="flex-1 flex flex-col overflow-hidden">
 
-        <!-- HEADER BLANCO SUPERIOR -->
         <header class="bg-white border-b border-[#e8e4de] px-8 py-4 flex items-center justify-between shrink-0">
-            <!-- Título Dinámico de la Página -->
             <h2 class="font-['Playfair_Display'] font-bold text-[24px] text-[#085041]" th:text="${pageTitle}">
                 Dashboard
             </h2>
 
-            <!-- Menú Desplegable "Nuevo" (Manejo con Vanilla JS) -->
             <div class="relative">
                 <button id="btnNuevo" onclick="toggleMenu()"
                         class="flex items-center gap-2 bg-[#1d9e75] text-white font-['DM_Sans'] font-semibold text-[14px] px-6 py-2 rounded-[40px] hover:bg-[#158963] transition-colors focus:outline-none">
@@ -101,7 +85,6 @@
                     Nuevo
                 </button>
 
-                <!-- Caja Oculta del Menú (Equivalente al state showNewMenu de React) -->
                 <div id="dropdownNuevo" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-[#e8e4de] overflow-hidden z-50">
                     <a th:href="@{/clientes}" class="block w-full text-left px-4 py-2 font-['DM_Sans'] text-[14px] text-[#2c2c2a] hover:bg-[#f7f3ee] transition-colors">Cliente</a>
                     <a th:href="@{/pacientes}" class="block w-full text-left px-4 py-2 font-['DM_Sans'] text-[14px] text-[#2c2c2a] hover:bg-[#f7f3ee] transition-colors">Paciente</a>
@@ -112,21 +95,18 @@
             </div>
         </header>
 
-        <!-- ÁREA DE CONTENIDO DINÁMICO (th:replace) -->
         <main class="flex-1 overflow-auto p-8">
             <div th:replace="${content}"></div>
         </main>
     </div>
 </div>
 
-<!-- Script minimalista para la apertura/cierre del dropdown -->
 <script>
     function toggleMenu() {
         const menu = document.getElementById('dropdownNuevo');
         menu.classList.toggle('hidden');
     }
 
-    // Cierra el menú automáticamente si haces clic fuera de él
     window.onclick = function(event) {
         if (!event.target.matches('#btnNuevo') && !event.target.closest('#btnNuevo')) {
             const dropdown = document.getElementById('dropdownNuevo');
@@ -136,5 +116,6 @@
         }
     }
 </script>
+
 </body>
 </html>
