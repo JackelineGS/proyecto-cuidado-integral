@@ -16,6 +16,7 @@ public class ProveedorController {
         this.proveedorService = proveedorService;
     }
 
+
     @GetMapping("/proveedores")
     public String listarProveedores(
             @RequestParam(required = false) String searchTerm,

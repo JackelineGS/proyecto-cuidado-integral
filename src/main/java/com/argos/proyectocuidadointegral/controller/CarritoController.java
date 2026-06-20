@@ -33,6 +33,7 @@ public class CarritoController {
         return "redirect:/carrito";
     }
 
+
     @PostMapping("/carrito/vaciar")
     public String vaciar() {
         carritoService.vaciar();

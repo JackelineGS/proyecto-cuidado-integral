@@ -17,6 +17,7 @@ public class ProductoController {
     private final ProductoService productoService;
     private final ProveedorService proveedorService;
 
+
     public ProductoController(ProductoService productoService, ProveedorService proveedorService) {
         this.productoService = productoService;
         this.proveedorService = proveedorService;

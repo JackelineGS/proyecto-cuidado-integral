@@ -31,6 +31,7 @@ public class MovimientoStockController {
         return "stock/movimientos";
     }
 
+
     @PostMapping("/stock/ajustar")
     public String ajustarStock(@RequestParam Long idProducto,
                                @RequestParam String tipo,

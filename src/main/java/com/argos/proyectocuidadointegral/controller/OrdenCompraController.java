@@ -29,6 +29,7 @@ public class OrdenCompraController {
         return "ordenes/detalle";
     }
 
+
     @PostMapping("/ordenes/{id}/confirmar")
     public String confirmarOrden(@PathVariable Long id) {
         ordenCompraService.confirmarOrden(id);
