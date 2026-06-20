@@ -15,7 +15,6 @@ public class ProductoExceptionHandler {
         mav.setStatus(HttpStatus.NOT_FOUND);
         return mav;
     }
-
     @ExceptionHandler(StockInsuficienteException.class)
     public ModelAndView handleStockInsuficiente(StockInsuficienteException ex) {
         ModelAndView mav = new ModelAndView("error/stock-insuficiente");
