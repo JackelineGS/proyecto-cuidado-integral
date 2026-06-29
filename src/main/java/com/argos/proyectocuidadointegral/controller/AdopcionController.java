@@ -13,7 +13,7 @@ public class AdopcionController {
 
     @GetMapping("/adopciones")
     public String verAdopciones(Model model) {
-        model.addAttribute("enadopcion", new ArrayList<>());
+        model.addAttribute("en adopcion", new ArrayList<>());
         return "adopciones/lista";
     }
 }
