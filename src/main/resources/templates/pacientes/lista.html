@@ -8,58 +8,33 @@
 
 <main class="space-y-6">
 
-    <!-- BARRA DE BÚSQUEDA Y FILTROS -->
     <div class="flex items-center justify-between gap-4 flex-wrap sm:flex-nowrap">
-
-        <!-- Formulario GET para enviar filtros al Servidor Spring -->
         <form th:action="@{/pacientes}" method="get" class="flex gap-4 flex-1 items-center">
             <div class="relative flex-1 max-w-md">
-                <!-- Icon: Search -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 -translate-y-1/2 text-[#5f5e5a]"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                <input
-                        type="text"
-                        name="searchTerm"
-                        th:value="${searchTerm}"
-                        placeholder="Buscar por nombre o dueño..."
-                        class="w-full pl-10 pr-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]"
-                />
+                <input type="text" name="searchTerm" th:value="${searchTerm}" placeholder="Buscar por nombre o dueño..." class="w-full pl-10 pr-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" />
             </div>
-
-            <!-- Selector de Especies -->
-            <select
-                    name="speciesFilter"
-                    onchange="this.form.submit()"
-                    class="px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]"
-            >
+            <select name="speciesFilter" onchange="this.form.submit()" class="px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]">
                 <option value="Todos" th:selected="${speciesFilter == 'Todos'}">Todos</option>
                 <option value="Perro" th:selected="${speciesFilter == 'Perro'}">Perro</option>
                 <option value="Gato" th:selected="${speciesFilter == 'Gato'}">Gato</option>
             </select>
-
-            <!-- Botón oculto por si presionan Enter en el input de texto -->
             <button type="submit" class="hidden">Buscar</button>
         </form>
 
-        <!-- Botón Agregar Paciente (Redirige para activar el formulario por URL) -->
-        <a th:href="@{/pacientes(action='nuevo')}"
-           class="flex items-center gap-2 bg-[#1d9e75] text-white font-['DM_Sans'] font-semibold text-[14px] px-6 py-2 rounded-[40px] hover:bg-[#158963] transition-colors whitespace-nowrap">
-            <!-- Icon: Plus -->
+        <a th:href="@{/pacientes(action='nuevo')}" class="flex items-center gap-2 bg-[#1d9e75] text-white font-['DM_Sans'] font-semibold text-[14px] px-6 py-2 rounded-[40px] hover:bg-[#158963] transition-colors whitespace-nowrap">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
             Agregar Paciente
         </a>
     </div>
 
-    <!-- FORMULARIO: REGISTRAR / EDITAR PACIENTE (th:if controlado desde Spring) -->
+    <!-- FORMULARIO DE REGISTRO / EDICIÓN -->
     <div th:if="${showForm}" class="bg-white rounded-[20px] p-6 border border-[#e8e4de] shadow-sm animate-fade-in">
-        <h3 class="font-['Playfair_Display'] font-bold text-[20px] text-[#085041] mb-4"
-            th:text="${paciente.id != null} ? 'Editar Paciente' : 'Nuevo Paciente'">
-            Nuevo Paciente
-        </h3>
+        <h3 class="font-['Playfair_Display'] font-bold text-[20px] text-[#085041] mb-4" th:text="${paciente.id != null} ? 'Editar Paciente' : 'Nuevo Paciente'">Nuevo Paciente</h3>
 
-        <!-- Formulario POST enlazado al Objeto de Java -->
+        <!--/*@thymesVar id="paciente" type="com.argos.proyectocuidadointegral.model.Paciente"*/-->
         <form th:action="@{/pacientes/guardar}" th:object="${paciente}" method="post" class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-            <!-- Guardamos el ID oculto si es una edición -->
             <input type="hidden" th:field="*{id}" />
 
             <div>
@@ -76,26 +51,6 @@
             </div>
 
             <div>
-                <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Raza</label>
-                <input type="text" th:field="*{breed}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required />
-            </div>
-
-            <div>
-                <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Fecha de nacimiento</label>
-                <input type="date" th:field="*{birthDate}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" />
-            </div>
-
-            <div>
-                <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Edad</label>
-                <input type="text" th:field="*{age}" placeholder="Ej: 3 años" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required />
-            </div>
-
-            <div>
-                <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Color</label>
-                <input type="text" th:field="*{color}" placeholder="Ej: Negro con blanco" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" />
-            </div>
-
-            <div>
                 <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Sexo</label>
                 <select th:field="*{sex}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]">
                     <option value="Macho">Macho</option>
@@ -104,29 +59,25 @@
             </div>
 
             <div>
-                <!-- En un sistema real puedes enlazarlo al ID de tu clase Cliente, aquí mapeamos texto por simplicidad -->
-                <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Dueño</label>
-                <input type="text" th:field="*{owner}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required />
-            </div>
-
-            <div>
                 <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Estado</label>
                 <select th:field="*{status}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]">
-                    <option value="Activo">Activo</option>
-                    <option value="Inactivo">Inactivo</option>
+                    <option value="ACTIVO">Activo</option>
+                    <option value="INACTIVO">Inactivo</option>
                 </select>
             </div>
 
-            <!-- BOTONES DE ACCIÓN DEL FORMULARIO -->
+            <div class="col-span-1 md:col-span-2">
+                <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">ID del Cliente (Dueño)</label>
+                <input type="number" name="clienteId"
+                       th:value="${paciente.cliente != null ? paciente.cliente.idCliente : ''}"
+                       placeholder="Ej: 1"
+                       class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]"
+                       required />
+            </div>
+
             <div class="col-span-1 md:col-span-2 flex gap-4 justify-end mt-2">
-                <a th:href="@{/pacientes}"
-                   class="px-6 py-2 border border-[#e8e4de] rounded-[40px] font-['DM_Sans'] text-[14px] text-[#5f5e5a] hover:bg-[#f7f3ee] transition-colors text-center">
-                    Cancelar
-                </a>
-                <button type="submit"
-                        class="px-6 py-2 bg-[#1d9e75] text-white rounded-[40px] font-['DM_Sans'] font-semibold text-[14px] hover:bg-[#158963] transition-colors">
-                    Guardar
-                </button>
+                <a th:href="@{/pacientes}" class="px-6 py-2 border border-[#e8e4de] rounded-[40px] font-['DM_Sans'] text-[14px] text-[#5f5e5a] hover:bg-[#f7f3ee] transition-colors text-center">Cancelar</a>
+                <button type="submit" class="px-6 py-2 bg-[#1d9e75] text-white rounded-[40px] font-['DM_Sans'] font-semibold text-[14px] hover:bg-[#158963] transition-colors">Guardar</button>
             </div>
         </form>
     </div>
@@ -146,38 +97,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                <!-- Caso: No hay registros -->
-                <tr th:if="${#lists.isEmpty(filteredPets)}">
-                    <td colspan="6" class="px-6 py-10 text-center font-['DM_Sans'] text-[14px] text-[#5f5e5a]">
-                        No se encontraron pacientes bajo estos criterios.
-                    </td>
+                <tr th:if="${#lists.isEmpty(pacientes)}">
+                    <td colspan="6" class="px-6 py-10 text-center font-['DM_Sans'] text-[14px] text-[#5f5e5a]">No se encontraron pacientes bajo estos criterios.</td>
                 </tr>
 
-                <!-- Bucle principal de Pacientes -->
-                <tr th:unless="${#lists.isEmpty(filteredPets)}"
-                    th:each="pet, iter : ${filteredPets}"
-                    th:classappend="${iter.index % 2 == 0} ? 'bg-white' : 'bg-[#fafafa]'"
-                    th:data-url="@{/pacientes/detalle/{id}(id=${pet.id})}"
-                    onclick="window.location.href=this.getAttribute('data-url')"
-                    class="border-t border-[#e8e4de] cursor-pointer hover:bg-[#f7f3ee]/50 transition-colors">
-
+                <tr th:unless="${#lists.isEmpty(pacientes)}" th:each="pet, iter : ${pacientes}" th:classappend="${iter.index % 2 == 0} ? 'bg-white' : 'bg-[#fafafa]'" th:data-url="@{/pacientes/detalle/{id}(id=${pet.id})}" onclick="window.location.href=this.getAttribute('data-url')" class="border-t border-[#e8e4de] cursor-pointer hover:bg-[#f7f3ee]/50 transition-colors">
                     <td class="px-6 py-4 font-['DM_Sans'] font-medium text-[14px] text-[#2c2c2a]" th:text="${pet.name}">Firulais</td>
                     <td class="px-6 py-4 font-['DM_Sans'] text-[14px] text-[#5f5e5a]" th:text="${pet.species}">Perro</td>
-                    <td class="px-6 py-4 font-['DM_Sans'] text-[14px] text-[#5f5e5a]" th:text="${pet.owner}">Juan Pérez</td>
+                    <td class="px-6 py-4 font-['DM_Sans'] text-[14px] text-[#5f5e5a]" th:text="${pet.cliente != null ? pet.cliente.nombre : 'Sin Dueño'}">Juan Pérez</td>
                     <td class="px-6 py-4 font-['DM_Sans'] text-[14px] text-[#5f5e5a]" th:text="${pet.sex}">Macho</td>
                     <td class="px-6 py-4">
-                        <!-- Estatus de Color Dinámico -->
-                        <span class="inline-block px-3 py-1 rounded-[20px] font-['DM_Sans'] text-[12px] font-medium"
-                              th:classappend="${pet.status == 'Activo'} ? 'bg-[#e1f5ee] text-[#085041]' : 'bg-[#ececf0] text-[#5f5e5a]'"
-                              th:text="${pet.status}">
-                                Activo
-                            </span>
+                        <span class="inline-block px-3 py-1 rounded-[20px] font-['DM_Sans'] text-[12px] font-medium" th:classappend="${pet.status == 'ACTIVO'} ? 'bg-[#e1f5ee] text-[#085041]' : 'bg-[#ececf0] text-[#5f5e5a]'" th:text="${pet.status}">Activo</span>
                     </td>
                     <td class="px-6 py-4" onclick="event.stopPropagation();">
-                        <!-- Botón de Edición (Redirige pasando el ID por parámetro para abrir el formulario con datos) -->
-                        <a th:href="@{/pacientes(action='editar', id=${pet.id})}"
-                           class="text-[#1d9e75] hover:text-[#158963] inline-block transition-colors p-1">
-                            <!-- Icon: Edit -->
+                        <a th:href="@{/pacientes(action='editar', id=${pet.id})}" class="text-[#1d9e75] hover:text-[#158963] inline-block transition-colors p-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
                         </a>
                     </td>
@@ -187,6 +120,5 @@
         </div>
     </div>
 </main>
-
 </body>
 </html>
