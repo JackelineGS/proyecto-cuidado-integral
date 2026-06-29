@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface DescuentoRepository extends JpaRepository<Descuento, Long> {
+public interface DescuentoRepository extends JpaRepository<Descuento, Integer> {
     Optional<Descuento> findByCodigo(String codigo);
     List<Descuento> findByActivoTrue();
-    List<Descuento> findByProductoIdProducto(Long idProducto);
+    List<Descuento> findByProductoIdProducto(Integer idProducto);
 }

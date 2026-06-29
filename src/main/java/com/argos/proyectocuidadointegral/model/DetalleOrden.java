@@ -9,7 +9,7 @@ public class DetalleOrden {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_detalle")
-    private Long idDetalle;
+    private Integer idDetalle;
 
     @ManyToOne
     @JoinColumn(name = "id_orden")
@@ -30,8 +30,8 @@ public class DetalleOrden {
 
     public DetalleOrden() {}
 
-    public Long getIdDetalle() { return idDetalle; }
-    public void setIdDetalle(Long idDetalle) { this.idDetalle = idDetalle; }
+    public Integer getIdDetalle() { return idDetalle; }
+    public void setIdDetalle(Integer idDetalle) { this.idDetalle = idDetalle; }
     public OrdenCompra getOrdenCompra() { return ordenCompra; }
     public void setOrdenCompra(OrdenCompra ordenCompra) { this.ordenCompra = ordenCompra; }
     public Producto getProducto() { return producto; }

@@ -2,8 +2,8 @@ package com.argos.proyectocuidadointegral.dto;
 
 public class DetalleOrdenDTO {
 
-    private Long idDetalle;
-    private Long idProducto;
+    private Integer idDetalle;
+    private Integer idProducto;
     private String nombreProducto;
     private Integer cantidad;
     private Double precioUnitario;
@@ -11,10 +11,10 @@ public class DetalleOrdenDTO {
 
     public DetalleOrdenDTO() {}
 
-    public Long getIdDetalle() { return idDetalle; }
-    public void setIdDetalle(Long idDetalle) { this.idDetalle = idDetalle; }
-    public Long getIdProducto() { return idProducto; }
-    public void setIdProducto(Long idProducto) { this.idProducto = idProducto; }
+    public Integer getIdDetalle() { return idDetalle; }
+    public void setIdDetalle(Integer idDetalle) { this.idDetalle = idDetalle; }
+    public Integer getIdProducto() { return idProducto; }
+    public void setIdProducto(Integer idProducto) { this.idProducto = idProducto; }
     public String getNombreProducto() { return nombreProducto; }
     public void setNombreProducto(String nombreProducto) { this.nombreProducto = nombreProducto; }
     public Integer getCantidad() { return cantidad; }

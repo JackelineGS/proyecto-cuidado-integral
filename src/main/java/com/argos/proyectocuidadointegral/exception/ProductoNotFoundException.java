@@ -2,7 +2,7 @@ package com.argos.proyectocuidadointegral.exception;
 
 public class ProductoNotFoundException extends RuntimeException {
 
-    public ProductoNotFoundException(Long id) {
+    public ProductoNotFoundException(Integer id) {
         super("Producto no encontrado con id: " + id);
     }
 

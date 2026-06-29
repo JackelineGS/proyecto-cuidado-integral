@@ -10,7 +10,7 @@ public class Descuento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_descuento")
-    private Long idDescuento;
+    private Integer idDescuento;
 
     @Column(name = "codigo", length = 50)
     private String codigo;
@@ -33,8 +33,8 @@ public class Descuento {
 
     public Descuento() {}
 
-    public Long getIdDescuento() { return idDescuento; }
-    public void setIdDescuento(Long idDescuento) { this.idDescuento = idDescuento; }
+    public Integer getIdDescuento() { return idDescuento; }
+    public void setIdDescuento(Integer idDescuento) { this.idDescuento = idDescuento; }
     public String getCodigo() { return codigo; }
     public void setCodigo(String codigo) { this.codigo = codigo; }
     public Double getPorcentaje() { return porcentaje; }

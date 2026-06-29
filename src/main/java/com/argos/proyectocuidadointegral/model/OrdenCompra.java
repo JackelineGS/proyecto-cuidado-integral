@@ -11,7 +11,7 @@ public class OrdenCompra {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_orden")
-    private Long idOrden;
+    private Integer idOrden;
 
     @Column(name = "fecha_orden")
     private LocalDateTime fechaOrden;
@@ -31,8 +31,8 @@ public class OrdenCompra {
 
     public OrdenCompra() {}
 
-    public Long getIdOrden() { return idOrden; }
-    public void setIdOrden(Long idOrden) { this.idOrden = idOrden; }
+    public Integer getIdOrden() { return idOrden; }
+    public void setIdOrden(Integer idOrden) { this.idOrden = idOrden; }
     public LocalDateTime getFechaOrden() { return fechaOrden; }
     public void setFechaOrden(LocalDateTime fechaOrden) { this.fechaOrden = fechaOrden; }
     public Double getTotal() { return total; }

@@ -43,7 +43,7 @@ public class DescuentoService {
     }
 
     @Transactional
-    public void eliminar(Long id) {
+    public void eliminar(Integer id) {
         descuentoRepository.deleteById(id);
     }
 }

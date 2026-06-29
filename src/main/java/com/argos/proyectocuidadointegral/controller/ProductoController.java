@@ -28,7 +28,7 @@ public class ProductoController {
             @RequestParam(required = false) String searchTerm,
             @RequestParam(required = false) String categoriaFilter,
             @RequestParam(required = false) String action,
-            @RequestParam(required = false) Long id,
+            @RequestParam(required = false) Integer id,
             Model model) {
 
         List<Producto> productos;
@@ -60,7 +60,7 @@ public class ProductoController {
 
     @PostMapping("/productos/guardar")
     public String guardarProducto(@ModelAttribute("producto") Producto producto,
-                                  @RequestParam(required = false) Long proveedorId) {
+                                  @RequestParam(required = false) Integer proveedorId) {
         if (proveedorId != null) {
             proveedorService.buscarPorId(proveedorId).ifPresent(producto::setProveedor);
         }
@@ -69,7 +69,7 @@ public class ProductoController {
     }
 
     @GetMapping("/productos/eliminar/{id}")
-    public String eliminarProducto(@PathVariable Long id) {
+    public String eliminarProducto(@PathVariable Integer id) {
         productoService.eliminar(id);
         return "redirect:/productos";
     }

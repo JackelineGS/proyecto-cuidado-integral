@@ -3,6 +3,7 @@ package com.argos.proyectocuidadointegral.mapper;
 import com.argos.proyectocuidadointegral.dto.DetalleOrdenDTO;
 import com.argos.proyectocuidadointegral.dto.OrdenCompraDTO;
 import com.argos.proyectocuidadointegral.model.OrdenCompra;
+import com.argos.proyectocuidadointegral.model.DetalleOrden;
 import org.springframework.stereotype.Component;
 import java.util.stream.Collectors;
 

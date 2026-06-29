@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MovimientoStockRepository extends JpaRepository<MovimientoStock, Long> {
-    List<MovimientoStock> findByProductoIdProducto(Long idProducto);
+public interface MovimientoStockRepository extends JpaRepository<MovimientoStock, Integer> {
+    List<MovimientoStock> findByProductoIdProducto(Integer idProducto);
     List<MovimientoStock> findByTipo(String tipo);
 }

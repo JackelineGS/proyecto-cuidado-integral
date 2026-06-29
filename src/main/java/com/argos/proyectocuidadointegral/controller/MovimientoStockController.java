@@ -25,7 +25,7 @@ public class MovimientoStockController {
     }
 
     @GetMapping("/stock/movimientos/{idProducto}")
-    public String movimientosPorProducto(@PathVariable Long idProducto, Model model) {
+    public String movimientosPorProducto(@PathVariable Integer idProducto, Model model) {
         model.addAttribute("movimientos", movimientoStockService.listarPorProducto(idProducto));
         productoService.buscarPorId(idProducto).ifPresent(p -> model.addAttribute("producto", p));
         return "stock/movimientos";
@@ -33,7 +33,7 @@ public class MovimientoStockController {
 
 
     @PostMapping("/stock/ajustar")
-    public String ajustarStock(@RequestParam Long idProducto,
+    public String ajustarStock(@RequestParam Integer idProducto,
                                @RequestParam String tipo,
                                @RequestParam Integer cantidad,
                                @RequestParam String motivo) {

@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 
 public class MovimientoStockDTO {
 
-    private Long idMovimiento;
-    private Long idProducto;
+    private Integer idMovimiento;
+    private Integer idProducto;
     private String nombreProducto;
     private String tipo;
     private Integer cantidad;
@@ -14,10 +14,10 @@ public class MovimientoStockDTO {
 
     public MovimientoStockDTO() {}
 
-    public Long getIdMovimiento() { return idMovimiento; }
-    public void setIdMovimiento(Long idMovimiento) { this.idMovimiento = idMovimiento; }
-    public Long getIdProducto() { return idProducto; }
-    public void setIdProducto(Long idProducto) { this.idProducto = idProducto; }
+    public Integer getIdMovimiento() { return idMovimiento; }
+    public void setIdMovimiento(Integer idMovimiento) { this.idMovimiento = idMovimiento; }
+    public Integer getIdProducto() { return idProducto; }
+    public void setIdProducto(Integer idProducto) { this.idProducto = idProducto; }
     public String getNombreProducto() { return nombreProducto; }
     public void setNombreProducto(String nombreProducto) { this.nombreProducto = nombreProducto; }
     public String getTipo() { return tipo; }

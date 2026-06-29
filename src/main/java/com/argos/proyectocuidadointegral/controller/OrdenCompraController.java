@@ -24,20 +24,20 @@ public class OrdenCompraController {
     }
 
     @GetMapping("/ordenes/{id}")
-    public String detalleOrden(@PathVariable Long id, Model model) {
+    public String detalleOrden(@PathVariable Integer id, Model model) {
         ordenCompraService.buscarPorId(id).ifPresent(o -> model.addAttribute("orden", o));
         return "ordenes/detalle";
     }
 
 
     @PostMapping("/ordenes/{id}/confirmar")
-    public String confirmarOrden(@PathVariable Long id) {
+    public String confirmarOrden(@PathVariable Integer id) {
         ordenCompraService.confirmarOrden(id);
         return "redirect:/ordenes";
     }
 
     @PostMapping("/ordenes/{id}/cancelar")
-    public String cancelarOrden(@PathVariable Long id) {
+    public String cancelarOrden(@PathVariable Integer id) {
         ordenCompraService.cancelarOrden(id);
         return "redirect:/ordenes";
     }

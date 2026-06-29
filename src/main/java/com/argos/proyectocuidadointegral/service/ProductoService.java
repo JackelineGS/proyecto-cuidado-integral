@@ -22,7 +22,7 @@ public class ProductoService {
         return productoRepository.findAll();
     }
 
-    public Optional<Producto> buscarPorId(Long id) {
+    public Optional<Producto> buscarPorId(Integer id) {
         return productoRepository.findById(id);
     }
 
@@ -55,12 +55,12 @@ public class ProductoService {
     }
 
     @Transactional
-    public void eliminar(Long id) {
+    public void eliminar(Integer id) {
         productoRepository.deleteById(id);
     }
 
     @Transactional
-    public void actualizarStock(Long idProducto, int cantidad, String tipo) {
+    public void actualizarStock(Integer idProducto, int cantidad, String tipo) {
         Producto producto = productoRepository.findById(idProducto)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
         if ("ENTRADA".equals(tipo)) {

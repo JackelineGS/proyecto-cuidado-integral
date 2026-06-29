@@ -6,7 +6,7 @@ import com.argos.proyectocuidadointegral.enums.UnidadMedida;
 
 public class ProductoDTO {
 
-    private Long idProducto;
+    private Integer idProducto;
     private String nombre;
     private String descripcion;
     private Double precio;
@@ -20,8 +20,8 @@ public class ProductoDTO {
 
     public ProductoDTO() {}
 
-    public Long getIdProducto() { return idProducto; }
-    public void setIdProducto(Long idProducto) { this.idProducto = idProducto; }
+    public Integer getIdProducto() { return idProducto; }
+    public void setIdProducto(Integer idProducto) { this.idProducto = idProducto; }
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
     public String getDescripcion() { return descripcion; }

@@ -10,21 +10,21 @@ import java.util.Map;
 public class CarritoService {
 
     private final ProductoRepository productoRepository;
-    private final Map<Long, Integer> carrito = new HashMap<>();
+    private final Map<Integer, Integer> carrito = new HashMap<>();
 
     public CarritoService(ProductoRepository productoRepository) {
         this.productoRepository = productoRepository;
     }
 
-    public void agregarProducto(Long idProducto, int cantidad) {
+    public void agregarProducto(Integer idProducto, int cantidad) {
         carrito.merge(idProducto, cantidad, Integer::sum);
     }
 
-    public void quitarProducto(Long idProducto) {
+    public void quitarProducto(Integer idProducto) {
         carrito.remove(idProducto);
     }
 
-    public void actualizarCantidad(Long idProducto, int cantidad) {
+    public void actualizarCantidad(Integer idProducto, int cantidad) {
         if (cantidad <= 0) {
             carrito.remove(idProducto);
         } else {
@@ -32,13 +32,13 @@ public class CarritoService {
         }
     }
 
-    public Map<Long, Integer> getCarrito() {
+    public Map<Integer, Integer> getCarrito() {
         return carrito;
     }
 
     public double calcularTotal() {
         double total = 0.0;
-        for (Map.Entry<Long, Integer> entry : carrito.entrySet()) {
+        for (Map.Entry<Integer, Integer> entry : carrito.entrySet()) {
             Producto p = productoRepository.findById(entry.getKey()).orElse(null);
             if (p != null) {
                 total += p.getPrecio() * entry.getValue();

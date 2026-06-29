@@ -22,13 +22,13 @@ public class CarritoController {
     }
 
     @PostMapping("/carrito/agregar")
-    public String agregar(@RequestParam Long idProducto, @RequestParam int cantidad) {
+    public String agregar(@RequestParam Integer idProducto, @RequestParam int cantidad) {
         carritoService.agregarProducto(idProducto, cantidad);
         return "redirect:/carrito";
     }
 
     @PostMapping("/carrito/quitar")
-    public String quitar(@RequestParam Long idProducto) {
+    public String quitar(@RequestParam Integer idProducto) {
         carritoService.quitarProducto(idProducto);
         return "redirect:/carrito";
     }

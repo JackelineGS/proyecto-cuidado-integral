@@ -10,7 +10,7 @@ public class MovimientoStock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_movimiento")
-    private Long idMovimiento;
+    private Integer idMovimiento;
 
     @ManyToOne
     @JoinColumn(name = "id_producto")
@@ -30,8 +30,8 @@ public class MovimientoStock {
 
     public MovimientoStock() {}
 
-    public Long getIdMovimiento() { return idMovimiento; }
-    public void setIdMovimiento(Long idMovimiento) { this.idMovimiento = idMovimiento; }
+    public Integer getIdMovimiento() { return idMovimiento; }
+    public void setIdMovimiento(Integer idMovimiento) { this.idMovimiento = idMovimiento; }
     public Producto getProducto() { return producto; }
     public void setProducto(Producto producto) { this.producto = producto; }
     public String getTipo() { return tipo; }

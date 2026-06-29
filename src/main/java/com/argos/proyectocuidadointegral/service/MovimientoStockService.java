@@ -25,12 +25,12 @@ public class MovimientoStockService {
         return movimientoStockRepository.findAll();
     }
 
-    public List<MovimientoStock> listarPorProducto(Long idProducto) {
+    public List<MovimientoStock> listarPorProducto(Integer idProducto) {
         return movimientoStockRepository.findByProductoIdProducto(idProducto);
     }
 
     @Transactional
-    public MovimientoStock registrarMovimiento(Long idProducto, String tipo,
+    public MovimientoStock registrarMovimiento(Integer idProducto, String tipo,
                                                Integer cantidad, String motivo) {
         Producto producto = productoRepository.findById(idProducto)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));

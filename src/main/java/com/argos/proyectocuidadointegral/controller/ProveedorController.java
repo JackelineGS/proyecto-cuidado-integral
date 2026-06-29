@@ -21,7 +21,7 @@ public class ProveedorController {
     public String listarProveedores(
             @RequestParam(required = false) String searchTerm,
             @RequestParam(required = false) String action,
-            @RequestParam(required = false) Long id,
+            @RequestParam(required = false) Integer id,
             Model model) {
 
         List<Proveedor> proveedores = (searchTerm != null && !searchTerm.isBlank())
@@ -48,7 +48,7 @@ public class ProveedorController {
     }
 
     @GetMapping("/proveedores/eliminar/{id}")
-    public String eliminarProveedor(@PathVariable Long id) {
+    public String eliminarProveedor(@PathVariable Integer id) {
         proveedorService.eliminar(id);
         return "redirect:/proveedores";
     }
