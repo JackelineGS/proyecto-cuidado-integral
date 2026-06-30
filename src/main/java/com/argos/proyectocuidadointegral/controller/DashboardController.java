@@ -1,5 +1,6 @@
 package com.argos.proyectocuidadointegral.controller;
 
+import com.argos.proyectocuidadointegral.service.OrdenCompraService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,11 @@ import java.util.Map;
 @Controller
 public class DashboardController {
 
+    private final OrdenCompraService ordenCompraService; // inyectar esto
+
+    public DashboardController(OrdenCompraService ordenCompraService) {
+        this.ordenCompraService = ordenCompraService;
+    }
     @GetMapping("/dashboard")
     public String verDashboard(Model model) {
 
@@ -18,6 +24,7 @@ public class DashboardController {
         model.addAttribute("todayAppointments", new ArrayList<>());
         model.addAttribute("adoptionRequests", new ArrayList<>());
         model.addAttribute("purchases", new ArrayList<>());
+        model.addAttribute("purchases", ordenCompraService.listarTodasMapeadas());
 
         // 2. Valores por defecto para los contadores estadísticos de las tarjetas
         model.addAttribute("unreadRequestsCount", 0);

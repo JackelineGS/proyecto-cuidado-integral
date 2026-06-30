@@ -29,3 +29,4 @@ public class HistoriaClinica {
     public List<AtencionMedica> getAtenciones() { return atenciones; }
     public void setAtenciones(List<AtencionMedica> atenciones) { this.atenciones = atenciones; }
 }
+

@@ -18,32 +18,78 @@
 
     <div th:if="${showForm}" class="bg-white rounded-[20px] p-6 border border-[#e8e4de] shadow-sm animate-fade-in">
         <h3 class="font-['Playfair_Display'] font-bold text-[20px] text-[#085041] mb-4"
-            th:text="${producto.id != null} ? 'Editar Producto' : 'Nuevo Producto'">
+            th:text="${producto.idProducto != null} ? 'Editar Producto' : 'Nuevo Producto'">
             Nuevo Producto
         </h3>
 
         <form th:action="@{/productos/guardar}" th:object="${producto}" method="post" class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-            <input type="hidden" th:field="*{id}" />
+            <input type="hidden" th:field="*{idProducto}" />
 
             <div>
                 <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Nombre</label>
-                <input type="text" th:field="*{name}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required />
+                <input type="text" th:field="*{nombre}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required />
             </div>
 
             <div>
                 <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Precio (S/)</label>
-                <input type="number" step="0.01" th:field="*{price}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required />
+                <input type="number" step="0.01" th:field="*{precio}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required />
             </div>
 
             <div>
                 <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Cantidad (Stock)</label>
-                <input type="number" th:field="*{quantity}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required />
+                <input type="number" th:field="*{stock}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required />
+            </div>
+
+            <div>
+                <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Stock Mínimo</label>
+                <input type="number" th:field="*{stockMinimo}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" />
+            </div>
+
+            <div>
+                <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Categoría</label>
+                <select th:field="*{categoria}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]">
+                    <option value="">Seleccionar...</option>
+                    <option th:each="cat : ${categorias}" th:value="${cat}" th:text="${cat}"></option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Estado</label>
+                <select th:field="*{estado}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]">
+                    <option value="">Seleccionar...</option>
+                    <option th:each="est : ${estados}" th:value="${est}" th:text="${est}"></option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Unidad de Medida</label>
+                <select th:field="*{unidadMedida}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]">
+                    <option value="">Seleccionar...</option>
+                    <option th:each="uni : ${unidades}" th:value="${uni}" th:text="${uni}"></option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Proveedor</label>
+                <select name="proveedorId" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]">
+                    <option value="">Sin proveedor</option>
+                    <option th:each="prov : ${proveedores}"
+                            th:value="${prov.idProveedor}"
+                            th:text="${prov.nombre}"
+                            th:selected="${producto.proveedor != null and producto.proveedor.idProveedor == prov.idProveedor}">
+                    </option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">URL de Imagen</label>
+                <input type="text" th:field="*{imagenUrl}" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" />
             </div>
 
             <div class="col-span-1 md:col-span-2">
                 <label class="block font-['DM_Sans'] text-[14px] text-[#5f5e5a] mb-2">Descripción</label>
-                <textarea th:field="*{description}" rows="3" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]" required></textarea>
+                <textarea th:field="*{descripcion}" rows="3" class="w-full px-4 py-2 border border-[#e8e4de] rounded-[12px] font-['DM_Sans'] text-[14px] focus:outline-none focus:border-[#1d9e75]"></textarea>
             </div>
 
             <div class="col-span-1 md:col-span-2 flex gap-4 justify-end mt-2">
@@ -61,39 +107,50 @@
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-        <div th:if="${#lists.isEmpty(products)}" class="col-span-1 sm:col-span-2 lg:col-span-3 bg-white rounded-[20px] p-10 text-center border border-[#e8e4de]">
+        <div th:if="${#lists.isEmpty(productos)}" class="col-span-1 sm:col-span-2 lg:col-span-3 bg-white rounded-[20px] p-10 text-center border border-[#e8e4de]">
             <p class="font-['DM_Sans'] text-[14px] text-[#5f5e5a]">No hay productos registrados en el inventario.</p>
         </div>
 
-        <div th:unless="${#lists.isEmpty(products)}"
-             th:each="product : ${products}"
+        <div th:unless="${#lists.isEmpty(productos)}"
+             th:each="producto : ${productos}"
              class="bg-white rounded-[20px] p-6 border border-[#e8e4de] shadow-sm flex flex-col justify-between group hover:shadow-md transition-shadow">
 
             <div>
                 <div class="flex justify-between items-start mb-4">
-                    <div class="text-[40px] select-none">📦</div>
-                    <a th:href="@{/productos(action='editar', id=${product.id})}"
+                    <div th:if="${producto.imagenUrl != null and !#strings.isEmpty(producto.imagenUrl)}">
+                        <img th:src="${producto.imagenUrl}" alt="Imagen del producto"
+                             class="w-16 h-16 object-cover rounded-[12px]" />
+                    </div>
+                    <div th:unless="${producto.imagenUrl != null and !#strings.isEmpty(producto.imagenUrl)}"
+                         class="text-[40px] select-none">📦</div>
+
+                    <a th:href="@{/productos(action='editar', id=${producto.idProducto})}"
                        class="text-[#1d9e75] hover:text-[#158963] transition-colors p-1"
                        title="Editar producto">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
                     </a>
                 </div>
 
-                <h3 class="font-['DM_Sans'] font-semibold text-[16px] text-[#2c2c2a] mb-2" th:text="${product.name}">
+                <h3 class="font-['DM_Sans'] font-semibold text-[16px] text-[#2c2c2a] mb-2" th:text="${producto.nombre}">
                     Nombre del Producto
                 </h3>
 
-                <p class="font-['DM_Sans'] text-[13px] text-[#5f5e5a] mb-4 line-clamp-2" th:text="${product.description}">
+                <p class="font-['DM_Sans'] text-[13px] text-[#5f5e5a] mb-4 line-clamp-2" th:text="${producto.descripcion}">
                     Descripción del producto...
                 </p>
+
+                <span th:if="${producto.categoria != null}"
+                      class="inline-block bg-[#f0faf6] text-[#1d9e75] text-[12px] font-['DM_Sans'] px-3 py-1 rounded-full mb-2"
+                      th:text="${producto.categoria}">
+                </span>
             </div>
 
             <div class="flex justify-between items-center pt-2 border-t border-[#f7f3ee]">
                 <p class="font-['Playfair_Display'] font-bold text-[20px] text-[#1d9e75]"
-                   th:text="'S/ ' + ${#numbers.formatDecimal(product.price, 1, 2, 'POINT')}">
+                   th:text="'S/ ' + ${#numbers.formatDecimal(producto.precio, 1, 2, 'POINT')}">
                     S/ 0.00
                 </p>
-                <p class="font-['DM_Sans'] text-[14px] text-[#5f5e5a]" th:text="'Stock: ' + ${product.quantity}">
+                <p class="font-['DM_Sans'] text-[14px] text-[#5f5e5a]" th:text="'Stock: ' + ${producto.stock}">
                     Stock: 0
                 </p>
             </div>

@@ -161,31 +161,41 @@
                 <tr th:each="p, iter : ${purchases}"
                     class="border-b border-[#f7f3ee]"
                     th:classappend="${iter.index % 2 == 0} ? '' : 'bg-[#fafafa]'">
+
                     <td class="py-3 pr-4 font-['DM_Sans'] text-[12px] text-[#5f5e5a]"
-                        th:text="${'#' + #strings.toUpperCase(#strings.substring(p.id, p.id.length() - 6))}">
-                        #A1B2C3
+                        th:text="${'#' + #numbers.formatInteger(p.idOrden, 6)}">
+                        #000001
                     </td>
+
                     <td class="py-3 pr-4 font-['DM_Sans'] text-[13px] text-[#2c2c2a] font-semibold max-w-[160px] truncate"
-                        th:text="${p.productName}">
+                        th:text="${p.detalles != null and !p.detalles.isEmpty()} ? ${p.detalles[0].nombreProducto} : 'Sin producto'">
                         Comida de Gato
                     </td>
-                    <td class="py-3 pr-4 font-['DM_Sans'] text-[13px] text-[#5f5e5a] text-center" th:text="${p.quantity}">
+
+                    <td class="py-3 pr-4 font-['DM_Sans'] text-[13px] text-[#5f5e5a] text-center"
+                        th:text="${p.detalles != null and !p.detalles.isEmpty()} ? ${p.detalles[0].cantidad} : '0'">
                         1
                     </td>
-                    <td class="py-3 pr-4 font-['DM_Sans'] text-[13px] text-[#2c2c2a]" th:text="${p.buyerName}">Carlos</td>
-                    <td class="py-3 pr-4 font-['DM_Sans'] text-[12px] text-[#5f5e5a]" th:text="${p.buyerEmail}">carlos@mail.com</td>
+
+                    <td class="py-3 pr-4 font-['DM_Sans'] text-[13px] text-[#2c2c2a]"
+                        th:text="${p.nombreCliente != null} ? ${p.nombreCliente} : 'Cliente Anónimo'">Carlos</td>
+
+                    <td class="py-3 pr-4 font-['DM_Sans'] text-[12px] text-[#5f5e5a]">cliente@mail.com</td>
+
                     <td class="py-3 pr-4">
                         <span class="inline-block px-2 py-0.5 bg-[#e1f5ee] text-[#085041] rounded-full font-['DM_Sans'] text-[11px] font-semibold"
-                              th:text="${methodLabels.get(p.paymentMethod)}">
-                                Tarjeta
-                            </span>
+                        th:text="${p.estado}">
+                        COMPLETADO
+                        </span>
                     </td>
+
                     <td class="py-3 pr-4 font-['Playfair_Display'] font-bold text-[14px] text-[#085041]"
                         th:text="${'S/ ' + #numbers.formatDecimal(p.total, 1, 2, 'POINT')}">
                         S/ 0.00
                     </td>
+
                     <td class="py-3 font-['DM_Sans'] text-[12px] text-[#5f5e5a]"
-                        th:text="${#temporals.format(p.date, 'dd/MM/yyyy', 'es-PE')}">
+                        th:text="${#temporals.format(p.fechaOrden, 'dd/MM/yyyy')}">
                         12/06/2026
                     </td>
                 </tr>

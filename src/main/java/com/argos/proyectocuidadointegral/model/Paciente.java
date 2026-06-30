@@ -51,14 +51,19 @@ public class Paciente {
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
 
-    public Cliente getCliente() { return cliente; }
-    public void setCliente(Cliente cliente) { this.cliente = cliente; }
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
 
     public HistoriaClinica getHistoriaClinica() {
         return historiaClinica;
     }
+
     public void setHistoriaClinica(HistoriaClinica historiaClinica) {
         this.historiaClinica = historiaClinica;
     }
-
 }
