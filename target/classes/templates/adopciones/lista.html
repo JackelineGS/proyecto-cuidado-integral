@@ -167,8 +167,10 @@
                             <span><i class="fa-solid fa-phone text-[#1d9e75] mr-1"></i><span th:text="${req.phone}">telefono</span></span>
                             <span><i class="fa-solid fa-location-dot text-[#1d9e75] mr-1"></i><span th:text="${req.district}">distrito</span></span>
                         </div>
-                        <p class="font-['DM_Sans'] text-[11px] text-[#b0aba3] mt-2"
-                           th:text="${#temporals.format(req.createdAt, 'dd/MM/yyyy, HH:mm:ss', 'es-PE')}">fecha</p>
+                        <td class="py-3 font-['DM_Sans'] text-[12px] text-[#5f5e5a]"
+                            th:text="${req.createdAt != null ? #temporals.format(req.createdAt, 'dd/MM/yyyy, HH:mm:ss') : 'Sin fecha'}">
+                            fecha
+                        </td>
                     </div>
                 </div>
 
