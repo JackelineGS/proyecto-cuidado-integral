@@ -1,7 +1,9 @@
 package com.argos.proyectocuidadointegral.controller;
 
+import com.argos.proyectocuidadointegral.model.HistoriaClinica;
 import com.argos.proyectocuidadointegral.model.Paciente;
 import com.argos.proyectocuidadointegral.model.Cliente;
+import com.argos.proyectocuidadointegral.repository.HistoriaClinicaRepository;
 import com.argos.proyectocuidadointegral.repository.PacienteRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +18,12 @@ public class PacienteController {
 
     private final PacienteRepository pacienteRepository;
     private final EntityManager entityManager;
+    private final HistoriaClinicaRepository historiaClinicaRepository;
 
-    public PacienteController(PacienteRepository pacienteRepository, EntityManager entityManager) {
+    public PacienteController(PacienteRepository pacienteRepository, EntityManager entityManager, HistoriaClinicaRepository historiaClinicaRepository) {
         this.pacienteRepository = pacienteRepository;
         this.entityManager = entityManager;
+        this.historiaClinicaRepository = historiaClinicaRepository;
     }
 
     @GetMapping("/pacientes")
@@ -71,7 +75,14 @@ public class PacienteController {
     @GetMapping("/pacientes/detalle/{id}")
     public String verDetalle(@PathVariable Integer id, Model model) {
         Paciente paciente = pacienteRepository.findById(id).orElse(null);
-        model.addAttribute("patient", paciente);
+        model.addAttribute("paciente", paciente);
+        if (paciente != null) {
+            // Buscamos su historial o lo inicializamos si está vacío en Neon
+            HistoriaClinica historia = historiaClinicaRepository.findByPacienteId(id)
+                    .orElseGet(() -> historiaClinicaRepository.save(new HistoriaClinica(paciente)));
+
+            model.addAttribute("historia", historia);
+        }
         return "pacientes/detalle";
     }
 }

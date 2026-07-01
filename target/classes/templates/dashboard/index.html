@@ -32,18 +32,18 @@
                     <div class="flex items-start justify-between">
                         <div class="flex-1">
                             <p class="font-['DM_Sans'] font-semibold text-[16px] text-[#085041]"
-                               th:text="${apt.time + ' - ' + apt.patientName}">
+                               th:text="${apt.hora + ' - ' + apt.pacienteNombre}">
                                 09:00 AM - Firulais
                             </p>
                             <p class="font-['DM_Sans'] text-[14px] text-[#5f5e5a] mt-1">
-                                Dueño: <span th:text="${apt.clientName}">Juan Pérez</span>
+                                Dueño: <span th:text="${apt.clienteNombre}">Juan Pérez</span>
                             </p>
                             <p class="font-['DM_Sans'] text-[14px] text-[#5f5e5a]">
                                 Doctor: <span th:text="${apt.doctor}">Dr. Silva</span>
                             </p>
-                            <p th:if="${apt.consultationReason != null}"
+                            <p th:if="${apt.motivoConsulta != null}"
                                class="font-['DM_Sans'] text-[12px] text-[#5f5e5a] mt-2 italic"
-                               th:text="${'Motivo: ' + apt.consultationReason}">
+                               th:text="${'Motivo: ' + apt.motivoConsulta}">
                                 Motivo: Chequeo general
                             </p>
                         </div>

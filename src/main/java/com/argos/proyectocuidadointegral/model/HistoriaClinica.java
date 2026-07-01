@@ -12,14 +12,18 @@ public class HistoriaClinica {
     private Integer id;
 
     @OneToOne  // Relación OneToOne con Paciente
-    @JoinColumn(name = "id_paciente", nullable = false)
+    @JoinColumn(name = "id_paciente", unique = true, nullable = false)
     private Paciente paciente;
 
     // Una Historia Clínica tiene muchos Atenciones
     @OneToMany(mappedBy = "historiaClinica", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AtencionMedica> atenciones = new ArrayList<>();
+    public HistoriaClinica() {
+    }
 
-    public HistoriaClinica() {}
+    public HistoriaClinica(Paciente paciente) {
+        this.paciente = paciente;
+    }
 
     // Getters y Setters
     public Integer getId() { return id; }

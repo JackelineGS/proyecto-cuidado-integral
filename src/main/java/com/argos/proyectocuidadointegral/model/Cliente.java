@@ -34,7 +34,6 @@ public class Cliente {
 
     public Cliente() {}
 
-    // Getters y Setters
     public Integer getIdCliente() { return idCliente; }
     public void setIdCliente(Integer idCliente) { this.idCliente = idCliente; }
     public String getNombre() { return nombre; }
@@ -49,4 +48,5 @@ public class Cliente {
     public void setDni(Integer dni) { this.dni = dni; }
     public List<Paciente> getPacientes() { return pacientes; }
     public void setPacientes(List<Paciente> pacientes) { this.pacientes = pacientes; }
+
 }

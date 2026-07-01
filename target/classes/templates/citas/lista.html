@@ -16,9 +16,9 @@
                     Atención Médica
                 </h2>
                 <p class="font-['DM_Sans'] text-[14px] text-[#5f5e5a] mt-1">
-                    Paciente: <strong class="text-[#2c2c2a]" th:text="${medicalAppt.patientName}">Firulais</strong>
-                    &nbsp;·&nbsp;Cliente: <strong class="text-[#2c2c2a]" th:text="${medicalAppt.clientName}">Juan Pérez</strong>
-                    &nbsp;·&nbsp;Fecha: <strong class="text-[#2c2c2a]" th:text="${#temporals.format(medicalAppt.date, 'dd/MM/yyyy', 'es-PE')}">11/06/2026</strong>
+                    Paciente: <strong class="text-[#2c2c2a]" th:text="${medicalAppt.pacienteNombre}">Firulais</strong>
+                    &nbsp;·&nbsp;Cliente: <strong class="text-[#2c2c2a]" th:text="${medicalAppt.clienteNombre}">Juan Pérez</strong>
+                    &nbsp;·&nbsp;Fecha: <strong class="text-[#2c2c2a]" th:text="${medicalAppt.fecha != null ? #temporals.format(medicalAppt.fecha, 'dd/MM/yyyy') : ''}">11/06/2026</strong>
                     &nbsp;·&nbsp;Dr.: <strong class="text-[#2c2c2a]" th:text="${medicalAppt.doctor}">Dr. Silva</strong>
                 </p>
             </div>
@@ -30,7 +30,7 @@
         <form th:action="@{/citas/atencion/guardar}" th:object="${atencionMedica}" method="post" class="space-y-4">
             <input type="hidden" th:field="*{id}" />
             <input type="hidden" name="appointmentId" th:value="${medicalAppt.id}" />
-            <input type="hidden" name="patientName" th:value="${medicalAppt.patientName}" />
+            <input type="hidden" name="patientName" th:value="${medicalAppt.pacienteNombre}" />
 
             <section class="bg-white rounded-[20px] border border-[#e8e4de] overflow-hidden">
                 <div class="px-6 py-4 bg-[#f7f3ee]">
@@ -215,14 +215,15 @@
                     <tr th:if="${#lists.isEmpty(appointments)}"><td colspan="7" class="px-5 py-8 text-center text-gray-500 font-['DM_Sans'] text-[14px]">No hay citas registradas.</td></tr>
 
                     <tr th:unless="${#lists.isEmpty(appointments)}" th:each="appt, iter : ${appointments}" class="border-t border-[#e8e4de]" th:classappend="${iter.index % 2 == 0} ? 'bg-white' : 'bg-[#fafafa]'">
-                        <td class="px-5 py-4 font-['DM_Sans'] text-[14px] text-[#2c2c2a]" th:text="${appt.clientName}">Cliente</td>
-                        <td class="px-5 py-4 font-['DM_Sans'] text-[14px] text-[#5f5e5a]" th:text="${appt.patientName}">Paciente</td>
+                        <td class="px-5 py-4 font-['DM_Sans'] text-[14px] text-[#2c2c2a]" th:text="${appt.clienteNombre}">Cliente</td>
+                        <td class="px-5 py-4 font-['DM_Sans'] text-[14px] text-[#5f5e5a]" th:text="${appt.pacienteNombre}">Paciente</td>
                         <td class="px-5 py-4 font-['DM_Sans'] text-[14px] text-[#5f5e5a]" th:text="${appt.doctor}">Veterinario</td>
-                        <td class="px-5 py-4 font-['DM_Sans'] text-[14px] text-[#5f5e5a]" th:text="${#temporals.format(appt.date, 'dd/MM/yyyy', 'es-PE')}">01/01/2026</td>
-                        <td class="px-5 py-4 font-['DM_Sans'] text-[14px] text-[#5f5e5a]" th:text="${appt.time}">09:00 AM</td>
+                        <td class="px-5 py-4 font-['DM_Sans'] text-[14px] text-[#5f5e5a]" th:text="${appt.fecha != null ? #temporals.format(appt.fecha, 'dd/MM/yyyy') : ''}">01/01/2026</td>
+                        <td class="px-5 py-4 font-['DM_Sans'] text-[14px] text-[#5f5e5a]" th:text="${appt.hora}">09:00 AM</td>
                         <td class="px-5 py-4">
-                                <span class="px-3 py-1 rounded-full font-['DM_Sans'] text-[12px] font-semibold"
-                                      th:classappend="${appt.status == 'Pendiente'} ? 'bg-yellow-100 text-yellow-700' : (${appt.status == 'Atendido'} ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700')"
+                                <span class="inline-block px-3 py-1 rounded-[20px] font-['DM_Sans'] text-[12px] font-medium"
+                                      th:classappend="${appt.status == 'PENDIENTE' ? 'bg-yellow-100 text-yellow-700' :
+                                                       (appt.status == 'ATENDIDO' ? 'bg-[#e1f5ee] text-[#085041]' : 'bg-red-100 text-red-700')}"
                                       th:text="${appt.status}">
                                     Pendiente
                                 </span>
@@ -233,10 +234,11 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
                                 </a>
 
-                                <a th:if="${appt.hasMedicalRecord}" th:href="@{/citas/atencion(apptId=${appt.id})}" class="flex items-center gap-1 bg-[#085041] text-white font-['DM_Sans'] text-[12px] font-semibold px-3 py-1 rounded-[20px] hover:bg-[#063830] transition-colors whitespace-nowrap">
+                                <a th:if="${appt.tieneHistorialMedico}" th:href="@{/citas/atencion(apptId=${appt.id})}" class="flex items-center gap-1 bg-[#085041] text-white font-['DM_Sans'] text-[12px] font-semibold px-3 py-1 rounded-[20px] hover:bg-[#063830] transition-colors whitespace-nowrap">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg> Editar Atención
                                 </a>
-                                <a th:if="${!appt.hasMedicalRecord && appt.status == 'Pendiente'}" th:href="@{/citas/atencion(apptId=${appt.id})}" class="flex items-center gap-1 bg-[#085041] text-white font-['DM_Sans'] text-[12px] font-semibold px-3 py-1 rounded-[20px] hover:bg-[#063830] transition-colors whitespace-nowrap">
+
+                                <a th:if="${!appt.tieneHistorialMedico && appt.status == 'Pendiente'}" th:href="@{/citas/atencion(apptId=${appt.id})}" class="flex items-center gap-1 bg-[#085041] text-white font-['DM_Sans'] text-[12px] font-semibold px-3 py-1 rounded-[20px] hover:bg-[#063830] transition-colors whitespace-nowrap">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg> Iniciar Atención
                                 </a>
                             </div>

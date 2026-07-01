@@ -35,6 +35,10 @@ public class AtencionMedica {
     @OneToMany(mappedBy = "atencionMedica", cascade = CascadeType.ALL)
     private List<Vacunacion> vacunaciones = new ArrayList<>();
 
+    @OneToOne
+    @JoinColumn(name = "id_cita")
+    private Cita cita;
+
     public AtencionMedica() {}
 
     public Integer getId() { return id; }
