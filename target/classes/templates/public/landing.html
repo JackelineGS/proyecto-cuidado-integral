@@ -178,11 +178,11 @@
             <div th:each="pet : ${adoptionPets}" class="bg-[rgba(255,255,255,0.08)] border border-[rgba(255,255,255,0.15)] rounded-[20px] p-5 flex flex-col justify-between">
                 <div>
                     <div class="bg-gray-700 rounded-[20px] h-[113px] mb-4 overflow-hidden shadow-inner">
-                        <img th:src="@{/images/pets/{name}.png(name=${#strings.toLowerCase(pet.name)})}" th:alt="${pet.name}" class="w-full h-full object-cover" onerror="this.src='/images/default-pet.png'" />
+                        <img th:src="@{/images/pets/{name}.png(name=${#strings.toLowerCase(pet.nombre)})}" th:alt="${pet.nombre}" class="w-full h-full object-cover" onerror="this.src='/images/default-pet.png'" />
                     </div>
-                    <h3 class="font-['Playfair_Display'] text-[17.6px] text-center mb-2" th:text="${pet.name}">Mascota</h3>
+                    <h3 class="font-['Playfair_Display'] text-[17.6px] text-center mb-2" th:text="${pet.nombre}">Mascota</h3>
                     <p class="font-['DM_Sans'] text-[12.8px] text-[rgba(255,255,255,0.6)] text-center mb-4"
-                       th:text="${pet.breed} + ' · ' + ${pet.age} + ' · ' + ${pet.sex}">
+                       th:text="${pet.raza} + ' · ' + ${pet.edad} + ' años · ' + ${pet.sexo}">
                         Raza · Edad · Sexo
                     </p>
                 </div>
@@ -207,14 +207,19 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             <div th:each="product : ${products}" class="bg-white rounded-[20px] p-6 border border-[#e8e4de] flex flex-col justify-between">
                 <div>
-                    <div class="text-[40px] mb-4 select-none">🥩</div>
-                    <h3 class="font-['DM_Sans'] font-medium text-[16px] text-[#2c2c2a] mb-2" th:text="${product.name}">Producto</h3>
-                    <p class="font-['DM_Sans'] text-[13.12px] leading-[19.68px] text-[#5f5e5a] mb-4 line-clamp-3" th:text="${product.description}">Descripción...</p>
+                    <div class="text-[40px] mb-4 select-none" th:switch="${product.categoria?.name()}">
+                        <span th:case="'ALIMENTO'">🥩</span>
+                        <span th:case="'MEDICAMENTO'">💊</span>
+                        <span th:case="'HIGIENE'">🧴</span>
+                        <span th:case="*">📦</span> </div>
+
+                    <h3 class="font-['DM_Sans'] font-medium text-[16px] text-[#2c2c2a] mb-2" th:text="${product.nombre}">Producto</h3>
+                    <p class="font-['DM_Sans'] text-[13.12px] leading-[19.68px] text-[#5f5e5a] mb-4 line-clamp-3" th:text="${product.descripcion}">Descripción...</p>
                 </div>
                 <div class="flex items-center justify-between mt-2 pt-2 border-t border-[#f7f3ee]">
                     <p class="font-['Playfair_Display'] font-bold text-[19.2px] text-[#1d9e75]"
-                       th:text="'S/ ' + ${#numbers.formatDecimal(product.price, 1, 2, 'POINT')}">S/ 0.00</p>
-                    <a th:href="'https://wa.me/51999999999?text=Hola,%20deseo%20comprar%20el%20producto:%20' + ${product.name}"
+                       th:text="'S/ ' + ${#numbers.formatDecimal(product.precio, 1, 2, 'POINT')}">S/ 0.00</p>
+                    <a th:href="'https://wa.me/51999999999?text=Hola,%20deseo%20comprar%20el%20producto:%20' + ${product.nombre}"
                        target="_blank" class="bg-[#1d9e75] text-white font-['DM_Sans'] font-semibold text-[13px] px-4 py-2 rounded-[40px] hover:bg-[#158963] transition-colors">
                         Comprar
                     </a>
